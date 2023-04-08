@@ -1,0 +1,6 @@
+#alert-container {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    z-index: 1030; /* This value should be higher than the z-index of other elements on the page */
+  }

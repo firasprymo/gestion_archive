@@ -1,0 +1,66 @@
+<h2>Structure Central</h2>
+<app-add-structure-central></app-add-structure-central>
+
+<table class="table table-dark table-striped">
+  <thead>
+    <tr>
+      <th>Code Structure</th>
+      <th>Libelle Structure</th>
+      <th>Lieu Archive</th>
+      <th>Lieu Archive Sec Age</th>
+      <th>code Structure</th>
+      <th>Update</th>
+      <th>Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let structure of structureCentrals ">
+      
+      <td>{{ structure.codeStructure }}</td>
+      <td>{{ structure.libelleStructure }}</td>
+      <td>{{ structure.lieuArchive }}</td>
+      <td>{{ structure.lieuArchiveSecAge }}</td>
+      <td>{{ structure.directionRegionalCode }}</td>
+      <td><button type="button" class="btn btn-warning" (click)="openUpdateModal(structure)">update</button></td>
+      <td><button type="button" class="btn btn-danger" (click)="structure.codeStructure && deleteStructureCentral(structure.codeStructure)">Delete</button></td>
+    </tr>
+  </tbody>
+</table>
+<!-- Update Direction Regional Modal -->
+
+
+
+<div class="modal fade" bsModal #updateModal="bs-modal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="updateModalLabel">Update Direction Regional</h5>
+          <button type="button" class="btn-close" (click)="closeModal()" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="updateForm" (ngSubmit)="updateStructureCentral()"> 
+      <div class="mb-3">
+        <label for="codeStructure" class="form-label">Code Structure</label>
+        <input type="text" class="form-control" id="codeStructure" name="codeStructure"  >
+      </div>
+      <div class="mb-3">
+        <label for="libelleStructure" class="form-label">Libelle Structure</label>
+        <input type="text" class="form-control" id="libelleStructure" name="libelleStructure"  required>
+      </div>
+      <div class="mb-3">
+        <label for="lieuArchive" class="form-label">Lieu Archive</label>
+        <input type="text" class="form-control" id="lieuArchive" name="lieuArchive"  required>
+      </div>
+      <div class="mb-3">
+        <label for="lieuArchiveSecAge" class="form-label">Lieu Archive Sec Age</label>
+        <input type="text" class="form-control" id="lieuArchiveSecAge" name="lieuArchiveSecAge"  required>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
+        <button type="submit" class="btn btn-primary">Save changes</button>
+      </div>
+    </form>
+  </div>
+</div>
+</div>
+</div>
