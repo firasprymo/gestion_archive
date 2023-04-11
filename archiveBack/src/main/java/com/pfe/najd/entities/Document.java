@@ -5,10 +5,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -19,7 +22,14 @@ public class Document implements Serializable {
     @Serial
     private static final long serialVersionUID = -748245647728840620L;
     @Id
-    private int numDocument;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    private String codeNomenclature;
+    private String nomberPage;
+    private LocalDateTime dateCreation;
+    private LocalDateTime dateReception;
+    private String codeLieuArchive;
+    private String lieuArchive;
     //TODO finish the document
     /*
         -> the document can get his location based on the foreign key of the user that created it

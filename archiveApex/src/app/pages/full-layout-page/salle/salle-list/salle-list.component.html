@@ -1,0 +1,40 @@
+<!--Shopping cart starts-->
+<section id="shopping-cart">
+    <div class="row text-left">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Liste des salles</h4>
+                </div>
+                <div class="card-content">
+                    <div class="card-body">
+                        <table class="table table-responsive-md text-center">
+                            <thead>
+                            <tr>
+                                <th>Numéro</th>
+                                <th>type</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr *ngFor="let item of salles">
+                                <td>{{item?.number}}</td>
+                                <td>{{item?.type}}</td>
+                                <td>
+                                    <a class="danger" data-original-title="" title="" (click)="deleteSalle(item?.id)">
+                                        <i class="ft-trash font-medium-3 p-1"></i>
+                                    </a>
+                                    <a class="warning" data-original-title="" title="">
+                                        <i class="ft-edit font-medium-3 p-1"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--Shopping cart ends-->

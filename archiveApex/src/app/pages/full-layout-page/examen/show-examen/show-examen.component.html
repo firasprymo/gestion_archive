@@ -1,0 +1,57 @@
+<!--Shopping cart starts-->
+<section id="shopping-cart">
+    <div class="row text-left">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Liste des examens</h4>
+                </div>
+                <div class="card-content">
+                    <div class="card-body">
+                        <table class="table table-responsive-md text-center">
+                            <thead>
+                            <tr>
+                                <th>title</th>
+                                <th>session</th>
+                                <th>Date d'examen et Durée</th>
+                                <th>Enseignant</th>
+                                <th>Salle</th>
+                                <th>classes</th>
+                                <th>students</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr *ngFor="let examen of examens">
+                                <td>{{examen?.title}}</td>
+                                <td>{{examen?.session}}</td>
+                                <td>{{examen?.examsDate | date:'yyyy-MMMM-dd'}} à {{examen?.examsTime}}
+                                    pour {{examen?.duration}} Heure
+                                </td>
+
+                                <td>{{examen?.teachers?.name}}</td>
+                                <td>{{examen?.salles?.type}} {{examen?.salles?.number}}</td>
+                                <td>{{examen?.classes?.name}} </td>
+                                <td id="list_students">
+                                    <p *ngFor="let student of examen.students">{{student?.name}}</p>
+                                </td>
+                                <td>
+                                    <a class="danger" data-original-title="" title=""
+                                       (click)="deleteExamen(examen?.id)">
+                                        <i class="ft-trash p-1 font-medium-3"></i>
+                                    </a>
+                                    <a class="warning" data-original-title="" title=""
+                                       [routerLink]="['/edit-examen/'+examen?.id]">
+                                        <i class="ft-edit p-1 font-medium-3"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--Shopping cart ends-->

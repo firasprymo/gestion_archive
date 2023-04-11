@@ -26,6 +26,12 @@ public class UserController {
     public User createUser(@RequestBody CreateUserRequest request) {
         return userService.createUser(request.getUsername(), request.getPassword(), request.getLieuAffectation(), request.getRoleNames());
     }
+
+    @GetMapping("/Me")
+    public User getMe(@RequestParam  String username) {
+        return userService.getMe(username);
+    }
+
     @ExceptionHandler(UserExistsException.class)
     public ResponseEntity<String> handleUserExistsException(UserExistsException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());

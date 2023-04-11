@@ -3,6 +3,7 @@ package com.pfe.najd.entities;
 // Other imports...
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,6 +22,7 @@ public class User implements Serializable{
     private static final long serialVersionUID = 805830910536566911L;
     @Id
     private String username;
+    @JsonIgnore
     private String password;
     private String lieuAffectation;
 

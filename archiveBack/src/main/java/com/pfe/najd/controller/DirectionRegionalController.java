@@ -2,8 +2,9 @@ package com.pfe.najd.controller;
 
 import com.pfe.najd.entities.DirectionRegional;
 import com.pfe.najd.entities.StructureCentral;
-import com.pfe.najd.service.DirectionRegionalService;
+import com.pfe.najd.service.implementation.DirectionRegionalServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,7 +18,7 @@ import java.util.Optional;
 @RequestMapping("/api/direction-regional")
 public class DirectionRegionalController {
     @Autowired
-    private DirectionRegionalService directionRegionalService;
+    private DirectionRegionalServiceImpl directionRegionalService;
 
     @PreAuthorize("hasAnyAuthority('SCOPE_ROLE_ADMIN')")
     @PostMapping("/create")
@@ -26,10 +27,14 @@ public class DirectionRegionalController {
         return new ResponseEntity<>(createdDirectionRegional, HttpStatus.CREATED);
     }
 
-    @GetMapping("/get-direction")
+    @GetMapping("/get-direction-regional")
     public ResponseEntity<List<DirectionRegional>> getAllDirectionRegional(){
         List<DirectionRegional> directionRegionals = directionRegionalService.getAllDirectionRegional();
         return new ResponseEntity<>(directionRegionals, HttpStatus.OK);
+    }
+    @GetMapping("/get-all-direction-regionals")
+    public ResponseEntity<Page<DirectionRegional>> getAllLessons(Pageable pageable) {
+        return ResponseEntity.ok().body(directionRegionalService.pageDirectionRegionals(pageable));
     }
     @GetMapping("/get-direction/{codeDirection}")
     public ResponseEntity<DirectionRegional> getDirectionRegionalById(@PathVariable("codeDirection") String codeDirection){
@@ -43,7 +48,7 @@ public class DirectionRegionalController {
 
     // Delete DirectionRegional by code
     @PreAuthorize("hasAnyAuthority('SCOPE_ROLE_ADMIN')")
-    @DeleteMapping("/delete/{codeDirection}")
+    @DeleteMapping("/{codeDirection}")
     public ResponseEntity<Void> deleteDirectionRegionalById(@PathVariable("codeDirection") String codeDirection) {
         try {
             directionRegionalService.deleteDirectionRegionalById(codeDirection);

@@ -1,0 +1,66 @@
+<div class="row text-left">
+    <div class="col-sm-12">
+        <div class="content-header">{{idTeacher == null ? 'Ajouter un enseignant ' : 'Modifier un enseignant'}}</div>
+    </div>
+</div>
+<!-- Reactive Form Validaton Starts -->
+<div class="row text-left">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-content">
+                <div class="card-body">
+                    <form [formGroup]="regularForm" novalidate>
+                        <div class="row">
+                            <div class="form-group col-lg-6">
+                                <label for="name">Nom</label>
+
+                                <input type="name" class="form-control" id="name" formControlName="firstName" required>
+                                <small class="form-text text-muted danger"
+                                       *ngIf="!regularForm.get('firstName').valid && (regularForm.get('firstName').dirty || regularForm.get('firstName').touched)">Please
+                                    enter a valid name!</small>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label for="lastName">Prénom</label>
+
+                                <input type="lastName" class="form-control" id="lastName" formControlName="lastName"
+                                       required>
+                                <small class="form-text text-muted danger"
+                                       *ngIf="!regularForm.get('lastName').valid && (regularForm.get('lastName').dirty || regularForm.get('lastName').touched)">Please
+                                    enter a valid lastName!</small>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-lg-12">
+                                <label for="name">Filiére</label>
+
+                                <select type="filiere" class="form-control" id="filiere" formControlName="filiere"
+                                        required>
+                                    <option [value]="item?.id" *ngFor="let item of filieres">{{item?.name}}</option>
+                                </select>
+                                <small class="form-text text-muted danger"
+                                       *ngIf="!regularForm.get('name').valid && (regularForm.get('name').dirty || regularForm.get('name').touched)">Please
+                                    enter a valid name!</small>
+                            </div>
+
+
+                        </div>
+
+
+                        <div class="form-group text-right">
+                            <button type="button" class="btn btn-danger btn-raised mr-1">Cancel</button>
+                            <button type="submit" class="btn btn-success btn-raised" *ngIf="!idTeacher"
+                                    [disabled]="!regularForm.valid" (click)="addTeacher()">
+                                Submit
+                            </button>
+                            <button type="submit" class="btn btn-warning btn-raised" *ngIf="idTeacher"
+                                    [disabled]="!regularForm.valid" (click)="editTeacher()">
+                                Modifier
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

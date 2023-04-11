@@ -1,0 +1,100 @@
+<div class="flex flex-col flex-auto min-w-0">
+    <div
+        class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-6 sm:py-8 sm:px-10 border-b bg-card dark:bg-transparent">
+        <div class="flex-1 min-w-0">
+            <!-- Breadcrumbs -->
+            <div class="flex flex-wrap items-center font-medium">
+                <div>
+                    <a class="whitespace-nowrap text-primary-500">Direction régional</a>
+                </div>
+                <div class="flex items-center ml-1 whitespace-nowrap">
+                    <mat-icon
+                        class="icon-size-5 text-secondary"
+                        [svgIcon]="'heroicons_solid:chevron-right'"></mat-icon>
+                    <a class="ml-1 text-primary-500">Add</a>
+                </div>
+            </div>
+            <!-- Title -->
+            <!--            <div class="mt-2">-->
+            <!--                <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate">-->
+            <!--                    Layouts-->
+            <!--                </h2>-->
+            <!--            </div>-->
+        </div>
+    </div>
+    <!-- Main -->
+    <div class="flex-auto  pt-3 px-6 sm:p-10">
+        <!-- Sectioned form with separate cards #3 -->
+        <form [formGroup]="directionRegionalForm">
+            <div class="flex flex-col  bg-card shadow rounded overflow-hidden">
+                <div class="p-8 bg-gray-50 dark:bg-gray-700">
+                    <p class="text-lg font-medium">Direction régional</p>
+                </div>
+                <mat-divider></mat-divider>
+                <div class="p-8 pb-4">
+                    <div class="flex flex-col gt-xs:flex-row gt-xs:items-baseline">
+                            <span class="font-semibold mb-1 gt-xs:text-right gt-xs:min-w-32 gt-xs:mr-4
+                            gt-xs:mb-0">Code direction</span>
+                        <mat-form-field class="fuse-mat-dense flex-auto">
+                            <input matInput [formControlName]="'codeDirection'"
+                                   placeholder="Ajouter libelle Direction" maxlength="255">
+                            <mat-error *ngIf="directionRegionalForm.controls.codeDirection.hasError('required')">
+                                Code direction est obligatoire
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="flex flex-col gt-xs:flex-row gt-xs:items-baseline">
+                            <span class="font-semibold mb-1 gt-xs:text-right gt-xs:min-w-32 gt-xs:mr-4
+                            gt-xs:mb-0">Libelle Direction</span>
+                        <mat-form-field class="fuse-mat-dense flex-auto">
+                            <input matInput [formControlName]="'libelleDirection'"
+                                   placeholder="Ajouter libelle Direction" maxlength="255">
+                            <mat-error *ngIf="directionRegionalForm.controls.libelleDirection.hasError('required')">
+                                Libelle est obligatoire
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="flex flex-col gt-xs:flex-row gt-xs:items-baseline">
+                            <span class="font-semibold mb-1 gt-xs:text-right gt-xs:min-w-32 gt-xs:mr-4
+                            gt-xs:mb-0">lieu Archive</span>
+                        <mat-form-field class="fuse-mat-dense flex-auto">
+                            <input matInput [formControlName]="'lieuArchive'" rows="2"
+                                   placeholder="Ajouter la lieuArchive de cours">
+                            <mat-error *ngIf="directionRegionalForm.controls.lieuArchive.hasError('required')">
+                                Lieu Archive est obligatoire
+                            </mat-error>
+
+                        </mat-form-field>
+                    </div>
+                    <div class="flex flex-col gt-xs:flex-row gt-xs:items-baseline">
+                            <span class="font-semibold mb-1 gt-xs:text-right gt-xs:min-w-32 gt-xs:mr-4
+                            gt-xs:mb-0">lieu Archive Sec Age</span>
+                        <mat-form-field class="fuse-mat-dense flex-auto">
+                            <input matInput [formControlName]="'lieuArchiveSecAge'" rows="2"
+                                   placeholder="Ajouter la lieu archive sec age">
+                            <mat-error *ngIf="directionRegionalForm.controls.lieuArchiveSecAge.hasError('required')">
+                                Lieu Archive sec age est obligatoire
+                            </mat-error>
+
+                        </mat-form-field>
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="flex items-center justify-end mt-10">
+                <button mat-button>
+                    Cancel
+                </button>
+                <button (click)="createDirectionRegional()"
+                        class="px-6 ml-3"
+                        mat-flat-button
+                        [disabled]="!directionRegionalForm.valid"
+                        [color]="'primary'">
+                    Save
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
