@@ -20,6 +20,8 @@ import java.util.Optional;
 public class DocumentController {
     @Autowired
     private DocumentServiceImpl documentService;
+    @Autowired
+    private DocumentRequestService documentRequestService;
 
     @PreAuthorize("hasAnyAuthority('SCOPE_ROLE_ADMIN')")
     @PostMapping("/create")
@@ -74,7 +76,12 @@ public class DocumentController {
         List<Document> documents = documentService.getDocumentByName(numDocument);
         return new ResponseEntity<>(documents, HttpStatus.OK);
     }
-
+    // update document Status : 
+   @PutMapping("/document-update/{id}")
+    public DocumentRequest updateDocumentRequestStatus(@PathVariable Long id, @RequestBody String status) {
+        return documentRequestService.updateStatus(id, status);
+    }
+    
 
 
     @ExceptionHandler(RuntimeException.class)
