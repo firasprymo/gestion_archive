@@ -30,6 +30,7 @@ public class Document implements Serializable {
     private LocalDateTime dateReception;
     private String codeLieuArchive;
     private String lieuArchive;
+    private String Status 
     //TODO finish the document
     /*
         -> the document can get his location based on the foreign key of the user that created it
