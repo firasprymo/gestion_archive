@@ -64,6 +64,17 @@ public class DocumentServiceImpl implements DocumentService {
         }
     }
 
+    public DocumentRequest updateStatus(Long id, String status) {
+    Optional<DocumentRequest> existingDocumentRequestOptional = documentRepository.findById(id);
+
+    if (existingDocumentRequestOptional.isPresent()) {
+        DocumentRequest existingDocumentRequest = existingDocumentRequestOptional.get();
+        existingDocumentRequest.setStatus(status);
+        return documentRepository.save(existingDocumentRequest);
+    } else {
+        throw new RuntimeException("Document with ID " + id + " does not exist.");
+    }
+}
 
 
 
