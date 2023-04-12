@@ -15,6 +15,8 @@ import {appRoutes} from 'app/app.routing';
 import {MaterialModule} from './shared/material/material.module';
 import {ReactiveFormsModule} from '@angular/forms';
 import { ConsultDocumentComponent } from './modules/admin/pages/document/consult-document/consult-document.component';
+import { ShowCentreArchiveComponent } from './modules/admin/pages/centre-archive/show-centre-archive/show-centre-archive.component';
+import { AddCentreArchiveComponent } from './modules/admin/pages/centre-archive/add-centre-archive/add-centre-archive.component';
 
 const routerConfig: ExtraOptions = {
     preloadingStrategy: PreloadAllModules,
@@ -25,6 +27,8 @@ const routerConfig: ExtraOptions = {
     declarations: [
         AppComponent,
         ConsultDocumentComponent,
+        ShowCentreArchiveComponent,
+        AddCentreArchiveComponent,
     ],
     imports: [
         BrowserModule,

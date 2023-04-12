@@ -13,6 +13,5 @@ public interface DocumentRepository extends JpaRepository<Document, Long>,
         JpaSpecificationExecutor<Document> {
 
     boolean existsById(Long id);
-    List<Document> findByCodeNomenclatureContainingIgnoreCase(String codeNomenclature);
 
 }

@@ -1,5 +1,6 @@
 package com.pfe.najd.service.implementation;
 
+import com.pfe.najd.Enum.DocumentStatus;
 import com.pfe.najd.entities.DocumentRequest;
 import com.pfe.najd.repository.DocumentRequestRepository;
 import com.pfe.najd.service.DocumentRequestService;
@@ -20,7 +21,7 @@ public class DocumentRequestServiceImpl implements DocumentRequestService {
 
     //TODO: change the code of create to verify if the codeStartWith "DR"
     public DocumentRequest createDocumentRequest(DocumentRequest document) {
-            return documentRepository.save(document);
+        return documentRepository.save(document);
     }
 
 
@@ -57,6 +58,17 @@ public class DocumentRequestServiceImpl implements DocumentRequestService {
         return null;
     }
 
+    @Override
+    public DocumentRequest changeStatus(Long id, String status) {
+        DocumentRequest documentRequest = documentRepository.findById(id).
+                orElseThrow(() ->
+                        new RuntimeException("Document doesn't exist"));
+        if (DocumentStatus.valueOf(status) == DocumentStatus.PENDING) {
+            documentRequest.getDocument().setStatus(DocumentStatus.PRIME_AGE);
+        }
+        return documentRepository.save(documentRequest);
+    }
+
 
     @Transactional
     public Page<DocumentRequest> pageDocumentRequests(Pageable pageable) {
@@ -65,7 +77,6 @@ public class DocumentRequestServiceImpl implements DocumentRequestService {
         return new PageImpl<>(documents.getContent(), documents.getPageable(), documents.getTotalElements());
 
     }
-
 
 
 }

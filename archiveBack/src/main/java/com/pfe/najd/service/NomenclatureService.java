@@ -15,30 +15,26 @@ public class NomenclatureService {
     private NomenclatureDao nomenclatureDao;
 
     public Nomenclature createNomenclature(Nomenclature nomenclature){
-        if(nomenclatureDao.existsByCodeNomenclature(nomenclature.getCodeNomenclature())){
-            throw new RuntimeException("nomenclature avec code"+  nomenclature.getCodeNomenclature() + "deja existe");
-        }else{
             return nomenclatureDao.save(nomenclature);
-        }
     }
 
     public List<Nomenclature> getAllNomenclature(){
         return nomenclatureDao.findAll();
     }
-    public Optional<Nomenclature> getNomenclatureById(String codeNomenclature){
-        return nomenclatureDao.findById( codeNomenclature);
+    public Optional<Nomenclature> getNomenclatureById(Long id){
+        return nomenclatureDao.findById(id);
     }
 
-    public void deleteNomenclatureById(String codeNomenclature){
-        if (nomenclatureDao.existsByCodeNomenclature(codeNomenclature)){
-            nomenclatureDao.deleteById(codeNomenclature);
+    public void deleteNomenclatureById(Long id){
+        if (nomenclatureDao.findById(id).isPresent()){
+            nomenclatureDao.deleteById(id);
         }else{
-            throw new RuntimeException("nomenclature avec code"+codeNomenclature+"n'existe pas");
+            throw new RuntimeException("nomenclature avec code"+id+"n'existe pas");
         }
     }
 
-    public Nomenclature updateNomenclatureById(String codeNomenclature, Nomenclature updatedNomenclature){
-        Optional<Nomenclature> existingNomenclatureOptional = nomenclatureDao.findById(codeNomenclature);
+    public Nomenclature updateNomenclatureById(Long id, Nomenclature updatedNomenclature){
+        Optional<Nomenclature> existingNomenclatureOptional = nomenclatureDao.findById(id);
         if(existingNomenclatureOptional.isPresent()){
             Nomenclature existingNomenclature = existingNomenclatureOptional.get();
             if (updatedNomenclature.getDesignationNomenclature() != null){
@@ -55,7 +51,7 @@ public class NomenclatureService {
             }
             return nomenclatureDao.save(existingNomenclature);
         }else {
-            throw new RuntimeException("nomenclature with code" + codeNomenclature + "does not exist" );
+            throw new RuntimeException("nomenclature with code" + id + "does not exist" );
         }
     }
     public List<Nomenclature> getNomenclatureDesignationNomenclature(String designationNomenclature){

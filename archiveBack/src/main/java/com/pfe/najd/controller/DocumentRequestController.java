@@ -1,10 +1,7 @@
 package com.pfe.najd.controller;
 
-import com.pfe.najd.entities.Document;
 import com.pfe.najd.entities.DocumentRequest;
 import com.pfe.najd.service.DocumentRequestService;
-import com.pfe.najd.service.implementation.DocumentRequestServiceImpl;
-import com.pfe.najd.service.implementation.DocumentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,7 +20,7 @@ public class DocumentRequestController {
     @Autowired
     private DocumentRequestService documentService;
 
-    @PreAuthorize("hasAnyAuthority('SCOPE_ROLE_ADMIN')")
+//    @PreAuthorize("hasAnyAuthority('SCOPE_ROLE_ADMIN')")
     @PostMapping("/create")
     public ResponseEntity<DocumentRequest> createDocument(@RequestBody DocumentRequest document){
         DocumentRequest createdDocument  = documentService.createDocumentRequest(document);
@@ -79,6 +76,10 @@ public class DocumentRequestController {
         return new ResponseEntity<>(documents, HttpStatus.OK);
     }
 
+    @PutMapping("/change-status/{id}")
+    public DocumentRequest updateDocumentRequestStatus(@PathVariable Long id, @RequestBody String status) {
+        return documentService.changeStatus(id, status);
+    }
 
 
     @ExceptionHandler(RuntimeException.class)

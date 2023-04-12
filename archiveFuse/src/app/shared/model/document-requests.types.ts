@@ -1,9 +1,7 @@
-import {Trainers} from './trainers.types';
-import {Category} from './category.types';
-import {DirectionRegional} from './direction-regional.types';
 import {Users} from './users.types';
+import {Document} from './documents.types';
 
-export interface Document {
+export interface DocumentRequest {
     id: number;
       document: Document;
       user: Users;

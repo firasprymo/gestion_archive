@@ -1,6 +1,4 @@
-import {Trainers} from './trainers.types';
-import {Category} from './category.types';
-import {DirectionRegional} from './direction-regional.types';
+import {DocumentStatus} from './document-status.enum';
 
 export interface Document {
     id: number;
@@ -10,4 +8,5 @@ export interface Document {
       dateReception: Date;
       codeLieuArchive: string;
       lieuArchive: string;
+      status: DocumentStatus;
 }

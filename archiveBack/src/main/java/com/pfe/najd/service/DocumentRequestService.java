@@ -26,5 +26,5 @@ public interface DocumentRequestService {
 
 
     public List<DocumentRequest> getDocumentRequestByName(String libelleDirection);
-    public DocumentRequest updateStatus(Long id, String status);
+    public DocumentRequest changeStatus(Long id, String status);
 }

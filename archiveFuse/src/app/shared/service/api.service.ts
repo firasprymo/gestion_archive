@@ -4,6 +4,7 @@ import {environment} from '../../../environments/environment';
 import {Observable, throwError} from 'rxjs';
 import {catchError, map} from 'rxjs/operators';
 import {Router} from '@angular/router';
+import {DocumentRequest} from '../model/document-requests.types';
 
 @Injectable({
     providedIn: 'root'
@@ -14,6 +15,7 @@ export class ApiService {
     public static apiUser = environment.users;
     public static apiSKills = environment.skills;
     public static apiDocuments =ApiService.apiVersion + environment.documents;
+    public static apiDocumentRequests =ApiService.apiVersion + environment.documentRequests;
     public static apiDirectionRegional = environment.directionRegional;
     public static apiTrainer = environment.trainers;
     public static apiQuiz = environment.quizs;

@@ -1,13 +1,12 @@
 package com.pfe.najd.entities;
 
+import com.pfe.najd.Enum.DocumentStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -17,20 +16,17 @@ import java.time.LocalDateTime;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class Document implements Serializable {
+@EqualsAndHashCode(callSuper = true)
+public class Document extends AbstractEntity{
 
-    @Serial
-    private static final long serialVersionUID = -748245647728840620L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-    private String codeNomenclature;
     private String nomberPage;
-    private LocalDateTime dateCreation;
-    private LocalDateTime dateReception;
     private String codeLieuArchive;
     private String lieuArchive;
-    private String Status 
+    @ManyToOne
+    @JoinColumn(name="nomenclature_id",nullable = true)
+    private Nomenclature nomenclature;
+    @Enumerated(EnumType.STRING)
+    private DocumentStatus Status ;
     //TODO finish the document
     /*
         -> the document can get his location based on the foreign key of the user that created it

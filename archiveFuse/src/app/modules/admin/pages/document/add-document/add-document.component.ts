@@ -30,10 +30,9 @@ export class AddDocumentComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         // Horizontal stepper form
         this.documentForm = this._formBuilder.group({
-            codeNomenclature: ['', Validators.required],
             nomberPage: ['', Validators.required],
-            dateCreation: ['', ],
-            dateReception: ['', ],
+            dateCreation: ['',],
+            dateReception: ['',],
             codeLieuArchive: ['', Validators.required],
             lieuArchive: ['', Validators.required],
         });

@@ -32,13 +32,9 @@ public class NomenclatureController {
     }
 
     @GetMapping("/get-nomenclature/{codeNomenclature}")
-    public ResponseEntity<Nomenclature> getNomenclatureById(@PathVariable("codeNomenclature")String codeNomenclature){
-        Optional<Nomenclature> nomenclature = nomenclatureService.getNomenclatureById(codeNomenclature);
-        if(nomenclature.isPresent()){
-        return new ResponseEntity<>(nomenclature.get(),HttpStatus.OK);
-        }else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+    public ResponseEntity<Nomenclature> getNomenclatureById(@PathVariable("codeNomenclature")Long id){
+        Optional<Nomenclature> nomenclature = nomenclatureService.getNomenclatureById(id);
+        return nomenclature.map(value -> new ResponseEntity<>(value, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
     @GetMapping("/search-by-name/{designationNomenclature}")
     public ResponseEntity<List<Nomenclature>> getNomenclatureByDesignation(@PathVariable("designationNomenclature") String designationNomenclature){
@@ -48,9 +44,9 @@ public class NomenclatureController {
 
     @PreAuthorize("hasAnyAuthority('SCOPE_ROLE_ADMIN')")
     @DeleteMapping("delete/{codeNomenclature}")
-    public ResponseEntity<Void> deleteNomenclatureById(@PathVariable("codeNomenclature") String codeNomenclature){
+    public ResponseEntity<Void> deleteNomenclatureById(@PathVariable("codeNomenclature") Long id){
         try {
-            nomenclatureService.deleteNomenclatureById(codeNomenclature);
+            nomenclatureService.deleteNomenclatureById(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }catch (RuntimeException e){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -59,10 +55,10 @@ public class NomenclatureController {
 
     @PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN')")
     @PutMapping("/update/{codeNomenclature}")
-    public ResponseEntity<Nomenclature> updateNomenclature(@PathVariable("codeNomenclature") String codeNomenclature,
+    public ResponseEntity<Nomenclature> updateNomenclature(@PathVariable("codeNomenclature") Long id,
                                                            @RequestBody Nomenclature updatedNomenclature){
         try {
-            Nomenclature updated = nomenclatureService.updateNomenclatureById(codeNomenclature, updatedNomenclature);
+            Nomenclature updated = nomenclatureService.updateNomenclatureById(id, updatedNomenclature);
             return new ResponseEntity<>(updated, HttpStatus.OK);
         }catch (RuntimeException e){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

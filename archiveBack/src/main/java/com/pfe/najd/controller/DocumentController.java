@@ -1,8 +1,12 @@
 package com.pfe.najd.controller;
 
 import com.pfe.najd.entities.Document;
+import com.pfe.najd.entities.DocumentRequest;
 import com.pfe.najd.entities.StructureCentral;
+import com.pfe.najd.service.DocumentRequestService;
+import com.pfe.najd.service.DocumentService;
 import com.pfe.najd.service.implementation.DocumentServiceImpl;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,15 +19,15 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-
+@RequiredArgsConstructor
 @RequestMapping("/api/documents")
 public class DocumentController {
-    @Autowired
-    private DocumentServiceImpl documentService;
-    @Autowired
-    private DocumentRequestService documentRequestService;
 
-    @PreAuthorize("hasAnyAuthority('SCOPE_ROLE_ADMIN')")
+    private final DocumentService documentService;
+
+    private final DocumentRequestService documentRequestService;
+
+//    @PreAuthorize("hasAnyAuthority('SCOPE_ROLE_ADMIN')")
     @PostMapping("/create")
     public ResponseEntity<Document> createDocument(@RequestBody Document document){
         Document createdDocument  = documentService.createDocument(document);
@@ -70,17 +74,14 @@ public class DocumentController {
     }
 
 
-    @GetMapping("/search-by-name/{numDocument}")
-    public ResponseEntity<List<Document>> getDocumentByName(@PathVariable("numDocument")
-                                                                String numDocument) {
-        List<Document> documents = documentService.getDocumentByName(numDocument);
-        return new ResponseEntity<>(documents, HttpStatus.OK);
-    }
+//    @GetMapping("/search-by-name/{numDocument}")
+//    public ResponseEntity<List<Document>> getDocumentByName(@PathVariable("numDocument")
+//                                                                String numDocument) {
+//        List<Document> documents = documentService.getDocumentByName(numDocument);
+//        return new ResponseEntity<>(documents, HttpStatus.OK);
+//    }
     // update document Status : 
-   @PutMapping("/document-update/{id}")
-    public DocumentRequest updateDocumentRequestStatus(@PathVariable Long id, @RequestBody String status) {
-        return documentRequestService.updateStatus(id, status);
-    }
+
     
 
 

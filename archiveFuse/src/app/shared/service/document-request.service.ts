@@ -1,19 +1,19 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable, of, throwError} from 'rxjs';
 import {InventoryPagination} from '../../modules/admin/apps/ecommerce/inventory/inventory.types';
-import {Document} from '../model/documents.types';
+import {DocumentRequest} from '../model/document-requests.types';
 import {ApiService} from './api.service';
 import {HttpClient} from '@angular/common/http';
 import {map, switchMap, take, tap} from 'rxjs/operators';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class DocumentRequestService {
     private _pagination: BehaviorSubject<InventoryPagination | null> = new BehaviorSubject(null);
-    private _documents: BehaviorSubject<Document[] | null> = new BehaviorSubject(null);
-    private _document: BehaviorSubject<Document | null> = new BehaviorSubject(null);
-    private _DirectionRegionaldocument: BehaviorSubject<Document | null> = new BehaviorSubject(null);
+    private _documentRequests: BehaviorSubject<DocumentRequest[] | null> = new BehaviorSubject(null);
+    private _documentRequest: BehaviorSubject<DocumentRequest | null> = new BehaviorSubject(null);
+    private _DirectionRegionaldocument: BehaviorSubject<DocumentRequest | null> = new BehaviorSubject(null);
 
     constructor(private _apiService: ApiService,
                 private _httpClient: HttpClient) {
@@ -22,15 +22,15 @@ export class DocumentRequestService {
     /**
      * Getter for documents
      */
-    get documents$(): Observable<Document[]> {
-        return this._documents.asObservable();
+    get documentRequests$(): Observable<DocumentRequest[]> {
+        return this._documentRequests.asObservable();
     }
 
     /**
      * Getter for item
      */
-    get document$(): Observable<Document> {
-        return this._document.asObservable();
+    get documentRequest$(): Observable<DocumentRequest> {
+        return this._documentRequest.asObservable();
     }
 
 
@@ -44,49 +44,52 @@ export class DocumentRequestService {
     /**
      * Create product
      */
-    addDocument(document): Observable<Document> {
-        return this.documents$.pipe(
+    addDocumentRequest(document): Observable<DocumentRequest> {
+        return this.documentRequests$.pipe(
             take(1),
             switchMap(documents =>
-                this._httpClient.post<Document>(`${ApiService.apiDocuments}/create`, document)
+                this._httpClient.post<DocumentRequest>(`${ApiService.apiDocumentRequests}/create`, document)
                     .pipe(
-                        map((newDocument) => {
+                        map((newDocumentRequest) => {
 
                             // Update the documents with the new product-
-                            this._documents.next([newDocument]);
+                            this._documentRequests.next([newDocumentRequest]);
 
                             // Return the new product
-                            return newDocument;
+                            return newDocumentRequest;
                         })
                     ))
         );
     }
 
-    editDocument(body, id): Observable<Document> {
-        return this._apiService.patch(`${ApiService.apiVersion}${ApiService.apiDocuments}/${id}`, body).pipe(map(res => res));
+    editDocumentRequest(body, id): Observable<DocumentRequest> {
+        return this._apiService.patch(`${ApiService.apiVersion}${ApiService.apiDocumentRequests}/${id}`, body)
+            .pipe(map(res => res));
     }
 
     /**
      * Get document by id
      */
-    getdocumentById(id: string): Observable<Document> {
-        return this._httpClient.get<Document>(`${ApiService.apiVersion}${ApiService.apiDocuments}/find-document/${id}`).pipe(
-            map((document) => {
-                // Update the document
-                this._document.next(document);
+    getdocumentById(id: string): Observable<DocumentRequest> {
+        return this._httpClient
+            .get<DocumentRequest>(`${ApiService.apiVersion}${ApiService.apiDocumentRequests}/find-document/${id}`)
+            .pipe(
+                map((document) => {
+                    // Update the document
+                    this._documentRequest.next(document);
 
-                // Return the document
-                return document;
-            }),
-            switchMap((document) => {
+                    // Return the document
+                    return document;
+                }),
+                switchMap((document) => {
 
-                if (!document) {
-                    return throwError('Could not found document with id of ' + id + '!');
-                }
+                    if (!document) {
+                        return throwError('Could not found document with id of ' + id + '!');
+                    }
 
-                return of(document);
-            })
-        );
+                    return of(document);
+                })
+            );
     }
 
     /**
@@ -99,10 +102,11 @@ export class DocumentRequestService {
      * @param order
      * @param search
      */
-    getAlldocuments(page: number = 0, size: number = 5, sort: string = 'codeNomenclature', order: 'asc' | 'desc' | '' = 'asc', search: string = ''):
-        Observable<{ pageable: InventoryPagination; content: Document[] }> {
-        return this._httpClient.get<{ pageable: InventoryPagination; content: Document[] }>
-        (`${ApiService.apiDocuments}/get-all-documents`, {
+    getAllDocuments(page: number = 0, size: number = 5, sort: string = 'document.nomberPage', order: 'asc' | 'desc'
+        | '' = 'asc', search: string = ''):
+        Observable<{ pageable: InventoryPagination; content: DocumentRequest[] }> {
+        return this._httpClient.get<{ pageable: InventoryPagination; content: DocumentRequest[] }>
+        (`${ApiService.apiDocumentRequests}/get-all-documents`, {
             params: {
                 page: '' + page,
                 size: '' + size,
@@ -113,7 +117,7 @@ export class DocumentRequestService {
         }).pipe(
             tap((response) => {
                 this._pagination.next(response.pageable);
-                this._documents.next(response.content);
+                this._documentRequests.next(response.content);
             })
         );
     }
@@ -123,18 +127,18 @@ export class DocumentRequestService {
      *
      * @param document
      */
-    deleteDocument(document: Document): Observable<boolean> {
-        return this.documents$.pipe(
+    deleteDocumentRequest(document: DocumentRequest): Observable<boolean> {
+        return this.documentRequests$.pipe(
             take(1),
             switchMap(documents =>
-                this._httpClient.delete(`${ApiService.apiDocuments}/${document.id}`).pipe(
+                this._httpClient.delete(`${ApiService.apiDocumentRequests}/${document.id}`).pipe(
                     map(() => {
                         // Find the index of the deleted product
                         const index = documents.findIndex(item => item.id === document.id);
                         // Delete the product
                         documents.splice(index, 1);
                         // Update the documents
-                        this._documents.next(documents);
+                        this._documentRequests.next(documents);
                         // Return the deleted status
                         return true;
                     })
@@ -142,12 +146,23 @@ export class DocumentRequestService {
         );
     }
 
-    getDocuments(): Observable<Document[]> {
-        return this._httpClient.get<Document[]>(`${ApiService.apiVersion}${ApiService.apiDocuments}`).pipe(
+    getDocumentRequests(): Observable<DocumentRequest[]> {
+        return this._httpClient.get<DocumentRequest[]>(`${ApiService.apiVersion}${ApiService.apiDocumentRequests}`).pipe(
             tap((response: any) => {
-                this._documents.next(response);
+                this._documentRequests.next(response);
             })
         );
     }
 
+    changeStatus(document): any {
+        console.log(document?.document);
+        return this._httpClient.put<DocumentRequest[]>
+        (`${ApiService.apiDocumentRequests}/change-status/${document?.id}`,
+            document?.document?.status).pipe(
+            tap((response: any) => {
+                this._documentRequests.next(response);
+            })
+        );
+
+    }
 }

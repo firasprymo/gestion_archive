@@ -179,30 +179,49 @@ export const appRoutes: Route[] = [
                     {
                         path: 'add-document',
                         canActivate: [AuthGuard],
-                        data: {
-                            role: roleUser
-                        },
+                        // data: {
+                        //     role: roleUser
+                        // },
                         loadChildren: () => import('app/modules/admin/pages/document/add-document/add-document.module').then(m => m.AddDocumentModule)
                     }, {
                         path: 'add-document/:id',
                         canActivate: [AuthGuard],
-                        data: {
-                            role: roleUser
-                        },
+                        // data: {
+                        //     role: roleUser
+                        // },
                         loadChildren: () => import('app/modules/admin/pages/document/add-document/add-document.module').then(m => m.AddDocumentModule)
                     },
                     {
                         path: 'show-documents',
-                        data: {
-                            role: roleAdmin
-                        },
+                        // data: {
+                        //     role: roleAdmin
+                        // },
                         loadChildren: () => import('app/modules/admin/pages/document/show-documents/show-documents.module').then(m => m.ShowDocumentsModule)
                     },
                     {
+                        path: 'add-centre',
+                        // data: {
+                        //     role: roleAdmin
+                        // },
+                        loadChildren: () => import('app/modules/admin/pages/centre-archive/add-centre-archive/add-centre-archive.module').then(m => m.AddCentreArchiveModule)
+                    },  {
+                        path: 'add-centre/:id',
+                        // data: {
+                        //     role: roleAdmin
+                        // },
+                        loadChildren: () => import('app/modules/admin/pages/centre-archive/add-centre-archive/add-centre-archive.module').then(m => m.AddCentreArchiveModule)
+                    },  {
+                        path: 'show-centre',
+                        // data: {
+                        //     role: roleAdmin
+                        // },
+                        loadChildren: () => import('app/modules/admin/pages/centre-archive/show-centre-archive/show-centre-archive.module').then(m => m.ShowCentreArchiveModule)
+                    },
+                    {
                         path: 'consult-documents',
-                        data: {
-                            role: roleAdmin
-                        },
+                        // data: {
+                        //     role: roleAdmin
+                        // },
                         loadChildren: () => import('app/modules/admin/pages/document/consult-document/consult-document.module').then(m => m.ConsultDocumentModule)
                     },
                     {

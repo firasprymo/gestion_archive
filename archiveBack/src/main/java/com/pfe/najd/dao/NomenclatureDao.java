@@ -8,9 +8,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface NomenclatureDao extends JpaRepository<Nomenclature,String> {
-    boolean existsByCodeNomenclature(String codeNomenclature);
+public interface NomenclatureDao extends JpaRepository<Nomenclature,Long> {
+    boolean existsById(Long id);
     List<Nomenclature> findAll();
-    List<Nomenclature> findAllByCodeNomenclature(String codeNomenclature);
     List<Nomenclature> findByDesignationNomenclatureContainingIgnoreCase(String designationNomenclature);
 }

@@ -14,6 +14,7 @@ export const environment = {
     trainers: 'trainers',
     skills: 'skills',
     documents: 'api/documents',
+    documentRequests: 'api/document-requests',
     quizs: 'quizs',
     steps: 'steps',
     activeUser: 'activeUser'

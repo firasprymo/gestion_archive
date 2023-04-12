@@ -1,12 +1,13 @@
 import {
-    AfterViewInit, ChangeDetectionStrategy,
-    ChangeDetectorRef,
+    AfterViewInit,
+    ChangeDetectionStrategy, ChangeDetectorRef,
     Component,
     OnDestroy,
     OnInit,
     ViewChild,
     ViewEncapsulation
 } from '@angular/core';
+import {fuseAnimations} from '../../../../../../@fuse/animations';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {merge, Observable, Subject} from 'rxjs';
@@ -15,7 +16,8 @@ import {ApiService} from '../../../../../shared/service/api.service';
 import {
     InventoryBrand,
     InventoryCategory,
-    InventoryPagination, InventoryVendor
+    InventoryPagination,
+    InventoryVendor
 } from '../../../apps/ecommerce/inventory/inventory.types';
 import {Skills} from '../../../../../shared/model/skills.types';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
@@ -24,16 +26,10 @@ import {InventoryService} from '../../../apps/ecommerce/inventory/inventory.serv
 import {DocumentsService} from '../../../../../shared/service/documents.service';
 import {SkillsService} from '../../../../../shared/service/skills.service';
 import {debounceTime, map, switchMap, takeUntil} from 'rxjs/operators';
-import {DocumentRequest} from '../../../../../shared/model/document-requests.types';
-import {DocumentRequestService} from '../../../../../shared/service/document-request.service';
-import {fuseAnimations} from '../../../../../../@fuse/animations';
-import {User} from '../../../../../core/user/user.types';
-import {UserService} from '../../../../../core/user/user.service';
-import {Users} from '../../../../../shared/model/users.types';
 
 @Component({
-    selector: 'app-consult-document',
-    templateUrl: './consult-document.component.html',
+  selector: 'app-centre-archive',
+  templateUrl: './show-centre-archive.component.html',
     styles: [
         /* language=SCSS */
         `
@@ -49,7 +45,7 @@ import {Users} from '../../../../../shared/model/users.types';
                 }
 
                 @screen lg {
-                    grid-template-columns: 120px 120px 120px 80px 330px 80px ;
+                    grid-template-columns: 48px 112px auto 112px 96px 96px 72px;
                 }
             }
         `
@@ -58,13 +54,12 @@ import {Users} from '../../../../../shared/model/users.types';
     changeDetection: ChangeDetectionStrategy.OnPush,
     animations: fuseAnimations
 })
-export class ConsultDocumentComponent implements OnInit, AfterViewInit, OnDestroy {
+export class ShowCentreArchiveComponent implements OnInit, AfterViewInit, OnDestroy {
 
     @ViewChild(MatPaginator) private _paginator: MatPaginator;
     @ViewChild(MatSort) private _sort: MatSort;
-    documentRequests$: Observable<DocumentRequest[]>;
-    user$: Observable<Users>;
-    user: Users;
+
+    documents$: Observable<Document[]>;
     apiImg = ApiService.apiPicture;
     brands: InventoryBrand[];
     categories: InventoryCategory[];
@@ -73,7 +68,7 @@ export class ConsultDocumentComponent implements OnInit, AfterViewInit, OnDestro
     isLoading: boolean = false;
     pagination: InventoryPagination;
     searchInputControl: FormControl = new FormControl();
-    selectedDocument: DocumentRequest | null = null;
+    selecteddocument: Document | null = null;
     selectedProductForm: FormGroup;
     skills: Skills[];
     tagsEditMode: boolean = false;
@@ -87,8 +82,9 @@ export class ConsultDocumentComponent implements OnInit, AfterViewInit, OnDestro
         private _changeDetectorRef: ChangeDetectorRef,
         private _fuseConfirmationService: FuseConfirmationService,
         private _formBuilder: FormBuilder,
-        private userService: UserService,
-        private _documentReqService: DocumentRequestService,
+        private _inventoryService: InventoryService,
+        private _documentService: DocumentsService,
+        private _skillsService: SkillsService,
     ) {
     }
 
@@ -123,9 +119,8 @@ export class ConsultDocumentComponent implements OnInit, AfterViewInit, OnDestro
             currentImageIndex: [0], // Image index that is currently being viewed
             active: [false]
         });
-        this.user$ = this.userService.user$;
         // Get the pagination
-        this._documentReqService.pagination$
+        this._documentService.pagination$
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((pagination: InventoryPagination) => {
                 // Update the pagination
@@ -134,7 +129,7 @@ export class ConsultDocumentComponent implements OnInit, AfterViewInit, OnDestro
                 this._changeDetectorRef.markForCheck();
             });
         // Get the products
-        this.documentRequests$ = this._documentReqService.documentRequests$;
+        this.documents$ = this._documentService.documents$;
         // Get the vendors
 
         // Subscribe to search input field value changes
@@ -215,7 +210,7 @@ export class ConsultDocumentComponent implements OnInit, AfterViewInit, OnDestro
      * Close the details
      */
     closeDetails(): void {
-        this.selectedDocument = null;
+        this.selecteddocument = null;
     }
 
 
@@ -235,7 +230,7 @@ export class ConsultDocumentComponent implements OnInit, AfterViewInit, OnDestro
     /**
      * Delete the selected product using the form data
      */
-    deleteSelectedDocument(document: DocumentRequest): void {
+    deleteSelectedDocument(document: Document): void {
         // Open the confirmation dialog
         const confirmation = this._fuseConfirmationService.open({
             title: 'Delete document',
@@ -256,7 +251,7 @@ export class ConsultDocumentComponent implements OnInit, AfterViewInit, OnDestro
                 // Get the product object
 
                 // Delete the product on the server
-                this._documentReqService.deleteDocumentRequest(document).subscribe(() => {
+                this._documentService.deleteDocument(document).subscribe(() => {
 
                     // Close the details
                     this.closeDetails();
@@ -295,15 +290,5 @@ export class ConsultDocumentComponent implements OnInit, AfterViewInit, OnDestro
         return item.id || index;
     }
 
-    isRoleResponsibleInList(value): any {
-        return this.user$.subscribe(user =>
-            user.roles.some((obj) => {
-                return obj.roleName === value;
-            })
-        );
-    }
 
-    changeStatus(documentRequest: DocumentRequest): any {
-        return this._documentReqService.changeStatus(documentRequest).subscribe(res => res);
-    }
 }
