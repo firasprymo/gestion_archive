@@ -2,10 +2,10 @@ import {Route} from '@angular/router';
 import {AuthGuard} from 'app/core/auth/guards/auth.guard';
 import {LayoutComponent} from 'app/layout/layout.component';
 import {InitialDataResolver} from 'app/app.resolvers';
-import {NoAuthGuard} from './core/auth/guards/noAuth.guard';
 
 const roleAdmin = 'ROLE_ADMIN';
 const roleUser = 'ROLE_USER';
+const roleAgent = 'ROLE_AGENT';
 // @formatter:off
 /* eslint-disable max-len */
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
@@ -197,6 +197,13 @@ export const appRoutes: Route[] = [
                             role: roleAdmin
                         },
                         loadChildren: () => import('app/modules/admin/pages/document/show-documents/show-documents.module').then(m => m.ShowDocumentsModule)
+                    },
+                    {
+                        path: 'consult-documents',
+                        data: {
+                            role: roleAdmin
+                        },
+                        loadChildren: () => import('app/modules/admin/pages/document/consult-document/consult-document.module').then(m => m.ConsultDocumentModule)
                     },
                     {
                         path: 'add-quiz/:idLesson',

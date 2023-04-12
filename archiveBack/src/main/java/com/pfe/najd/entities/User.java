@@ -17,10 +17,12 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class User implements Serializable{
+public class User implements Serializable {
     @Serial
     private static final long serialVersionUID = 805830910536566911L;
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
     private String username;
     @JsonIgnore
     private String password;

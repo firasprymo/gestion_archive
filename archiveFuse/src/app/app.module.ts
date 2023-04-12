@@ -14,6 +14,7 @@ import {AppComponent} from 'app/app.component';
 import {appRoutes} from 'app/app.routing';
 import {MaterialModule} from './shared/material/material.module';
 import {ReactiveFormsModule} from '@angular/forms';
+import { ConsultDocumentComponent } from './modules/admin/pages/document/consult-document/consult-document.component';
 
 const routerConfig: ExtraOptions = {
     preloadingStrategy: PreloadAllModules,
@@ -23,6 +24,7 @@ const routerConfig: ExtraOptions = {
 @NgModule({
     declarations: [
         AppComponent,
+        ConsultDocumentComponent,
     ],
     imports: [
         BrowserModule,
