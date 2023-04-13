@@ -1,56 +1,26 @@
 package com.pfe.najd.service;
 
-import com.pfe.najd.dao.CentrePreArchiveDao;
+import com.pfe.najd.entities.CentreArchive;
+import com.pfe.najd.repository.CentrePreArchiveRepository;
 
 import com.pfe.najd.entities.CentrePreArchive;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
 
-@Service
-public class CentrePreArchiveService {
-    @Autowired
-    private CentrePreArchiveDao centrePreArchiveDao;
+public interface CentrePreArchiveService {
 
-    public CentrePreArchive createCentrePreArchive(CentrePreArchive centrePreArchive){
-        if(centrePreArchiveDao.existsByCodeCentrePreArchive(centrePreArchive.getCodeCentrePreArchive())){
-            throw new RuntimeException("centre de pre-Archive avec code = "+centrePreArchive.getCodeCentrePreArchive()+" existe");
-        }else {
-            return centrePreArchiveDao.save(centrePreArchive);
-        }
-    }
+    public CentrePreArchive createCentrePreArchive(CentrePreArchive centrePreArchive);
 
-    public List<CentrePreArchive> getAllCentrePreArchive(){
-        return centrePreArchiveDao.findAll();
-    }
-    public Optional<CentrePreArchive> getCentrePreArchiveById(String codeCentrePreArchive){
-        return centrePreArchiveDao.findById(codeCentrePreArchive);
-    }
-    public void deleteCentrePreArchiveId(String codeCentrePreArchive){
-        if(centrePreArchiveDao.existsByCodeCentrePreArchive(codeCentrePreArchive)){
-            centrePreArchiveDao.deleteById(codeCentrePreArchive);
-        }else {
-            throw new RuntimeException("centre Pre-Archive avec code "+ codeCentrePreArchive +" n'existe pas");
-        }
-    }
+    public List<CentrePreArchive> getAllCentrePreArchive();
+    public Optional<CentrePreArchive> getCentrePreArchiveById(Long id);
+    public void deleteCentrePreArchiveId(Long id);
+    Page<CentrePreArchive> pageCentrePreArchives(Pageable pageable);
 
-    public CentrePreArchive updateCentrePreArchive(String codeCentrePreArchive, CentrePreArchive updatedCentrePreArchive){
-        Optional<CentrePreArchive> existingCentrePreArchiveOptional = centrePreArchiveDao.findById(codeCentrePreArchive);
-        if(existingCentrePreArchiveOptional.isPresent()){
-            CentrePreArchive existingCentrePreArchive = existingCentrePreArchiveOptional.get();
-            if(updatedCentrePreArchive.getLibelleCentrePreArchive() != null){
-                existingCentrePreArchive.setLibelleCentrePreArchive(updatedCentrePreArchive.getLibelleCentrePreArchive());
-            }
+    public CentrePreArchive updateCentrePreArchive(Long id, CentrePreArchive updatedCentrePreArchive);
 
-            return centrePreArchiveDao.save(existingCentrePreArchive);
-        }else {
-            throw new RuntimeException("centre Pre Archive avec code "+codeCentrePreArchive+" n'existe pas");
-        }
-    }
-
-    public List<CentrePreArchive> getCentrePreArchiveByName(String libelleCentrePreArchive){
-        return centrePreArchiveDao.findByLibelleCentrePreArchiveContainingIgnoreCase(libelleCentrePreArchive);
-    }
+    public List<CentrePreArchive> getCentrePreArchiveByName(String libelleCentrePreArchive);
 }

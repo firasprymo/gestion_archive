@@ -1,34 +1,29 @@
 import {
-    AfterViewInit, ChangeDetectionStrategy,
-    ChangeDetectorRef,
+    AfterViewInit,
+    ChangeDetectionStrategy, ChangeDetectorRef,
     Component,
     OnDestroy,
     OnInit,
     ViewChild,
     ViewEncapsulation
 } from '@angular/core';
+import {fuseAnimations} from '../../../../../../@fuse/animations';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {merge, Observable, Subject} from 'rxjs';
+import {CentreArchive} from '../../../../../shared/model/centre-archive.types';
 import {ApiService} from '../../../../../shared/service/api.service';
-import {
-    InventoryBrand,
-    InventoryCategory,
-    InventoryPagination, InventoryVendor
-} from '../../../apps/ecommerce/inventory/inventory.types';
-import {Skills} from '../../../../../shared/model/skills.types';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {InventoryPagination} from '../../../apps/ecommerce/inventory/inventory.types';
+import {FormBuilder, FormControl} from '@angular/forms';
 import {FuseConfirmationService} from '../../../../../../@fuse/services/confirmation';
+import {CentreArchiveService} from '../../../../../shared/service/centre-archive.service';
 import {debounceTime, map, switchMap, takeUntil} from 'rxjs/operators';
-import {DocumentRequest} from '../../../../../shared/model/document-requests.types';
-import {DocumentRequestService} from '../../../../../shared/service/document-request.service';
-import {fuseAnimations} from '../../../../../../@fuse/animations';
-import {UserService} from '../../../../../core/user/user.service';
-import {Users} from '../../../../../shared/model/users.types';
+import {CentrePreArchive} from '../../../../../shared/model/centre-pre-archive.types';
+import {CentrePreArchiveService} from '../../../../../shared/service/centre-pre-archive.service';
 
 @Component({
-    selector: 'app-consult-document',
-    templateUrl: './consult-document.component.html',
+  selector: 'app-centre-pre-archive',
+  templateUrl: './show-centre-pre-archive.component.html',
     styles: [
         /* language=SCSS */
         `
@@ -44,7 +39,7 @@ import {Users} from '../../../../../shared/model/users.types';
                 }
 
                 @screen lg {
-                    grid-template-columns: 120px 120px 120px 80px 330px 80px ;
+                    grid-template-columns: 25% 25% 25% 25%;
                 }
             }
         `
@@ -53,26 +48,18 @@ import {Users} from '../../../../../shared/model/users.types';
     changeDetection: ChangeDetectionStrategy.OnPush,
     animations: fuseAnimations
 })
-export class ConsultDocumentComponent implements OnInit, AfterViewInit, OnDestroy {
+export class ShowCentrePreArchiveComponent implements OnInit, AfterViewInit, OnDestroy {
 
     @ViewChild(MatPaginator) private _paginator: MatPaginator;
     @ViewChild(MatSort) private _sort: MatSort;
-    documentRequests$: Observable<DocumentRequest[]>;
-    user$: Observable<Users>;
-    user: Users;
+
+    centrePreArchives$: Observable<CentrePreArchive[]>;
     apiImg = ApiService.apiPicture;
-    brands: InventoryBrand[];
-    categories: InventoryCategory[];
-    filteredSkills: Skills[];
     flashMessage: 'success' | 'error' | null = null;
     isLoading: boolean = false;
     pagination: InventoryPagination;
     searchInputControl: FormControl = new FormControl();
-    selectedDocument: DocumentRequest | null = null;
-    selectedProductForm: FormGroup;
-    skills: Skills[];
-    tagsEditMode: boolean = false;
-    vendors: InventoryVendor[];
+    selectedCentrePreArchives: CentrePreArchive | null = null;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     /**
@@ -82,8 +69,7 @@ export class ConsultDocumentComponent implements OnInit, AfterViewInit, OnDestro
         private _changeDetectorRef: ChangeDetectorRef,
         private _fuseConfirmationService: FuseConfirmationService,
         private _formBuilder: FormBuilder,
-        private userService: UserService,
-        private _documentReqService: DocumentRequestService,
+        private _centreArchiveService: CentrePreArchiveService,
     ) {
     }
 
@@ -96,31 +82,8 @@ export class ConsultDocumentComponent implements OnInit, AfterViewInit, OnDestro
      */
     ngOnInit(): void {
         // Create the selected product form
-        this.selectedProductForm = this._formBuilder.group({
-            id: [''],
-            category: [''],
-            name: ['', [Validators.required]],
-            description: [''],
-            skills: [[]],
-            sku: [''],
-            barcode: [''],
-            brand: [''],
-            vendor: [''],
-            stock: [''],
-            reserved: [''],
-            cost: [''],
-            basePrice: [''],
-            taxPercent: [''],
-            price: [''],
-            weight: [''],
-            thumbnail: [''],
-            images: [[]],
-            currentImageIndex: [0], // Image index that is currently being viewed
-            active: [false]
-        });
-        this.user$ = this.userService.user$;
         // Get the pagination
-        this._documentReqService.pagination$
+        this._centreArchiveService.pagination$
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((pagination: InventoryPagination) => {
                 // Update the pagination
@@ -129,26 +92,10 @@ export class ConsultDocumentComponent implements OnInit, AfterViewInit, OnDestro
                 this._changeDetectorRef.markForCheck();
             });
         // Get the products
-        this.documentRequests$ = this._documentReqService.documentRequests$;
+        this.centrePreArchives$ = this._centreArchiveService.centrePreArchives$;
         // Get the vendors
 
         // Subscribe to search input field value changes
-        this.searchInputControl.valueChanges
-            .pipe(
-                takeUntil(this._unsubscribeAll),
-                debounceTime(300),
-                switchMap((query) => {
-                    console.log('loading');
-                    this.closeDetails();
-                    this.isLoading = true;
-                    return null;
-                    // return this._documentService.getAlldocuments(0, 10, 'name', 'asc', query);
-                }),
-                map(() => {
-                    this.isLoading = false;
-                })
-            )
-            .subscribe();
     }
 
     /**
@@ -183,7 +130,7 @@ export class ConsultDocumentComponent implements OnInit, AfterViewInit, OnDestro
                     this.closeDetails();
                     this.isLoading = true;
                     return null;
-                    // return this._documentService.getAlldocuments(this._paginator.pageIndex, this._paginator.pageSize, this._sort.active, this._sort.direction);
+                    // return this._centreArchiveService.getAllcentreArchives(this._paginator.pageIndex, this._paginator.pageSize, this._sort.active, this._sort.direction);
                 }),
                 map(() => {
                     this.isLoading = false;
@@ -210,31 +157,16 @@ export class ConsultDocumentComponent implements OnInit, AfterViewInit, OnDestro
      * Close the details
      */
     closeDetails(): void {
-        this.selectedDocument = null;
+        this.selectedCentrePreArchives = null;
     }
-
-
-    /**
-     * Filter tags
-     *
-     * @param event
-     */
-    filterSkills(event): void {
-        // Get the value
-        const value = event.target.value.toLowerCase();
-
-        // Filter the tags
-        this.filteredSkills = this.skills.filter(tag => tag.title.toLowerCase().includes(value));
-    }
-
     /**
      * Delete the selected product using the form data
      */
-    deleteSelectedDocument(document: DocumentRequest): void {
+    deleteSelectedCenterArchive(centreArchive: CentrePreArchive): void {
         // Open the confirmation dialog
         const confirmation = this._fuseConfirmationService.open({
-            title: 'Delete document',
-            message: 'Are you sure you want to remove this document? This action cannot be undone!',
+            title: 'Delete centre archive',
+            message: 'Are you sure you want to remove this centre archive? This action cannot be undone!',
             actions: {
                 confirm: {
                     label: 'Delete'
@@ -247,12 +179,8 @@ export class ConsultDocumentComponent implements OnInit, AfterViewInit, OnDestro
 
             // If the confirm button pressed...
             if (result === 'confirmed') {
-
-                // Get the product object
-
                 // Delete the product on the server
-                this._documentReqService.deleteDocumentRequest(document).subscribe(() => {
-
+                this._centreArchiveService.deleteCentrePreArchive(centreArchive).subscribe(() => {
                     // Close the details
                     this.closeDetails();
                 });
@@ -290,15 +218,5 @@ export class ConsultDocumentComponent implements OnInit, AfterViewInit, OnDestro
         return item.id || index;
     }
 
-    isRoleResponsibleInList(value): any {
-        return this.user$.subscribe(user =>
-            user.roles.some((obj) => {
-                return obj.roleName === value;
-            })
-        );
-    }
 
-    changeStatus(documentRequest: DocumentRequest): any {
-        return this._documentReqService.changeStatus(documentRequest).subscribe(res => res);
-    }
 }

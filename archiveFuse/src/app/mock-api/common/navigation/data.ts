@@ -188,18 +188,18 @@ export const defaultNavigation: FuseNavigationItem[] = [
         children: [
             {
                 id: 'prearchives.add',
-                title: 'Ajouter centre',
+                title: 'Ajouter centre pré archive',
                 type: 'basic',
                 icon: 'heroicons_outline:academic-cap',
-                link: '/apps/add-centre',
+                link: '/pages/add-centre-pre',
                 meta: 'ROLE_ADMIN',
             },
             {
                 id: 'prearchives.show',
-                title: 'Afficher centres',
+                title: 'Afficher centre pré archive',
                 type: 'basic',
                 icon: 'heroicons_outline:academic-cap',
-                link: '/apps/show-centres',
+                link: '/pages/show-centres-pre',
                 meta: 'ROLE_ADMIN',
             },
         ]

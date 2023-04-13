@@ -13,10 +13,7 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CentrePreArchive implements Serializable {
-    @Serial
-    private static final long serialVersionUID = -1849243299981143230L;
-    @Id
+public class CentrePreArchive extends AbstractEntity {
     private String codeCentrePreArchive;
     private String libelleCentrePreArchive;
 

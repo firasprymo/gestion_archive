@@ -11,20 +11,14 @@ import {fuseAnimations} from '../../../../../../@fuse/animations';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {merge, Observable, Subject} from 'rxjs';
-import {Document} from '../../../../../shared/model/documents.types';
+import {CentreArchive} from '../../../../../shared/model/centre-archive.types';
 import {ApiService} from '../../../../../shared/service/api.service';
 import {
-    InventoryBrand,
-    InventoryCategory,
     InventoryPagination,
-    InventoryVendor
 } from '../../../apps/ecommerce/inventory/inventory.types';
-import {Skills} from '../../../../../shared/model/skills.types';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormControl} from '@angular/forms';
 import {FuseConfirmationService} from '../../../../../../@fuse/services/confirmation';
-import {InventoryService} from '../../../apps/ecommerce/inventory/inventory.service';
-import {DocumentsService} from '../../../../../shared/service/documents.service';
-import {SkillsService} from '../../../../../shared/service/skills.service';
+import {CentreArchiveService} from '../../../../../shared/service/centre-archive.service';
 import {debounceTime, map, switchMap, takeUntil} from 'rxjs/operators';
 
 @Component({
@@ -45,7 +39,7 @@ import {debounceTime, map, switchMap, takeUntil} from 'rxjs/operators';
                 }
 
                 @screen lg {
-                    grid-template-columns: 48px 112px auto 112px 96px 96px 72px;
+                    grid-template-columns: 25% 25% 25% 25%;
                 }
             }
         `
@@ -59,20 +53,13 @@ export class ShowCentreArchiveComponent implements OnInit, AfterViewInit, OnDest
     @ViewChild(MatPaginator) private _paginator: MatPaginator;
     @ViewChild(MatSort) private _sort: MatSort;
 
-    documents$: Observable<Document[]>;
+    centreArchives$: Observable<CentreArchive[]>;
     apiImg = ApiService.apiPicture;
-    brands: InventoryBrand[];
-    categories: InventoryCategory[];
-    filteredSkills: Skills[];
     flashMessage: 'success' | 'error' | null = null;
     isLoading: boolean = false;
     pagination: InventoryPagination;
     searchInputControl: FormControl = new FormControl();
-    selecteddocument: Document | null = null;
-    selectedProductForm: FormGroup;
-    skills: Skills[];
-    tagsEditMode: boolean = false;
-    vendors: InventoryVendor[];
+    selectedCentreArchive: CentreArchive | null = null;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     /**
@@ -82,9 +69,7 @@ export class ShowCentreArchiveComponent implements OnInit, AfterViewInit, OnDest
         private _changeDetectorRef: ChangeDetectorRef,
         private _fuseConfirmationService: FuseConfirmationService,
         private _formBuilder: FormBuilder,
-        private _inventoryService: InventoryService,
-        private _documentService: DocumentsService,
-        private _skillsService: SkillsService,
+        private _centreArchiveService: CentreArchiveService,
     ) {
     }
 
@@ -97,30 +82,8 @@ export class ShowCentreArchiveComponent implements OnInit, AfterViewInit, OnDest
      */
     ngOnInit(): void {
         // Create the selected product form
-        this.selectedProductForm = this._formBuilder.group({
-            id: [''],
-            category: [''],
-            name: ['', [Validators.required]],
-            description: [''],
-            skills: [[]],
-            sku: [''],
-            barcode: [''],
-            brand: [''],
-            vendor: [''],
-            stock: [''],
-            reserved: [''],
-            cost: [''],
-            basePrice: [''],
-            taxPercent: [''],
-            price: [''],
-            weight: [''],
-            thumbnail: [''],
-            images: [[]],
-            currentImageIndex: [0], // Image index that is currently being viewed
-            active: [false]
-        });
         // Get the pagination
-        this._documentService.pagination$
+        this._centreArchiveService.pagination$
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((pagination: InventoryPagination) => {
                 // Update the pagination
@@ -129,26 +92,10 @@ export class ShowCentreArchiveComponent implements OnInit, AfterViewInit, OnDest
                 this._changeDetectorRef.markForCheck();
             });
         // Get the products
-        this.documents$ = this._documentService.documents$;
+        this.centreArchives$ = this._centreArchiveService.centreArchives$;
         // Get the vendors
 
         // Subscribe to search input field value changes
-        this.searchInputControl.valueChanges
-            .pipe(
-                takeUntil(this._unsubscribeAll),
-                debounceTime(300),
-                switchMap((query) => {
-                    console.log('loading');
-                    this.closeDetails();
-                    this.isLoading = true;
-                    return null;
-                    // return this._documentService.getAlldocuments(0, 10, 'name', 'asc', query);
-                }),
-                map(() => {
-                    this.isLoading = false;
-                })
-            )
-            .subscribe();
     }
 
     /**
@@ -183,7 +130,7 @@ export class ShowCentreArchiveComponent implements OnInit, AfterViewInit, OnDest
                     this.closeDetails();
                     this.isLoading = true;
                     return null;
-                    // return this._documentService.getAlldocuments(this._paginator.pageIndex, this._paginator.pageSize, this._sort.active, this._sort.direction);
+                    // return this._centreArchiveService.getAllcentreArchives(this._paginator.pageIndex, this._paginator.pageSize, this._sort.active, this._sort.direction);
                 }),
                 map(() => {
                     this.isLoading = false;
@@ -210,31 +157,16 @@ export class ShowCentreArchiveComponent implements OnInit, AfterViewInit, OnDest
      * Close the details
      */
     closeDetails(): void {
-        this.selecteddocument = null;
+        this.selectedCentreArchive = null;
     }
-
-
-    /**
-     * Filter tags
-     *
-     * @param event
-     */
-    filterSkills(event): void {
-        // Get the value
-        const value = event.target.value.toLowerCase();
-
-        // Filter the tags
-        this.filteredSkills = this.skills.filter(tag => tag.title.toLowerCase().includes(value));
-    }
-
     /**
      * Delete the selected product using the form data
      */
-    deleteSelectedDocument(document: Document): void {
+    deleteSelectedCenterArchive(centreArchive: CentreArchive): void {
         // Open the confirmation dialog
         const confirmation = this._fuseConfirmationService.open({
-            title: 'Delete document',
-            message: 'Are you sure you want to remove this document? This action cannot be undone!',
+            title: 'Delete centre archive',
+            message: 'Are you sure you want to remove this centre archive? This action cannot be undone!',
             actions: {
                 confirm: {
                     label: 'Delete'
@@ -247,12 +179,8 @@ export class ShowCentreArchiveComponent implements OnInit, AfterViewInit, OnDest
 
             // If the confirm button pressed...
             if (result === 'confirmed') {
-
-                // Get the product object
-
                 // Delete the product on the server
-                this._documentService.deleteDocument(document).subscribe(() => {
-
+                this._centreArchiveService.deleteCentreArchive(centreArchive).subscribe(() => {
                     // Close the details
                     this.closeDetails();
                 });

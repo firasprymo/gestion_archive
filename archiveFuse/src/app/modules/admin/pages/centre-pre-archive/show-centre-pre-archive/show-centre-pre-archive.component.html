@@ -9,7 +9,7 @@
             <mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>
         </div>
         <!-- Title -->
-        <div class="text-4xl font-extrabold tracking-tight">Centre archive</div>
+        <div class="text-4xl font-extrabold tracking-tight">Centre Pré archive</div>
         <!-- Actions -->
         <div class="flex flex-shrink-0 items-center mt-6 sm:mt-0 sm:ml-4">
             <!-- Search -->
@@ -29,7 +29,7 @@
                 class="ml-4"
                 mat-flat-button
                 [color]="'primary'"
-                [routerLink]="['/pages/add-centre']">
+                [routerLink]="['/pages/add-centre-pre']">
                 <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
                 <span class="ml-2 mr-1">Add</span>
             </button>
@@ -40,7 +40,7 @@
     <div class="flex flex-auto overflow-hidden">
         <!-- Trainers list -->
         <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
-            <ng-container *ngIf="(centreArchives$ | async) as centres">
+            <ng-container *ngIf="(centrePreArchives$ | async) as centres">
                 <ng-container *ngIf="centres.length > 0; else noCentres">
                     <div class="grid">
                         <!-- Header -->
@@ -60,7 +60,7 @@ libelle Centre Archive
                             <div class="hidden sm:block">Actions</div>
                         </div>
                         <!-- Rows -->
-                        <ng-container *ngIf="(centreArchives$ | async) as centres">
+                        <ng-container *ngIf="(centrePreArchives$ | async) as centres">
                             <ng-container *ngFor="let centre of centres; trackBy: trackByFn">
                                 <div class="inventory-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b">
                                     <!-- SKU -->
@@ -68,10 +68,10 @@ libelle Centre Archive
                                         {{centre.id}}
                                     </div>
                                     <div class="hidden md:block truncate">
-                                        {{centre.codeCentreArchive}}
+                                        {{centre.codeCentrePreArchive}}
                                     </div>
                                     <div class="hidden md:block truncate">
-                                        {{centre.libelleCentreArchive}}
+                                        {{centre.libelleCentrePreArchive}}
                                     </div>
                                     <div>
                                         <button

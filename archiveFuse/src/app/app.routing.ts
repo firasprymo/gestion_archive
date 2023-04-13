@@ -203,19 +203,44 @@ export const appRoutes: Route[] = [
                         // data: {
                         //     role: roleAdmin
                         // },
-                        loadChildren: () => import('app/modules/admin/pages/centre-archive/add-centre-archive/add-centre-archive.module').then(m => m.AddCentreArchiveModule)
-                    },  {
+                        loadChildren: () => import('app/modules/admin/pages/centre-archive/add-centre-archive/add-centre-archive.module')
+                            .then(m => m.AddCentreArchiveModule)
+                    }, {
                         path: 'add-centre/:id',
                         // data: {
                         //     role: roleAdmin
                         // },
-                        loadChildren: () => import('app/modules/admin/pages/centre-archive/add-centre-archive/add-centre-archive.module').then(m => m.AddCentreArchiveModule)
-                    },  {
+                        loadChildren: () => import('app/modules/admin/pages/centre-archive/add-centre-archive/add-centre-archive.module')
+                            .then(m => m.AddCentreArchiveModule)
+                    }, {
                         path: 'show-centre',
                         // data: {
                         //     role: roleAdmin
                         // },
-                        loadChildren: () => import('app/modules/admin/pages/centre-archive/show-centre-archive/show-centre-archive.module').then(m => m.ShowCentreArchiveModule)
+                        loadChildren: () => import('app/modules/admin/pages/centre-archive/show-centre-archive/show-centre-archive.module')
+                            .then(m => m.ShowCentreArchiveModule)
+                    },
+                    {
+                        path: 'add-centre-pre',
+                        // data: {
+                        //     role: roleAdmin
+                        // },
+                        loadChildren: () => import('app/modules/admin/pages/centre-pre-archive/add-centre-pre-archive/add-centre-pre-archive.module')
+                            .then(m => m.AddCentrePreArchiveModule)
+                    }, {
+                        path: 'add-centre-pre/:id',
+                        // data: {
+                        //     role: roleAdmin
+                        // },
+                        loadChildren: () => import('app/modules/admin/pages/centre-pre-archive/add-centre-pre-archive/add-centre-pre-archive.module')
+                            .then(m => m.AddCentrePreArchiveModule)
+                    }, {
+                        path: 'show-centres-pre',
+                        // data: {
+                        //     role: roleAdmin
+                        // },
+                        loadChildren: () => import('app/modules/admin/pages/centre-pre-archive/show-centre-pre-archive/show-centre-pre-archive.module')
+                            .then(m => m.ShowCentrePreArchiveModule)
                     },
                     {
                         path: 'consult-documents',

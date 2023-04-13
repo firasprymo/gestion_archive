@@ -6,6 +6,8 @@ import com.pfe.najd.entities.CentrePreArchive;
 import com.pfe.najd.service.CentrePreArchiveService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/centre-pre-archive")
+@RequestMapping("/api/centre-pre-archives")
 public class CentrePreArchiveController {
     @Autowired
     private CentrePreArchiveService centrePreArchiveService;
@@ -28,15 +30,18 @@ public class CentrePreArchiveController {
         CentrePreArchive createdCentrePreArchive = centrePreArchiveService.createCentrePreArchive(centrePreArchive);
         return new ResponseEntity<>(createdCentrePreArchive, HttpStatus.CREATED);
     }
-
+    @GetMapping("/get-all-centre-pre-archives")
+    public ResponseEntity<Page<CentrePreArchive>> getAllDocuments(Pageable pageable) {
+        return ResponseEntity.ok().body(centrePreArchiveService.pageCentrePreArchives(pageable));
+    }
     @GetMapping("/get-centre-pre-archive")
     public ResponseEntity<List<CentrePreArchive>> getAllCentrePreArchive(){
         List<CentrePreArchive> centrePreArchives = centrePreArchiveService.getAllCentrePreArchive();
         return new ResponseEntity<>(centrePreArchives,HttpStatus.OK);
     }
     @GetMapping("/get-centre-pre-archive/{codeCentrePreArchive}")
-    public ResponseEntity<CentrePreArchive> getCentrePreArchiveById(@PathVariable("codeCentrePreArchive") String codeCentrePreArchive){
-        Optional<CentrePreArchive> centrePreArchive = centrePreArchiveService.getCentrePreArchiveById(codeCentrePreArchive);
+    public ResponseEntity<CentrePreArchive> getCentrePreArchiveById(@PathVariable("codeCentrePreArchive") Long id){
+        Optional<CentrePreArchive> centrePreArchive = centrePreArchiveService.getCentrePreArchiveById(id);
         if(centrePreArchive.isPresent()){
             return new ResponseEntity<>(centrePreArchive.get(),HttpStatus.OK);
         }else{
@@ -45,10 +50,10 @@ public class CentrePreArchiveController {
     }
 
     @PreAuthorize("hasAnyAuthority()")
-    @DeleteMapping("/delete/{codeCentrePreArchive}")
-    public ResponseEntity<Void> deleteCentrePreArchive(@PathVariable("codeCentreArchive") String codeCentrePreArchive){
+    @DeleteMapping("/{codeCentrePreArchive}")
+    public ResponseEntity<Void> deleteCentrePreArchive(@PathVariable("codeCentreArchive") Long id){
         try{
-            centrePreArchiveService.deleteCentrePreArchiveId(codeCentrePreArchive);
+            centrePreArchiveService.deleteCentrePreArchiveId(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }catch (RuntimeException e){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -57,10 +62,10 @@ public class CentrePreArchiveController {
 
     @PreAuthorize("hasAnyAuthority('SCOPE_ROLE_ADMIN')")
     @PutMapping("/update/{codeCentrePreArchive}")
-    public ResponseEntity<CentrePreArchive> updateCentrePreArchive(@PathVariable("codeCentrePreArchive") String codeCentrePreArchive,
+    public ResponseEntity<CentrePreArchive> updateCentrePreArchive(@PathVariable("codeCentrePreArchive") Long id,
                                                                    @RequestBody CentrePreArchive updatedCentrePreArchive){
         try{
-            CentrePreArchive updated = centrePreArchiveService.updateCentrePreArchive(codeCentrePreArchive, updatedCentrePreArchive);
+            CentrePreArchive updated = centrePreArchiveService.updateCentrePreArchive(id, updatedCentrePreArchive);
             return new ResponseEntity<>(updated, HttpStatus.OK);
         }catch (RuntimeException e){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

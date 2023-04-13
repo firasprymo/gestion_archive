@@ -14,10 +14,12 @@ export const environment = {
     trainers: 'trainers',
     skills: 'skills',
     documents: 'api/documents',
+    centreArchives: 'api/centre-archives',
+    centrePreArchives: 'api/centre-pre-archives',
     documentRequests: 'api/document-requests',
     quizs: 'quizs',
     steps: 'steps',
-    activeUser: 'activeUser'
+    activeUser: 'activeUser',
 
 
 };

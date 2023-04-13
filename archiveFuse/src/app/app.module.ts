@@ -26,9 +26,6 @@ const routerConfig: ExtraOptions = {
 @NgModule({
     declarations: [
         AppComponent,
-        ConsultDocumentComponent,
-        ShowCentreArchiveComponent,
-        AddCentreArchiveComponent,
     ],
     imports: [
         BrowserModule,

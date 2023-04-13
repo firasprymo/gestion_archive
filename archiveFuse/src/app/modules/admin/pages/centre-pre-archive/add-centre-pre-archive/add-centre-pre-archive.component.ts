@@ -8,11 +8,11 @@ import {Router} from '@angular/router';
 import {TrainerService} from '../../../../../shared/service/trainer.service';
 
 @Component({
-    selector: 'app-add-centre-archive',
-    templateUrl: './add-centre-archive.component.html',
-    styleUrls: ['./add-centre-archive.component.scss']
+    selector: 'app-add-centre-pre-archive',
+    templateUrl: './add-centre-pre-archive.component.html',
+    styleUrls: ['./add-centre-pre-archive.component.scss']
 })
-export class AddCentreArchiveComponent implements OnInit, OnDestroy {
+export class AddCentrePreArchiveComponent implements OnInit, OnDestroy {
     centreForm: FormGroup;
     center: CentreArchive;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
@@ -52,7 +52,7 @@ export class AddCentreArchiveComponent implements OnInit, OnDestroy {
         this._centerService.addCentreArchive(this.centreForm.value).subscribe((newCentreArchive) => {
             // Mark for check
             this._changeDetectorRef.markForCheck();
-            this._router.navigate(['pages/show-centre']);
+            this._router.navigate(['pages/show-centres-pre']);
 
         });
     }
