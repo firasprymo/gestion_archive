@@ -17,6 +17,7 @@ export class ApiService {
     public static apiDocuments =ApiService.apiVersion + environment.documents;
     public static apiDocumentRequests =ApiService.apiVersion + environment.documentRequests;
     public static apiDirectionRegional = environment.directionRegional;
+    public static apiStructureCentral = environment.structureCentral;
     public static apiTrainer = environment.trainers;
     public static apiQuiz = environment.quizs;
     public static apiStep = environment.steps;

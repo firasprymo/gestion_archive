@@ -11,6 +11,7 @@ export const environment = {
     auth: 'auth',
     accessToken: 'accessToken',
     directionRegional: 'api/direction-regional',
+    structureCentral: 'api/structure-central',
     trainers: 'trainers',
     skills: 'skills',
     documents: 'api/documents',

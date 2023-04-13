@@ -199,6 +199,20 @@ export const appRoutes: Route[] = [
                         loadChildren: () => import('app/modules/admin/pages/document/show-documents/show-documents.module').then(m => m.ShowDocumentsModule)
                     },
                     {
+                        path: 'show-structure-central',
+                        // data: {
+                        //     role: roleAdmin
+                        // },
+                        loadChildren: () => import('app/modules/admin/pages/StructureCentral/show-structure-central/show-structure-central.module').then(m => m.ShowStructureCentralModule)
+                    },
+                    {
+                        path: 'add-structure-central',
+                        // data: {
+                        //     role: roleAdmin
+                        // },
+                        loadChildren: () => import('app/modules/admin/pages/StructureCentral/add-structure-central/add-structure-central.module').then(m => m.AddStructureCentralModule)
+                    },
+                    {
                         path: 'add-centre',
                         // data: {
                         //     role: roleAdmin

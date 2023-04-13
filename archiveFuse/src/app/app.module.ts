@@ -17,6 +17,8 @@ import {ReactiveFormsModule} from '@angular/forms';
 import { ConsultDocumentComponent } from './modules/admin/pages/document/consult-document/consult-document.component';
 import { ShowCentreArchiveComponent } from './modules/admin/pages/centre-archive/show-centre-archive/show-centre-archive.component';
 import { AddCentreArchiveComponent } from './modules/admin/pages/centre-archive/add-centre-archive/add-centre-archive.component';
+import { AddStructureCentralComponent } from './modules/admin/pages/StructureCentral/add-structure-central/add-structure-central.component';
+import { ShowStructureCentralComponent } from './modules/admin/pages/StructureCentral/show-structure-central/show-structure-central.component';
 
 const routerConfig: ExtraOptions = {
     preloadingStrategy: PreloadAllModules,
@@ -29,6 +31,8 @@ const routerConfig: ExtraOptions = {
         ConsultDocumentComponent,
         ShowCentreArchiveComponent,
         AddCentreArchiveComponent,
+        AddStructureCentralComponent,
+        ShowStructureCentralComponent,
     ],
     imports: [
         BrowserModule,

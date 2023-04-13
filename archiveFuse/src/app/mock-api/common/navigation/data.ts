@@ -94,7 +94,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 title: 'Afficher structure',
                 type: 'basic',
                 icon: 'heroicons_outline:chart-pie',
-                link: '/pages/show-documents',
+                link: '/pages/show-structure-central',
                 meta: 'ROLE_ADMIN',
             },
         ]
