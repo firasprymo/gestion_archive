@@ -44,7 +44,7 @@ export class StructureCentralService {
    */
   addStructureCentral(structureCentral): Observable<StructureCentral> {
       return this._httpClient.post<StructureCentral>(
-          `${ApiService.apiVersion}${ApiService.apiStructureCentral}/create`,
+          `${ApiService.apiStructureCentral}/create`,
           structureCentral)
           .pipe(
               map(newStructureCentral =>
@@ -54,7 +54,7 @@ export class StructureCentralService {
   }
 
   editStructureCentral(body, id): Observable<StructureCentral> {
-      return this._apiService.patch(`${ApiService.apiVersion}${ApiService.apiStructureCentral}/${id}`, body)
+      return this._apiService.patch(`${ApiService.apiStructureCentral}/${id}`, body)
           .pipe(map(res => res));
   }
 
@@ -89,10 +89,10 @@ export class StructureCentralService {
    * @param order
    * @param search
    */
-  getAllStructureCentrals(page = 0, size = 0, sort: string = 'libelleStructure', order: 'asc' | 'desc' | '' = 'asc', search?):
+  getAllStructureCentrals(page = 0, size = 0, sort: string = 'codeStructure', order: 'asc' | 'desc' | '' = 'asc', search?):
       Observable<{ pageable: InventoryPagination; content: StructureCentral[] }> {
       return this._httpClient.get<{ pageable: InventoryPagination; content: StructureCentral[] }>
-      (`${ApiService.apiVersion}${ApiService.apiStructureCentral}/get-all-strucutre-centrals`, {
+      (`${ApiService.apiStructureCentral}/get-all-structure-central`, {
           params: {
               page: '' + page,
               size: '' + size,
@@ -118,7 +118,7 @@ export class StructureCentralService {
     return this.structureCentrals$.pipe(
         take(1),
         switchMap(structureCentralItem =>
-            this._httpClient.delete(`${ApiService.apiVersion}${ApiService.apiStructureCentral}/${structureCentral.codeStructure}`).pipe(
+            this._httpClient.delete(`${ApiService.apiStructureCentral}/${structureCentral.codeStructure}`).pipe(
                 map(() => {
                     // Find the index of the deleted product
                     const index = structureCentralItem.findIndex(item => item.codeStructure === structureCentral.codeStructure);

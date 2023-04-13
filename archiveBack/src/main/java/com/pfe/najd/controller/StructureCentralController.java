@@ -3,9 +3,13 @@ package com.pfe.najd.controller;
 
 import com.pfe.najd.dto.StructureCentralDTO;
 import com.pfe.najd.entities.Agence;
+import com.pfe.najd.entities.CentreArchive;
 import com.pfe.najd.entities.StructureCentral;
+import com.pfe.najd.service.StructureCentralService;
 import com.pfe.najd.service.implementation.StructureCentralServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -21,7 +25,7 @@ import java.util.stream.Collectors;
 public class StructureCentralController {
 
     @Autowired
-    private StructureCentralServiceImpl structureCentralService;
+    private StructureCentralService structureCentralService;
 
     //Create new Structure
 //    @PostMapping
@@ -29,7 +33,10 @@ public class StructureCentralController {
 //        StructureCentral createdStructureCentral = structureCentralService.createStructureCentral(structureCentral);
 //        return new ResponseEntity<>(createdStructureCentral, HttpStatus.CREATED);
 //    }
-
+    @GetMapping("/get-all-structure-central")
+    public ResponseEntity<Page<StructureCentral>> pageStructureCentrals(Pageable pageable) {
+        return ResponseEntity.ok().body(structureCentralService.pageStructureCentrals(pageable));
+    }
 
     // Get all StructureCentrals
     @GetMapping("/get-structure")

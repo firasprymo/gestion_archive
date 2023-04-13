@@ -2,13 +2,18 @@ package com.pfe.najd.service.implementation;
 
 import com.pfe.najd.dao.StructureCentralDao;
 import com.pfe.najd.entities.Agence;
+import com.pfe.najd.entities.DocumentRequest;
 import com.pfe.najd.entities.StructureCentral;
 import com.pfe.najd.service.AgenceService;
 import com.pfe.najd.service.StructureCentralService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -91,6 +96,12 @@ public boolean existsByCodeStructure(Long id) {
     }
 
 
+    @Transactional
+    public Page<StructureCentral> pageStructureCentrals(Pageable pageable) {
+        Page<StructureCentral> documents = structureCentralDao.findAll(pageable);
 
+        return new PageImpl<>(documents.getContent(), documents.getPageable(), documents.getTotalElements());
+
+    }
 
 }

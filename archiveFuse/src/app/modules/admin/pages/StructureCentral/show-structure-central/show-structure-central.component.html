@@ -40,8 +40,8 @@
     <div class="flex flex-auto overflow-hidden">
         <!-- Trainers list -->
         <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
-            <ng-container *ngIf="(structureCentrals$ | async) as StructureCenrals">
-                <ng-container *ngIf="StructureCentrals.length > 0; else nodocuments">
+            <ng-container *ngIf="(structureCentrals$ | async) as structureCentrals">
+                <ng-container *ngIf="structureCentrals.length > 0; else nodocuments">
                     <div class="grid">
                         <!-- Header -->
                         <div

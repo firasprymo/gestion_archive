@@ -18,7 +18,7 @@ export class ApiService {
     public static apiCentreArchives =ApiService.apiVersion + environment.centreArchives;
     public static apiCentrePreArchives =ApiService.apiVersion + environment.centrePreArchives;
     public static apiDirectionRegional = environment.directionRegional;
-    public static apiStructureCentral = environment.structureCentral;
+    public static apiStructureCentral =ApiService.apiVersion +  environment.structureCentral;
     public static apiTrainer = environment.trainers;
     public static apiQuiz = environment.quizs;
     public static apiStep = environment.steps;
