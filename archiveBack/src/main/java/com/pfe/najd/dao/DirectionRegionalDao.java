@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface DirectionRegionalDao extends JpaRepository<DirectionRegional,String> {
+public interface DirectionRegionalDao extends JpaRepository<DirectionRegional,Long> {
     boolean existsByCodeDirection(String codeDirection);
     List<DirectionRegional> findAll();
     List<DirectionRegional> findByCodeDirection(String codeDirection);

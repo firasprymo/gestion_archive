@@ -37,8 +37,8 @@ public class DirectionRegionalController {
         return ResponseEntity.ok().body(directionRegionalService.pageDirectionRegionals(pageable));
     }
     @GetMapping("/get-direction/{codeDirection}")
-    public ResponseEntity<DirectionRegional> getDirectionRegionalById(@PathVariable("codeDirection") String codeDirection){
-        Optional<DirectionRegional> directionRegional = directionRegionalService.getDirectionRegionalById(codeDirection);
+    public ResponseEntity<DirectionRegional> getDirectionRegionalById(@PathVariable("codeDirection") Long id){
+        Optional<DirectionRegional> directionRegional = directionRegionalService.getDirectionRegionalById(id);
         if(directionRegional.isPresent()){
             return new ResponseEntity<>(directionRegional.get(),HttpStatus.OK);
         }else{
@@ -49,9 +49,9 @@ public class DirectionRegionalController {
     // Delete DirectionRegional by code
     @PreAuthorize("hasAnyAuthority('SCOPE_ROLE_ADMIN')")
     @DeleteMapping("/{codeDirection}")
-    public ResponseEntity<Void> deleteDirectionRegionalById(@PathVariable("codeDirection") String codeDirection) {
+    public ResponseEntity<Void> deleteDirectionRegionalById(@PathVariable("codeDirection") Long id) {
         try {
-            directionRegionalService.deleteDirectionRegionalById(codeDirection);
+            directionRegionalService.deleteDirectionRegionalById(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (RuntimeException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -61,9 +61,9 @@ public class DirectionRegionalController {
     // Update DirectionRegional by code
     @PreAuthorize("hasAnyAuthority('SCOPE_ROLE_ADMIN')")
     @PutMapping("/update/{codeDirection}")
-    public ResponseEntity<DirectionRegional> updateDirectionRegional(@PathVariable("codeDirection") String codeDirection, @RequestBody DirectionRegional updatedDirectionRegional) {
+    public ResponseEntity<DirectionRegional> updateDirectionRegional(@PathVariable("codeDirection") Long id, @RequestBody DirectionRegional updatedDirectionRegional) {
         try {
-            DirectionRegional updated = directionRegionalService.updateDirectionRegional(codeDirection, updatedDirectionRegional);
+            DirectionRegional updated = directionRegionalService.updateDirectionRegional(id, updatedDirectionRegional);
             return new ResponseEntity<>(updated, HttpStatus.OK);
         } catch (RuntimeException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -71,7 +71,7 @@ public class DirectionRegionalController {
     }
 
     @PostMapping("/{directionRegionalCode}/structure-central")
-    public ResponseEntity<StructureCentral> addNewStructureCentral(@PathVariable String directionRegionalCode, @RequestBody StructureCentral structureCentral) {
+    public ResponseEntity<StructureCentral> addNewStructureCentral(@PathVariable Long directionRegionalCode, @RequestBody StructureCentral structureCentral) {
         StructureCentral createdStructureCentral = directionRegionalService.addNewStructureCentral(directionRegionalCode, structureCentral);
         return new ResponseEntity<>(createdStructureCentral, HttpStatus.CREATED);
     }

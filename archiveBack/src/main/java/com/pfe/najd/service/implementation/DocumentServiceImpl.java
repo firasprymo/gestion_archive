@@ -8,7 +8,6 @@ import com.pfe.najd.repository.DocumentRepository;
 import com.pfe.najd.repository.DocumentRequestRepository;
 import com.pfe.najd.repository.UserRepository;
 import com.pfe.najd.service.DocumentService;
-import com.pfe.najd.service.StructureCentralService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;

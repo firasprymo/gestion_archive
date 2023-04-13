@@ -7,9 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-
-public interface StructureCentralDao extends JpaRepository<StructureCentral,String> {
-    boolean existsByCodeStructure(String codeStructure);
+public interface StructureCentralDao extends JpaRepository<StructureCentral,Long> {
     List<StructureCentral> findAll();
     List<StructureCentral> findByDirectionRegional_CodeDirection(String codeDirection);
     List<StructureCentral> findStructureCentralByLibelleStructureIgnoreCase(String libelleStructure);

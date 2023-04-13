@@ -4,6 +4,7 @@ package com.pfe.najd.entities;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.io.Serial;
@@ -14,17 +15,17 @@ import java.util.List;
 
 @Data
 @Entity
+@EqualsAndHashCode(callSuper = true)
 @Table
-public class StructureCentral implements Serializable {
-    @Serial
-    private static final long serialVersionUID = 913875245402572279L;
-    @Id
+public class StructureCentral extends AbstractEntity {
+
+
     private String codeStructure;
     private String libelleStructure;
     private String lieuArchive;
     private String lieuArchiveSecAge;
 
-    @JsonBackReference
+    
     @ManyToOne
     @JoinColumn(name = "direction_regional_code",nullable = false)
     private DirectionRegional directionRegional;

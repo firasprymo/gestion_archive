@@ -4,7 +4,7 @@ package com.pfe.najd.controller;
 import com.pfe.najd.dto.StructureCentralDTO;
 import com.pfe.najd.entities.Agence;
 import com.pfe.najd.entities.StructureCentral;
-import com.pfe.najd.service.StructureCentralService;
+import com.pfe.najd.service.implementation.StructureCentralServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 public class StructureCentralController {
 
     @Autowired
-    private StructureCentralService structureCentralService;
+    private StructureCentralServiceImpl structureCentralService;
 
     //Create new Structure
 //    @PostMapping
@@ -44,8 +44,8 @@ public class StructureCentralController {
 
     // Get StructureCentral by code
     @GetMapping("/get-Structure/{codeStructure}")
-    public ResponseEntity<StructureCentral> getStructureCentralById(@PathVariable("codeStructure") String codeStructure) {
-        Optional<StructureCentral> structureCentral = structureCentralService.getStructureCentralById(codeStructure);
+    public ResponseEntity<StructureCentral> getStructureCentralById(@PathVariable("codeStructure") Long id) {
+        Optional<StructureCentral> structureCentral = structureCentralService.getStructureCentralById(id);
         if (structureCentral.isPresent()) {
             return new ResponseEntity<>(structureCentral.get(), HttpStatus.OK);
         } else {
@@ -62,9 +62,9 @@ public class StructureCentralController {
     //update Structure Central By code
     @PreAuthorize("hasAnyAuthority('SCOPE_ROLE_ADMIN')")
     @PutMapping("/update/{codeStructure}")
-    public ResponseEntity<StructureCentral> updateStructureCentral(@PathVariable("codeStructure") String codeStructure, @RequestBody StructureCentral updatedStructureCentral){
+    public ResponseEntity<StructureCentral> updateStructureCentral(@PathVariable("codeStructure") Long id, @RequestBody StructureCentral updatedStructureCentral){
         try{
-            StructureCentral updated = structureCentralService.updateStructureCentral(codeStructure, updatedStructureCentral);
+            StructureCentral updated = structureCentralService.updateStructureCentral(id, updatedStructureCentral);
             return new ResponseEntity<>(updated, HttpStatus.OK);
         }catch (RuntimeException e){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -73,9 +73,9 @@ public class StructureCentralController {
     //delete Structure Central by Id
     @PreAuthorize("hasAnyAuthority('SCOPE_ROLE_ADMIN')")
     @DeleteMapping("/delete/{codeStructure}")
-    public ResponseEntity<Void> deleteCodeStructureById(@PathVariable("codeStructure") String codeStrucutre){
+    public ResponseEntity<Void> deleteCodeStructureById(@PathVariable("codeStructure") Long id){
         try{
-            structureCentralService.deleteStructureCentralById(codeStrucutre);
+            structureCentralService.deleteStructureCentralById(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }catch (RuntimeException e){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -83,8 +83,8 @@ public class StructureCentralController {
     }
     @PreAuthorize("hasAnyAuthority('SCOPE_ROLE_ADMIN')")
     @PostMapping("/{structureCentralCode}/agence")
-    public ResponseEntity<Agence>addNewAgence(@PathVariable String structureCentralCode, @RequestBody  Agence agence){
-        Agence createdAgence = structureCentralService.addNewAgence(structureCentralCode,agence);
+    public ResponseEntity<Agence>addNewAgence(@PathVariable Long id, @RequestBody  Agence agence){
+        Agence createdAgence = structureCentralService.addNewAgence(id,agence);
         return new ResponseEntity<>(createdAgence, HttpStatus.CREATED);
     }
 

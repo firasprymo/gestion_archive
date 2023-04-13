@@ -5,9 +5,7 @@ import com.pfe.najd.entities.DirectionRegional;
 import com.pfe.najd.entities.StructureCentral;
 import com.pfe.najd.repository.DirectionRegionalRepository;
 import com.pfe.najd.service.DirectionRegionalService;
-import com.pfe.najd.service.StructureCentralService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -22,7 +20,7 @@ import java.util.Optional;
 public class DirectionRegionalServiceImpl implements DirectionRegionalService {
     private final DirectionRegionalDao directionRegionalDao;
     private final DirectionRegionalRepository directionRegionalRepository;
-    private final StructureCentralService structureCentralService;
+    private final StructureCentralServiceImpl structureCentralService;
 
     //TODO: change the code of create to verify if the codeStartWith "DR"
     public DirectionRegional createDirectionRegional(DirectionRegional directionRegional) {
@@ -38,20 +36,20 @@ public class DirectionRegionalServiceImpl implements DirectionRegionalService {
         return directionRegionalDao.findAll();
     }
 
-    public Optional<DirectionRegional> getDirectionRegionalById(String codeDirection) {
-        return directionRegionalDao.findById(codeDirection);
+    public Optional<DirectionRegional> getDirectionRegionalById(Long id) {
+        return directionRegionalDao.findById(id);
     }
 
-    public void deleteDirectionRegionalById(String codeDirection) {
-        if (directionRegionalDao.existsByCodeDirection(codeDirection)) {
-            directionRegionalDao.deleteById(codeDirection);
+    public void deleteDirectionRegionalById(Long id) {
+        if (directionRegionalDao.existsById(id)) {
+            directionRegionalDao.deleteById(id);
         } else {
-            throw new RuntimeException("Direction Regional with code " + codeDirection + " does not exist.");
+            throw new RuntimeException("Direction Regional with code " + id + " does not exist.");
         }
     }
 
-    public DirectionRegional updateDirectionRegional(String codeDirection, DirectionRegional updatedDirectionRegional) {
-        Optional<DirectionRegional> existingDirectionRegionalOptional = directionRegionalDao.findById(codeDirection);
+    public DirectionRegional updateDirectionRegional(Long id, DirectionRegional updatedDirectionRegional) {
+        Optional<DirectionRegional> existingDirectionRegionalOptional = directionRegionalDao.findById(id);
 
         if (existingDirectionRegionalOptional.isPresent()) {
             DirectionRegional existingDirectionRegional = existingDirectionRegionalOptional.get();
@@ -68,18 +66,21 @@ public class DirectionRegionalServiceImpl implements DirectionRegionalService {
 
             return directionRegionalDao.save(existingDirectionRegional);
         } else {
-            throw new RuntimeException("Direction Regional with code " + codeDirection + " does not exist.");
+            throw new RuntimeException("Direction Regional with code " + id + " does not exist.");
         }
     }
 
 
-    public StructureCentral addNewStructureCentral(String directionRegionalCode, StructureCentral structureCentral) {
-        Optional<DirectionRegional> directionRegionalOptional = directionRegionalDao.findById(directionRegionalCode);
+    public StructureCentral addNewStructureCentral(Long id,
+                                                   StructureCentral structureCentral) {
+        Optional<DirectionRegional> directionRegionalOptional =
+                directionRegionalDao.findById(id);
 
         if (directionRegionalOptional.isPresent()) {
             DirectionRegional directionRegional = directionRegionalOptional.get();
-            if (structureCentralService.existsByCodeStructure(structureCentral.getCodeStructure())) {
-                throw new RuntimeException("Structure Central with code " + structureCentral.getCodeStructure() + " already exists.");
+            if (structureCentralService.existsByCodeStructure(structureCentral.getId())) {
+                throw new RuntimeException("Structure Central with code " + structureCentral.getCodeStructure()
+                        + " already exists.");
             } else {
 
                 structureCentral.setDirectionRegional(directionRegional);
@@ -88,7 +89,7 @@ public class DirectionRegionalServiceImpl implements DirectionRegionalService {
                 return structureCentral;
             }
         } else {
-            throw new RuntimeException("Direction Regional with code " + directionRegionalCode + " does not exist.");
+            throw new RuntimeException("Direction Regional with code " + directionRegionalOptional + " does not exist.");
         }
     }
 
@@ -104,7 +105,6 @@ public class DirectionRegionalServiceImpl implements DirectionRegionalService {
         return new PageImpl<>(directionRegionals.getContent(), directionRegionals.getPageable(), directionRegionals.getTotalElements());
 
     }
-
 
 
 }
