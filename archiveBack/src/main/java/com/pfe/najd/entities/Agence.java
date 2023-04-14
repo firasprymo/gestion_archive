@@ -3,6 +3,7 @@ package com.pfe.najd.entities;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import javax.persistence.Entity;
 
@@ -14,26 +15,23 @@ import java.util.List;
 
 @Entity
 @Data
+@Table(name = "agence")
+@EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
-public class Agence implements Serializable {
+public class Agence extends AbstractEntity {
 
-    @Serial
-    private static final long serialVersionUID = 5085650700457050889L;
-    @Id
     private String codeAgence;
 
     private String libelleAgence;
     private String lieuArchive;
     private String lieuArchiveSecAge;
-
-    @JsonBackReference
     @ManyToOne
-    @JoinColumn(name = "structure_central_code",nullable = false)
-    private StructureCentral structureCentral;
-
-    @OneToMany(mappedBy = "agence", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, fetch = FetchType.LAZY)
-    private List<User> users = new ArrayList<>();
+    @JoinColumn(name="structure_id",nullable = true)
+    private StructureCentral structure;
+//
+//    @OneToMany(mappedBy = "agence", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, fetch = FetchType.LAZY)
+//    private List<User> users = new ArrayList<>();
 
 
 }

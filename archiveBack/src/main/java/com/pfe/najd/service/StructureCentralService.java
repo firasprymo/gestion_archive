@@ -16,13 +16,7 @@ import java.util.Optional;
 public interface StructureCentralService {
 
 
-//    public StructureCentral createStructureCentral(StructureCentral structureCentral){
-//        if (structureCentralDao.existsByCodeStructure(structureCentral.getCodeStructure())){
-//            throw new RuntimeException("Structure Central with code " + structureCentral.getCodeStructure() + " already exists.");
-//        }else {
-//            return structureCentralDao.save(structureCentral);
-//        }
-//    }
+    public StructureCentral createStructureCentral(StructureCentral structureCentral);
 
     public List<StructureCentral> getAllStructureCentral();
     public Optional<StructureCentral> getStructureCentralById(Long id) ;

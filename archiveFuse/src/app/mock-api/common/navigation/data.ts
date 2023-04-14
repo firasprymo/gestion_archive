@@ -86,7 +86,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 title: 'Ajouter structure',
                 type: 'basic',
                 icon: 'heroicons_outline:pencil-alt',
-                link: '/pages/add-document',
+                link: '/pages/add-structure-central',
                 meta: 'ROLE_ADMIN',
             },
             {
@@ -173,7 +173,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 title: 'Afficher agences',
                 type: 'basic',
                 icon: 'heroicons_outline:chart-pie',
-                link: '/apps/show-agences',
+                link: '/pages/show-agences',
                 meta: 'ROLE_ADMIN',
             },
         ]

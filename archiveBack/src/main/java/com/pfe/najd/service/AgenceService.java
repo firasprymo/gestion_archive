@@ -8,52 +8,20 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-@Service
+public interface AgenceService {
+    boolean existsByCodeAgence(String codeAgence);
 
-public class AgenceService {
-    @Autowired
-    private AgenceDao agenceDao;
-    public boolean existsByCodeAgence(String codeAgence) {
-        return agenceDao.existsByCodeAgence(codeAgence);
-    }
-    public Optional<Agence>getAgenceById(String codeAgence){
-        return agenceDao.findById(codeAgence);
-    }
-    public List<Agence> getAllAgence(){
-        return agenceDao.findAll();
-    }
-    public Agence updateAgence(String codeAgence, Agence updatedAgence){
-        Optional<Agence> existingAgenceOptional = agenceDao.findById(codeAgence);
-        if(existingAgenceOptional.isPresent()){
-            Agence existingAgence = existingAgenceOptional.get();
-            if(updatedAgence.getLibelleAgence() != null){
-                existingAgence.setLibelleAgence(updatedAgence.getLibelleAgence());
-            }
-            if(updatedAgence.getLieuArchive() != null){
-                existingAgence.setLieuArchive(updatedAgence.getLieuArchive());
-            }
-            return agenceDao.save(existingAgence);
-        }else{
-            throw new RuntimeException("Agence avec code "+codeAgence+ "n'existe pas");
+    Optional<Agence> getAgenceById(Long id);
 
-        }
-    }
-    public void deleteAgenceById(String codeAgence){
-        if(agenceDao.existsByCodeAgence(codeAgence)){
-            agenceDao.deleteById(codeAgence);
-        }else{
-            throw new RuntimeException("Agence avec code "+codeAgence+ "n'existe pas");
-        }
-    }
+    List<Agence> getAllAgence();
 
-    public List<Agence> getAgenceByCodeStructure(String codeStructure){
-        return agenceDao.findByStructureCentral_CodeStructure(codeStructure);
-    }
+    Agence updateAgence(Long id, Agence updatedAgence);
 
-    public List<Agence> getAgenceByName(String libelleAgence){
-        return agenceDao.findByLibelleAgenceContainingIgnoreCase(libelleAgence);
-    }
+    void deleteAgenceById(Long id);
 
+    List<Agence> getAgenceByCodeStructure(String codeStructure);
+
+    List<Agence> getAgenceByName(String libelleAgence);
 
 
 }

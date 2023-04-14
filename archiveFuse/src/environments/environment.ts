@@ -21,6 +21,7 @@ export const environment = {
     quizs: 'quizs',
     steps: 'steps',
     activeUser: 'activeUser',
+    agences: 'api/agences'
 
 
 };

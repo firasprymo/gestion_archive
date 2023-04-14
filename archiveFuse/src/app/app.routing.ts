@@ -2,6 +2,7 @@ import {Route} from '@angular/router';
 import {AuthGuard} from 'app/core/auth/guards/auth.guard';
 import {LayoutComponent} from 'app/layout/layout.component';
 import {InitialDataResolver} from 'app/app.resolvers';
+import {AddAgenceModule} from './modules/admin/pages/agence/add-agence/add-agence.module';
 
 const roleAdmin = 'ROLE_ADMIN';
 const roleUser = 'ROLE_USER';
@@ -233,6 +234,28 @@ export const appRoutes: Route[] = [
                         // },
                         loadChildren: () => import('app/modules/admin/pages/centre-archive/show-centre-archive/show-centre-archive.module')
                             .then(m => m.ShowCentreArchiveModule)
+                    },
+                    {
+                        path: 'add-agence',
+                        // data: {
+                        //     role: roleAdmin
+                        // },
+                        loadChildren: () => import('app/modules/admin/pages/agence/add-agence/add-agence.module')
+                            .then(m => m.AddAgenceModule)
+                    }, {
+                        path: 'add-agence/:id',
+                        // data: {
+                        //     role: roleAdmin
+                        // },
+                        loadChildren: () => import('app/modules/admin/pages/agence/add-agence/add-agence.module')
+                            .then(m => m.AddAgenceModule)
+                    }, {
+                        path: 'show-agences',
+                        // data: {
+                        //     role: roleAdmin
+                        // },
+                        loadChildren: () => import('app/modules/admin/pages/agence/show-agences/show-agences.module')
+                            .then(m => m.ShowAgenceModule)
                     },
                     {
                         path: 'add-centre-pre',

@@ -34,17 +34,17 @@ public class User extends AbstractEntity {
     private Set<Role> roles;
 
     // Relationships with DirectionRegional, StructureCentral, and Agence
-    @ManyToOne
-    @JoinColumn(name = "direction_regional_code", referencedColumnName = "codeDirection", insertable = false, updatable = true)
-    private DirectionRegional directionRegional;
+//    @ManyToOne
+//    @JoinColumn(name = "direction_regional_code", referencedColumnName = "codeDirection", insertable = false, updatable = true)
+//    private DirectionRegional directionRegional;
+//
+//    @ManyToOne
+//    @JoinColumn(name = "structure_central_code", referencedColumnName = "codeStructure", insertable = false, updatable = true)
+//    private StructureCentral structureCentral;
 
-    @ManyToOne
-    @JoinColumn(name = "structure_central_code", referencedColumnName = "codeStructure", insertable = false, updatable = true)
-    private StructureCentral structureCentral;
-
-    @ManyToOne
-    @JoinColumn(name = "agence_code", referencedColumnName = "codeAgence", insertable = false, updatable = true)
-    private Agence agence;
+//    @ManyToOne
+//    @JoinColumn(name = "agence_code", referencedColumnName = "codeAgence", insertable = false, updatable = true)
+//    private Agence agence;
 
 
     //ask if i should be able to see the collumns in the database

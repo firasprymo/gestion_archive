@@ -2,9 +2,12 @@ package com.pfe.najd.entities;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serial;
@@ -16,6 +19,8 @@ import java.util.List;
 @Data
 @Entity
 @EqualsAndHashCode(callSuper = true)
+@AllArgsConstructor
+@NoArgsConstructor
 @Table
 public class StructureCentral extends AbstractEntity {
 
@@ -25,14 +30,13 @@ public class StructureCentral extends AbstractEntity {
     private String lieuArchive;
     private String lieuArchiveSecAge;
 
-    
-    @ManyToOne
-    @JoinColumn(name = "direction_regional_code",nullable = false)
-    private DirectionRegional directionRegional;
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "structureCentral", cascade = CascadeType.ALL,fetch = FetchType.LAZY, orphanRemoval = true)
-    private List<Agence> agences = new ArrayList<>();
-    @OneToMany(mappedBy = "structureCentral", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, fetch = FetchType.LAZY)
-    private List<User> users = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "directeur_id", nullable = true)
+    @JsonIgnoreProperties("structureCentrals")
+    private DirectionRegional directeur;
+    @OneToMany(mappedBy = "structure")
+    private List<Agence> agences;
+//    @OneToMany(mappedBy = "structureCentral", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, fetch = FetchType.LAZY)
+//    private List<User> users = new ArrayList<>();
 }

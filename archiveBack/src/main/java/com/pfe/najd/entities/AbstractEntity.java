@@ -5,11 +5,12 @@ import org.springframework.data.annotation.*;
 
 import javax.persistence.*;
 import javax.persistence.Id;
+import java.io.Serializable;
 import java.time.LocalDate;
 
 @Data
 @MappedSuperclass
-public class AbstractEntity {
+public class AbstractEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

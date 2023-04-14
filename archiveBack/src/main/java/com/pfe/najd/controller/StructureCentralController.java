@@ -28,11 +28,11 @@ public class StructureCentralController {
     private StructureCentralService structureCentralService;
 
     //Create new Structure
-//    @PostMapping
-//    public ResponseEntity<StructureCentral> createStructureCentral(@RequestBody StructureCentral structureCentral){
-//        StructureCentral createdStructureCentral = structureCentralService.createStructureCentral(structureCentral);
-//        return new ResponseEntity<>(createdStructureCentral, HttpStatus.CREATED);
-//    }
+    @PostMapping("/create")
+    public ResponseEntity<StructureCentral> createStructureCentral(@RequestBody StructureCentral structureCentral){
+        StructureCentral createdStructureCentral = structureCentralService.createStructureCentral(structureCentral);
+        return new ResponseEntity<>(createdStructureCentral, HttpStatus.CREATED);
+    }
     @GetMapping("/get-all-structure-central")
     public ResponseEntity<Page<StructureCentral>> pageStructureCentrals(Pageable pageable) {
         return ResponseEntity.ok().body(structureCentralService.pageStructureCentrals(pageable));
@@ -114,7 +114,7 @@ public class StructureCentralController {
         dto.setLibelleStructure(structureCentral.getLibelleStructure());
         dto.setLieuArchive(structureCentral.getLieuArchive());
         dto.setLieuArchiveSecAge(structureCentral.getLieuArchiveSecAge());
-        dto.setDirectionRegionalCode(structureCentral.getDirectionRegional().getCodeDirection());
+//        dto.setDirectionRegionalCode(structureCentral.getDirectionRegional().getCodeDirection());
 
         return dto;
     }

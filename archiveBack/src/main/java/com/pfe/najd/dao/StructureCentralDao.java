@@ -9,6 +9,6 @@ import java.util.List;
 @Repository
 public interface StructureCentralDao extends JpaRepository<StructureCentral,Long> {
     List<StructureCentral> findAll();
-    List<StructureCentral> findByDirectionRegional_CodeDirection(String codeDirection);
+//    List<StructureCentral> findByDirectionRegional_CodeDirection(String codeDirection);
     List<StructureCentral> findStructureCentralByLibelleStructureIgnoreCase(String libelleStructure);
 }

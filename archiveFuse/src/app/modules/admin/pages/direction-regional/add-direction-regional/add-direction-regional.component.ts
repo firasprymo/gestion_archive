@@ -59,7 +59,7 @@ export class AddDirectionRegionalComponent implements OnInit {
             console.log(res);
             this.directionRegionalForm.reset();
             this._scrollCurrentStepElementIntoView();
-            this._router.navigate(['pages/show-direction-regionals']);
+            this._router.navigate(['pages/show-direction-regional']);
         });
     }
 

@@ -24,11 +24,7 @@ public class DirectionRegionalServiceImpl implements DirectionRegionalService {
 
     //TODO: change the code of create to verify if the codeStartWith "DR"
     public DirectionRegional createDirectionRegional(DirectionRegional directionRegional) {
-        if (directionRegionalDao.existsByCodeDirection(directionRegional.getCodeDirection())) {
-            throw new RuntimeException("Direction Regional avec le Code" + directionRegional.getCodeDirection() + "deja existe");
-        } else {
             return directionRegionalDao.save(directionRegional);
-        }
     }
 
 
@@ -83,8 +79,8 @@ public class DirectionRegionalServiceImpl implements DirectionRegionalService {
                         + " already exists.");
             } else {
 
-                structureCentral.setDirectionRegional(directionRegional);
-                directionRegional.getStructureCentrals().add(structureCentral);
+//                structureCentral.setDirectionRegional(directionRegional);
+//                directionRegional.getStructureCentrals().add(structureCentral);
                 directionRegionalDao.save(directionRegional);
                 return structureCentral;
             }

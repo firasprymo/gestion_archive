@@ -85,10 +85,10 @@ export class AuthService {
         if (this._authenticated) {
             return throwError('User is already logged in.');
         }
-        const headers = new HttpHeaders({
-            'Content-Type': 'application/json',
-        });
-        return this._httpClient.post(`${environment.apiUrl}auth/sign-in`, credentials, {headers}).pipe(
+        // const headers = new HttpHeaders({
+        //     'Content-Type': 'application/json',
+        // });
+        return this._httpClient.post(`${environment.apiUrl}auth/sign-in`, credentials).pipe(
             switchMap((response: any) => {
                 // Store the access token in the local storage
                 this.accessToken = response.accessToken;
