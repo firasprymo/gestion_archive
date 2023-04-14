@@ -4,6 +4,7 @@ import com.pfe.najd.dao.AgenceDao;
 import com.pfe.najd.entities.Agence;
 import com.pfe.najd.entities.StructureCentral;
 import com.pfe.najd.service.AgenceService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -15,14 +16,16 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class AgenceServiceImpl implements AgenceService {
-    @Autowired
-    private AgenceDao agenceDao;
+    private final AgenceDao agenceDao;
 
     public boolean existsByCodeAgence(String codeAgence) {
         return agenceDao.existsByCodeAgence(codeAgence);
     }
-
+    public Agence createAgence(Agence agence) {
+        return agenceDao.save(agence);
+    }
     public Optional<Agence> getAgenceById(Long id) {
         return agenceDao.findById(id);
     }

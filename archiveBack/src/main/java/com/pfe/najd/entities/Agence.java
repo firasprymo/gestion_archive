@@ -1,6 +1,7 @@
 package com.pfe.najd.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -28,6 +29,7 @@ public class Agence extends AbstractEntity {
     private String lieuArchiveSecAge;
     @ManyToOne
     @JoinColumn(name="structure_id",nullable = true)
+    @JsonIgnoreProperties("agences")
     private StructureCentral structure;
 //
 //    @OneToMany(mappedBy = "agence", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, fetch = FetchType.LAZY)

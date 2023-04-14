@@ -2,7 +2,9 @@ package com.pfe.najd.controller;
 
 import com.pfe.najd.entities.Agence;
 
+import com.pfe.najd.entities.StructureCentral;
 import com.pfe.najd.service.implementation.AgenceServiceImpl;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,12 +17,16 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/agences")
+@RequiredArgsConstructor
 public class AgenceController {
 
-    @Autowired
-    private AgenceServiceImpl agenceService;
+    private final AgenceServiceImpl agenceService;
 
-
+    @PostMapping("/create")
+    public ResponseEntity<Agence> createAgence(@RequestBody Agence agence){
+        Agence createdAgence = agenceService.createAgence(agence);
+        return new ResponseEntity<>(createdAgence, HttpStatus.CREATED);
+    }
     @GetMapping("/get-agences")
     public ResponseEntity<List<Agence>> getAllAgence() {
         List<Agence> agences = agenceService.getAllAgence();

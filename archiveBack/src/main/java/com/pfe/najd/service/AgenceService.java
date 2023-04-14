@@ -11,6 +11,8 @@ import java.util.Optional;
 public interface AgenceService {
     boolean existsByCodeAgence(String codeAgence);
 
+    public Agence createAgence(Agence agence);
+
     Optional<Agence> getAgenceById(Long id);
 
     List<Agence> getAllAgence();

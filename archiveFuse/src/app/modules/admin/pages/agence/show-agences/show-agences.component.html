@@ -9,7 +9,7 @@
             <mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>
         </div>
         <!-- Title -->
-        <div class="text-4xl font-extrabold tracking-tight">Structure Cenrals</div>
+        <div class="text-4xl font-extrabold tracking-tight">Agences</div>
         <!-- Actions -->
         <div class="flex flex-shrink-0 items-center mt-6 sm:mt-0 sm:ml-4">
             <!-- Search -->
@@ -48,9 +48,9 @@
                             matSort
                             matSortDisableClear>
 
-                            <div [mat-sort-header]="'codeStructure'">Code structure</div>
-                            <div [mat-sort-header]="'libelleStructure'">
-                                Libelle structure
+                            <div [mat-sort-header]="'codeAgence'">Code agence</div>
+                            <div [mat-sort-header]="'libelleAgence'">
+                                Libelle agence
                             </div>
                             <div
                                 [mat-sort-header]="'lieuArchive'">
@@ -59,6 +59,10 @@
                             <div
                                 [mat-sort-header]="'lieuArchiveSecAge'">
                                 Lieu archive sec age
+                            </div>
+                            <div
+                                [mat-sort-header]="'structure'">
+                                Structure
                             </div>
 
                             <div class="hidden sm:block">Actions</div>
@@ -79,6 +83,9 @@
                                     </div>
                                     <div class="hidden md:block truncate">
                                         {{agence?.lieuArchiveSecAge}}
+                                    </div>
+                                    <div class="hidden md:block truncate">
+                                        {{agence?.structure?.codeStructure}}
                                     </div>
                                     <!-- Details button -->
                                     <div>
