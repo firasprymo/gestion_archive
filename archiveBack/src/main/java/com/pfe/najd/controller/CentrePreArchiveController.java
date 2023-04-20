@@ -49,9 +49,8 @@ public class CentrePreArchiveController {
         }
     }
 
-    @PreAuthorize("hasAnyAuthority()")
-    @DeleteMapping("/{codeCentrePreArchive}")
-    public ResponseEntity<Void> deleteCentrePreArchive(@PathVariable("codeCentreArchive") Long id){
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteCentrePreArchive(@PathVariable("id") Long id){
         try{
             centrePreArchiveService.deleteCentrePreArchiveId(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);

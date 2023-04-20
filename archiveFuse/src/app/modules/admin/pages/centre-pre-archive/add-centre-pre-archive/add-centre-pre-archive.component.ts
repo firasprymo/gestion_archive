@@ -6,6 +6,7 @@ import {Trainers} from '../../../../../shared/model/trainers.types';
 import {CentreArchiveService} from '../../../../../shared/service/centre-archive.service';
 import {Router} from '@angular/router';
 import {TrainerService} from '../../../../../shared/service/trainer.service';
+import {CentrePreArchiveService} from '../../../../../shared/service/centre-pre-archive.service';
 
 @Component({
     selector: 'app-add-centre-pre-archive',
@@ -19,7 +20,7 @@ export class AddCentrePreArchiveComponent implements OnInit, OnDestroy {
 
     constructor(private _formBuilder: FormBuilder,
                 private _changeDetectorRef: ChangeDetectorRef,
-                private _centerService: CentreArchiveService,
+                private _centerService: CentrePreArchiveService,
                 private _router: Router,
                 private _trainerService: TrainerService,
     ) {
@@ -28,12 +29,12 @@ export class AddCentrePreArchiveComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         // Horizontal stepper form
         this.centreForm = this._formBuilder.group({
-            codeCentreArchive: ['',
+            codeCentrePreArchive: ['',
                 [
                     Validators.required,
                     Validators.pattern('[0-9]+')
                 ]],
-            libelleCentreArchive: ['', Validators.required],
+            libelleCentrePreArchive: ['', Validators.required],
         });
 
     }
@@ -49,7 +50,7 @@ export class AddCentrePreArchiveComponent implements OnInit, OnDestroy {
      */
     createCentreArchive(): void {
         // Create the product
-        this._centerService.addCentreArchive(this.centreForm.value).subscribe((newCentreArchive) => {
+        this._centerService.addCentrePreArchive(this.centreForm.value).subscribe((newCentreArchive) => {
             // Mark for check
             this._changeDetectorRef.markForCheck();
             this._router.navigate(['pages/show-centres-pre']);

@@ -10,12 +10,12 @@
                             <span class="font-semibold mb-1 gt-xs:text-right gt-xs:min-w-32 gt-xs:mr-4
                             gt-xs:mb-0"> Code Centre Pré Archive</span>
                             <mat-form-field class="fuse-mat-dense flex-auto">
-                                <input type="number" matInput [formControlName]="'codeCentreArchive'" rows="2"
+                                <input type="number" matInput [formControlName]="'codeCentrePreArchive'" rows="2"
                                        placeholder="Ajouter code centre archive">
-                                <mat-error *ngIf="centreForm.controls.codeCentreArchive.hasError('required')">
+                                <mat-error *ngIf="centreForm.controls.codeCentrePreArchive.hasError('required')">
                                     Code Centre Archive est obligatoire
                                 </mat-error>
-                                <mat-error *ngIf="centreForm.controls.codeCentreArchive.hasError('pattern')">
+                                <mat-error *ngIf="centreForm.controls.codeCentrePreArchive.hasError('pattern')">
                                     Nombre only
                                 </mat-error>
 
@@ -25,9 +25,9 @@
                             <span class="font-semibold mb-1 gt-xs:text-right gt-xs:min-w-32 gt-xs:mr-4
                             gt-xs:mb-0">Libelle Centre Pré Archive</span>
                             <mat-form-field class="fuse-mat-dense flex-auto">
-                                <input matInput [formControlName]="'libelleCentreArchive'" rows="2"
+                                <input matInput [formControlName]="'libelleCentrePreArchive'" rows="2"
                                        placeholder="Ajouter Libelle Centre Archive">
-                                <mat-error *ngIf="centreForm.controls.libelleCentreArchive.hasError('required')">
+                                <mat-error *ngIf="centreForm.controls.libelleCentrePreArchive.hasError('required')">
                                     Libelle Centre Archive est obligatoire
                                 </mat-error>
 

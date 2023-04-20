@@ -45,11 +45,7 @@ public class CentrePreArchiveServiceImpl implements CentrePreArchiveService {
     }
 
     public void deleteCentrePreArchiveId(Long id) {
-        if (centrePreArchiveDao.existsById(id)) {
             centrePreArchiveDao.deleteById(id);
-        } else {
-            throw new RuntimeException("centre Pre-Archive avec code " + id + " n'existe pas");
-        }
     }
 
     public CentrePreArchive updateCentrePreArchive(Long id, CentrePreArchive updatedCentrePreArchive) {
