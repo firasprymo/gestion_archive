@@ -1,5 +1,5 @@
 import {Users} from './users.types';
-import {Document} from './documents.types';
+import {Documents} from './documents.types';
 
 export enum DocumentStatus {
     PENDING = 'En attente',

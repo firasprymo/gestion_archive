@@ -13,13 +13,14 @@ export class ApiService {
     public static apiPicture = environment.apiImg;
     public static apiUser = environment.users;
     public static apiSKills = environment.skills;
-    public static apiDocuments =ApiService.apiVersion + environment.documents;
-    public static apiDocumentRequests =ApiService.apiVersion + environment.documentRequests;
-    public static apiCentreArchives =ApiService.apiVersion + environment.centreArchives;
-    public static apiCentrePreArchives =ApiService.apiVersion + environment.centrePreArchives;
+    public static apiDocuments = ApiService.apiVersion + environment.documents;
+    public static apiNomenclatures = ApiService.apiVersion + environment.nomenclatures;
+    public static apiDocumentRequests = ApiService.apiVersion + environment.documentRequests;
+    public static apiCentreArchives = ApiService.apiVersion + environment.centreArchives;
+    public static apiCentrePreArchives = ApiService.apiVersion + environment.centrePreArchives;
     public static apiDirectionRegional = environment.directionRegional;
-    public static apiStructureCentral =ApiService.apiVersion +  environment.structureCentral;
-    public static apiAgences =ApiService.apiVersion +  environment.agences;
+    public static apiStructureCentral = ApiService.apiVersion + environment.structureCentral;
+    public static apiAgences = ApiService.apiVersion + environment.agences;
     public static apiTrainer = environment.trainers;
     public static apiQuiz = environment.quizs;
     public static apiStep = environment.steps;
@@ -62,7 +63,7 @@ export class ApiService {
     patch(url: string, entities: any): Observable<any> {
         console.log(entities);
 
-        return this.http.patch(environment.apiUrl + url, entities)
+        return this.http.patch(url, entities)
             .pipe(map((res: any) => res,
                 catchError(err => throwError(err)
                 )));

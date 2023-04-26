@@ -15,6 +15,7 @@ export const environment = {
     trainers: 'trainers',
     skills: 'skills',
     documents: 'api/documents',
+    nomenclatures: 'api/nomenclatures',
     centreArchives: 'api/centre-archives',
     centrePreArchives: 'api/centre-pre-archives',
     documentRequests: 'api/document-requests',

@@ -1,6 +1,6 @@
 import {DocumentStatus} from './document-status.enum';
 
-export interface Document {
+export interface Documents {
     id: number;
       codeNomenclature: string;
       nomberPage: string;

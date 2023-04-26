@@ -4,8 +4,10 @@ import {DocumentsService} from '../../../../../shared/service/documents.service'
 import {Observable, Subject} from 'rxjs';
 import {Trainers} from '../../../../../shared/model/trainers.types';
 import {TrainerService} from '../../../../../shared/service/trainer.service';
-import {Router} from '@angular/router';
-import {Document} from '../../../../../shared/model/documents.types';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Documents} from '../../../../../shared/model/documents.types';
+import {NomenclatureService} from '../../../../../shared/service/nomenclature.service';
+import {Nomenclature} from '../../../../../shared/model/nomenclature.types';
 
 @Component({
     selector: 'app-add-document',
@@ -14,30 +16,42 @@ import {Document} from '../../../../../shared/model/documents.types';
 })
 export class AddDocumentComponent implements OnInit, OnDestroy {
     documentForm: FormGroup;
-    document: Document;
-    trainers$: Observable<Trainers[]>;
+    document: Documents;
+    document$: Observable<Documents>;
+    nomenclatures$: Observable<Nomenclature[]>;
     notCorrectType = false;
+    isUpdate = false;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     constructor(private _formBuilder: FormBuilder,
                 private _changeDetectorRef: ChangeDetectorRef,
                 private _documentService: DocumentsService,
                 private _router: Router,
-                private _trainerService: TrainerService,
+                private _nomenclatureService: NomenclatureService,
+                private active: ActivatedRoute
     ) {
     }
 
     ngOnInit(): void {
         // Horizontal stepper form
         this.documentForm = this._formBuilder.group({
+            id: [''],
             nomberPage: ['', Validators.required],
             dateCreation: ['',],
             dateReception: ['',],
             codeLieuArchive: ['', Validators.required],
             lieuArchive: ['', Validators.required],
         });
-        this.trainers$ = this._trainerService.trainers$;
-
+        this._documentService.document$.subscribe((res) => {
+            this.isUpdate = true;
+            this.documentForm.patchValue({
+                id: res.id,
+                nomberPage: res.nomberPage,
+                codeLieuArchive: res.codeLieuArchive,
+                lieuArchive: res.lieuArchive
+            });
+        });
+        this.nomenclatures$=this._nomenclatureService.nomenclatures$;
     }
 
     ngOnDestroy(): void {
@@ -59,58 +73,18 @@ export class AddDocumentComponent implements OnInit, OnDestroy {
         });
     }
 
-    uploadImage(fileList): void {
-        // Return if canceled
-        if (fileList.length === 0) {
-            return;
-        }
-        const allowedTypes = ['image/jpeg', 'image/png'];
-        const file = fileList[0];
-        // Return if the file is not allowed
-        if (!allowedTypes.includes(file.type)) {
-            return;
-        }
-        if (file.filename !== 0) {
-            this.documentForm.patchValue({
-                coverFile: file
-            });
-            console.log(this.documentForm.value);
-        } else {
-            this.documentForm.patchValue({
-                coverFile: ''
-            });
-        }
-    }
-
-    uploadVideo(fileList): void {
-        console.log(fileList);
-        // Return if canceled
-        if (fileList.length === 0) {
-            return;
-        }
-        const allowedTypes = ['video/mp4'];
-        const file = fileList[0];
-        // Return if the file is not allowed
-        if (!allowedTypes.includes(file.type)) {
-            this.notCorrectType = true;
-            return;
-        }
-        if (file.filename !== 0) {
-            this.notCorrectType = false;
-            this.documentForm.patchValue({
-                videoFile: file
-            });
-            console.log(this.documentForm.value);
-        } else {
-            this.documentForm.patchValue({
-                videoFile: ''
-            });
-        }
-    }
-
     trackByFn(index: number, item: any): any {
         return item.id || index;
     }
 
 
+    updateDocument(): any {
+        this._documentService.editDocument(this.documentForm.value, this.documentForm.value.id).subscribe((newDocument) => {
+            // Mark for check
+            this._changeDetectorRef.markForCheck();
+            this._router.navigate(['pages/show-documents']);
+
+        });
+
+    }
 }

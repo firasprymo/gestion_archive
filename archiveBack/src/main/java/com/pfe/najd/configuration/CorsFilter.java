@@ -36,7 +36,7 @@ public void doFilter(ServletRequest servletRequest, ServletResponse servletRespo
     HttpServletRequest request = (HttpServletRequest) servletRequest;
 
     response.setHeader("Access-Control-Allow-Origin", frontServerUrl);
-    response.setHeader("Access-Control-Allow-Methods", "GET,POST,DELETE,PUT,OPTIONS");
+    response.setHeader("Access-Control-Allow-Methods", "GET,POST,DELETE,PUT,PATCH,OPTIONS");
     response.setHeader("Access-Control-Allow-Headers", "*");
     response.setHeader("Access-Control-Allow-Credentials", "true");
     response.setHeader("Access-Control-Max-Age", "180");

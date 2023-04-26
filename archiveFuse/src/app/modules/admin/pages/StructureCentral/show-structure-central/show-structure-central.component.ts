@@ -29,7 +29,7 @@ import {merge, Observable, Subject} from 'rxjs';
 import {debounceTime, map, switchMap, takeUntil} from 'rxjs/operators';
 
 @Component({
-    selector: 'app-show-structure-central',
+    selector: 'app-show-nomenclatures',
     templateUrl: './show-structure-central.component.html',
     styles: [
         /* language=SCSS */

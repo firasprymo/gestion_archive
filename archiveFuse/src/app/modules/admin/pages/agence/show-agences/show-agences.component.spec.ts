@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ShowStructureCentralComponent } from './show-structure-central.component';
+import { ShowStructureCentralComponent } from './show-nomenclatures.component';
 
 describe('ShowStructureCentralComponent', () => {
   let component: ShowStructureCentralComponent;

@@ -9,13 +9,13 @@ import {DirectionRegional} from '../../../../../shared/model/direction-regional.
 import {map} from 'rxjs/operators';
 
 @Component({
-    selector: 'app-add-structure-central',
+    selector: 'app-add-nomenclature',
     templateUrl: './add-structure-central.component.html',
     styleUrls: ['./add-structure-central.component.scss']
 })
 export class AddStructureCentralComponent implements OnInit, OnDestroy {
     structureCentralForm: FormGroup;
-    structureCentrals$: Observable<StructureCentral[]>;
+    structureCentral$: Observable<StructureCentral>;
     directions$: Observable<DirectionRegional[]>;
     notCorrectType = false;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
@@ -37,7 +37,7 @@ export class AddStructureCentralComponent implements OnInit, OnDestroy {
             lieuArchiveSecAge: ['', Validators.required],
             directeur: ['', Validators.required],
         });
-        this.structureCentrals$ = this._structureCentralService.structureCentrals$;
+        this.structureCentral$ = this._structureCentralService.structureCentral$;
         this.directions$ = this._directionRegionalService.directionRegionals$;
     }
 
@@ -64,7 +64,7 @@ export class AddStructureCentralComponent implements OnInit, OnDestroy {
         this._structureCentralService.addStructureCentral(body).subscribe((newStructureCentral) => {
             // Mark for check
             this._changeDetectorRef.markForCheck();
-            this._router.navigate(['pages/show-structure-central']);
+            this._router.navigate(['pages/show-nomenclatures']);
 
         });
     }

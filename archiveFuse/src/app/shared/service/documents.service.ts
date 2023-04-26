@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable, of, throwError} from 'rxjs';
 import {InventoryPagination} from '../../modules/admin/apps/ecommerce/inventory/inventory.types';
-import {Document} from '../model/documents.types';
+import {Documents} from '../model/documents.types';
 import {ApiService} from './api.service';
 import {HttpClient} from '@angular/common/http';
 import {map, switchMap, take, tap} from 'rxjs/operators';
@@ -11,9 +11,9 @@ import {map, switchMap, take, tap} from 'rxjs/operators';
 })
 export class DocumentsService {
     private _pagination: BehaviorSubject<InventoryPagination | null> = new BehaviorSubject(null);
-    private _documents: BehaviorSubject<Document[] | null> = new BehaviorSubject(null);
-    private _document: BehaviorSubject<Document | null> = new BehaviorSubject(null);
-    private _DirectionRegionaldocument: BehaviorSubject<Document | null> = new BehaviorSubject(null);
+    private _documents: BehaviorSubject<Documents[] | null> = new BehaviorSubject(null);
+    private _document: BehaviorSubject<Documents | null> = new BehaviorSubject(null);
+    private _DirectionRegionaldocument: BehaviorSubject<Documents | null> = new BehaviorSubject(null);
 
     constructor(private _apiService: ApiService,
                 private _httpClient: HttpClient) {
@@ -22,14 +22,14 @@ export class DocumentsService {
     /**
      * Getter for documents
      */
-    get documents$(): Observable<Document[]> {
+    get documents$(): Observable<Documents[]> {
         return this._documents.asObservable();
     }
 
     /**
      * Getter for item
      */
-    get document$(): Observable<Document> {
+    get document$(): Observable<Documents> {
         return this._document.asObservable();
     }
 
@@ -44,11 +44,11 @@ export class DocumentsService {
     /**
      * Create product
      */
-    addDocument(document): Observable<Document> {
+    addDocument(document): Observable<Documents> {
         return this.documents$.pipe(
             take(1),
             switchMap(documents =>
-                this._httpClient.post<Document>(`${ApiService.apiDocuments}/create`, document)
+                this._httpClient.post<Documents>(`${ApiService.apiDocuments}/create`, document)
                 .pipe(
                     map((newDocument) => {
 
@@ -62,15 +62,15 @@ export class DocumentsService {
         );
     }
 
-    editDocument(body, id): Observable<Document> {
-        return this._apiService.patch(`${ApiService.apiVersion}${ApiService.apiDocuments}/${id}`, body).pipe(map(res => res));
+    editDocument(body, id): Observable<Documents> {
+        return this._apiService.patch(`${ApiService.apiDocuments}/${id}`, body).pipe(map(res => res));
     }
 
     /**
      * Get document by id
      */
-    getdocumentById(id: string): Observable<Document> {
-        return this._httpClient.get<Document>(`${ApiService.apiVersion}${ApiService.apiDocuments}/find-document/${id}`).pipe(
+    getdocumentById(id: string): Observable<Documents> {
+        return this._httpClient.get<Documents>(`${ApiService.apiDocuments}/get-document/${id}`).pipe(
             map((document) => {
                 // Update the document
                 this._document.next(document);
@@ -99,9 +99,9 @@ export class DocumentsService {
      * @param order
      * @param search
      */
-    getAlldocuments(page: number = 0, size: number = 5, sort: string = 'nomberPage', order: 'asc' | 'desc' | '' = 'asc', search: string = ''):
-        Observable<{ pageable: InventoryPagination; content: Document[] }> {
-        return this._httpClient.get<{ pageable: InventoryPagination; content: Document[] }>
+    getAllDocuments(page: number = 0, size: number = 5, sort: string = 'nomberPage', order: 'asc' | 'desc' | '' = 'asc', search: string = ''):
+        Observable<{ pageable: InventoryPagination; content: Documents[] }> {
+        return this._httpClient.get<{ pageable: InventoryPagination; content: Documents[] }>
         (`${ApiService.apiDocuments}/get-all-documents`, {
             params: {
                 page: '' + page,
@@ -123,7 +123,7 @@ export class DocumentsService {
      *
      * @param document
      */
-    deleteDocument(document: Document): Observable<boolean> {
+    deleteDocument(document: Documents): Observable<boolean> {
         return this.documents$.pipe(
             take(1),
             switchMap(documents =>
@@ -142,8 +142,8 @@ export class DocumentsService {
         );
     }
 
-    getDocuments(): Observable<Document[]> {
-        return this._httpClient.get<Document[]>(`${ApiService.apiVersion}${ApiService.apiDocuments}`).pipe(
+    getDocuments(): Observable<Documents[]> {
+        return this._httpClient.get<Documents[]>(`${ApiService.apiVersion}${ApiService.apiDocuments}`).pipe(
             tap((response: any) => {
                 this._documents.next(response);
             })

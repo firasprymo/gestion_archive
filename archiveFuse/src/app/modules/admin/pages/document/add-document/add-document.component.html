@@ -11,7 +11,7 @@
                             gt-xs:mb-0"> Nombre de page</span>
                             <mat-form-field class="fuse-mat-dense flex-auto">
                                 <input matInput [formControlName]="'nomberPage'" rows="2"
-                                          placeholder="Ajouter le nomber page">
+                                       placeholder="Ajouter le nomber page">
                                 <mat-error *ngIf="documentForm.controls.nomberPage.hasError('required')">
                                     le nomber page est obligatoire
                                 </mat-error>
@@ -23,7 +23,7 @@
                             gt-xs:mb-0">Code lieu archive</span>
                             <mat-form-field class="fuse-mat-dense flex-auto">
                                 <input matInput [formControlName]="'codeLieuArchive'" rows="2"
-                                          placeholder="Ajouter le Code lieu archive">
+                                       placeholder="Ajouter le Code lieu archive">
                                 <mat-error *ngIf="documentForm.controls.codeLieuArchive.hasError('required')">
                                     Code lieu archive est obligatoire
                                 </mat-error>
@@ -35,11 +35,19 @@
                             gt-xs:mb-0">Lieu archive</span>
                             <mat-form-field class="fuse-mat-dense flex-auto">
                                 <input matInput [formControlName]="'lieuArchive'" rows="2"
-                                          placeholder="Ajouter le Lieu archive">
+                                       placeholder="Ajouter le Lieu archive">
                                 <mat-error *ngIf="documentForm.controls.lieuArchive.hasError('required')">
                                     Lieu archive est obligatoire
                                 </mat-error>
 
+                            </mat-form-field>
+                            <mat-form-field
+                                class="flex-auto gt-xs:pr-3">
+                                <mat-label>Nomenclature</mat-label>
+                                <select matNativeControl formControlName="structure">
+                                    <option [ngValue]="nomenclature"
+                                            *ngFor="let nomenclature of nomenclatures$ | async">{{nomenclature?.designationNomenclature}}</option>
+                                </select>
                             </mat-form-field>
                         </div>
                     </div>
@@ -49,13 +57,22 @@
                     <button mat-button>
                         Cancel
                     </button>
-                    <button (click)="createDocument()"
+                    <button *ngIf="!isUpdate else onCreate" (click)="createDocument()"
                             class="px-6 ml-3"
                             mat-flat-button
                             [disabled]="!documentForm.valid"
                             [color]="'primary'">
                         Save
                     </button>
+                    <ng-template #onCreate>
+                        <button (click)="updateDocument()"
+                                class="px-6 ml-3"
+                                mat-flat-button
+                                [disabled]="!documentForm.valid"
+                                [color]="'warn'">
+                            Update
+                        </button>
+                    </ng-template>
                 </div>
             </form>
         </div>

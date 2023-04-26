@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot} from '@angular/router';
 import {Observable, throwError} from 'rxjs';
 import {DocumentsService} from '../service/documents.service';
-import {Document} from '../model/documents.types';
+import {Documents} from '../model/documents.types';
 import {InventoryPagination} from '../../modules/admin/apps/ecommerce/inventory/inventory.types';
 import {catchError} from 'rxjs/operators';
 import {StructureCentralService} from '../service/structure-central.service';
@@ -60,6 +60,7 @@ export class structureCentralByIdResolver implements Resolve<any> {
      * @param state
      */
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<StructureCentral> {
+        if(!route.paramMap.get('id')) return ;
         return this._structureCentralService.getStructureCentralById(route.paramMap.get('id'))
             .pipe(
                 // Error here means the requested task is not available

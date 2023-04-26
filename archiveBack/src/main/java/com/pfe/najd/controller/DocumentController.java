@@ -50,7 +50,7 @@ public class DocumentController {
     }
 
     // Delete Document by code
-    @PreAuthorize("hasAnyAuthority('SCOPE_ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteDocumentById(@PathVariable("id") Long id) {
         try {
@@ -63,8 +63,8 @@ public class DocumentController {
 
     // Update Document by code
     @PreAuthorize("hasAnyAuthority('SCOPE_ROLE_ADMIN')")
-    @PutMapping("/update/{codeDocument}")
-    public ResponseEntity<Document> updateDocument(@PathVariable("codeDocument") Long id, @RequestBody Document updatedDocument) {
+    @PatchMapping("/{id}")
+    public ResponseEntity<Document> updateDocument(@PathVariable("id") Long id, @RequestBody Document updatedDocument) {
         try {
             Document updated = documentService.updateDocument(id, updatedDocument);
             return new ResponseEntity<>(updated, HttpStatus.OK);

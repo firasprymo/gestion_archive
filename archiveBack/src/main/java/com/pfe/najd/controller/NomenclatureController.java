@@ -1,9 +1,12 @@
 package com.pfe.najd.controller;
 
 
+import com.pfe.najd.entities.Document;
 import com.pfe.najd.entities.Nomenclature;
 import com.pfe.najd.service.NomenclatureService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -13,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/nomenclature")
+@RequestMapping("/api/nomenclatures")
 public class NomenclatureController {
 
     @Autowired
@@ -31,10 +34,14 @@ public class NomenclatureController {
         return new ResponseEntity<>(nomenclatures, HttpStatus.OK);
     }
 
-    @GetMapping("/get-nomenclature/{codeNomenclature}")
-    public ResponseEntity<Nomenclature> getNomenclatureById(@PathVariable("codeNomenclature")Long id){
+    @GetMapping("/{id}")
+    public ResponseEntity<Nomenclature> getNomenclatureById(@PathVariable("id")Long id){
         Optional<Nomenclature> nomenclature = nomenclatureService.getNomenclatureById(id);
         return nomenclature.map(value -> new ResponseEntity<>(value, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+    @GetMapping("/get-all-nomenclatures")
+    public ResponseEntity<Page<Nomenclature>> getAllNomenclatures(Pageable pageable) {
+        return ResponseEntity.ok().body(nomenclatureService.pageNomenclatures(pageable));
     }
     @GetMapping("/search-by-name/{designationNomenclature}")
     public ResponseEntity<List<Nomenclature>> getNomenclatureByDesignation(@PathVariable("designationNomenclature") String designationNomenclature){
@@ -43,7 +50,7 @@ public class NomenclatureController {
     }
 
     @PreAuthorize("hasAnyAuthority('SCOPE_ROLE_ADMIN')")
-    @DeleteMapping("delete/{codeNomenclature}")
+    @DeleteMapping("/{codeNomenclature}")
     public ResponseEntity<Void> deleteNomenclatureById(@PathVariable("codeNomenclature") Long id){
         try {
             nomenclatureService.deleteNomenclatureById(id);
@@ -54,8 +61,8 @@ public class NomenclatureController {
     }
 
     @PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN')")
-    @PutMapping("/update/{codeNomenclature}")
-    public ResponseEntity<Nomenclature> updateNomenclature(@PathVariable("codeNomenclature") Long id,
+    @PatchMapping("/{id}")
+    public ResponseEntity<Nomenclature> updateNomenclature(@PathVariable("id") Long id,
                                                            @RequestBody Nomenclature updatedNomenclature){
         try {
             Nomenclature updated = nomenclatureService.updateNomenclatureById(id, updatedNomenclature);

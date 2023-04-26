@@ -11,7 +11,7 @@ import {fuseAnimations} from '@fuse/animations';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {merge, Observable, Subject} from 'rxjs';
-import {Document} from '../../../../../shared/model/documents.types';
+import {Documents} from '../../../../../shared/model/documents.types';
 import {
     InventoryBrand,
     InventoryCategory,
@@ -58,7 +58,7 @@ export class ShowDocumentsComponent implements OnInit, AfterViewInit, OnDestroy 
     @ViewChild(MatPaginator) private _paginator: MatPaginator;
     @ViewChild(MatSort) private _sort: MatSort;
 
-    documents$: Observable<Document[]>;
+    documents$: Observable<Documents[]>;
     apiImg = ApiService.apiPicture;
     brands: InventoryBrand[];
     categories: InventoryCategory[];
@@ -67,7 +67,7 @@ export class ShowDocumentsComponent implements OnInit, AfterViewInit, OnDestroy 
     isLoading: boolean = false;
     pagination: InventoryPagination;
     searchInputControl: FormControl = new FormControl();
-    selecteddocument: Document | null = null;
+    selecteddocument: Documents | null = null;
     selectedProductForm: FormGroup;
     skills: Skills[];
     tagsEditMode: boolean = false;
@@ -229,7 +229,7 @@ export class ShowDocumentsComponent implements OnInit, AfterViewInit, OnDestroy 
     /**
      * Delete the selected product using the form data
      */
-    deleteSelectedDocument(document: Document): void {
+    deleteSelectedDocument(document: Documents): void {
         // Open the confirmation dialog
         const confirmation = this._fuseConfirmationService.open({
             title: 'Delete document',

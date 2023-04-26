@@ -11,7 +11,7 @@ import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 import {FileManagerListComponent} from 'app/layout/file-manager/list/list.component';
 import {FileManagerService} from 'app/layout/file-manager/file-manager.service';
-import {Document} from '../../../shared/model/documents.types';
+import {Documents} from '../../../shared/model/documents.types';
 import {DocumentsService} from '../../../shared/service/documents.service';
 
 @Component({
@@ -21,7 +21,7 @@ import {DocumentsService} from '../../../shared/service/documents.service';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FileManagerDetailsComponent implements OnInit, OnDestroy {
-    item: Document;
+    item: Documents;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     /**
@@ -49,7 +49,7 @@ export class FileManagerDetailsComponent implements OnInit, OnDestroy {
         // Get the item
         this._documentService.document$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((document: Document) => {
+            .subscribe((document: Documents) => {
                 // Open the drawer in case it is closed
                 this._fileManagerListComponent.matDrawer.open();
                 // Get the item

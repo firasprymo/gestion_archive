@@ -1,0 +1,90 @@
+<div class="flex flex-col flex-auto min-w-0">
+    <!-- Main -->
+    <div class="flex-auto p-6 sm:p-10">
+        <div class="max-w-3xl">
+            <!-- Sectioned form with separate cards #3 -->
+            <form [formGroup]="nomenclatureForm">
+                <div class="flex flex-col  bg-card shadow rounded overflow-hidden">
+                    <div class="p-8 pb-4">
+                        <div class="flex flex-col gt-xs:flex-row gt-xs:items-baseline">
+                            <span class="font-semibold mb-1 gt-xs:text-right gt-xs:min-w-32 gt-xs:mr-4
+                            gt-xs:mb-0">Designation nomenclature</span>
+                            <mat-form-field class="fuse-mat-dense flex-auto">
+                                <input matInput [formControlName]="'designationNomenclature'" rows="2"
+                                       placeholder="Ajouter la désignation nomenclature">
+                                <mat-error
+                                    *ngIf="nomenclatureForm.controls.designationNomenclature.hasError('required')">
+                                    Désignation Nomenclature est obligatoire
+                                </mat-error>
+
+                            </mat-form-field>
+                        </div>
+                        <div class="flex flex-col gt-xs:flex-row gt-xs:items-baseline">
+                            <span class="font-semibold mb-1 gt-xs:text-right gt-xs:min-w-32 gt-xs:mr-4
+                            gt-xs:mb-0">dureeConservationPremAge</span>
+                            <mat-form-field class="fuse-mat-dense flex-auto">
+                                <input matInput [formControlName]="'dureeConservationPremAge'" rows="2"
+                                       placeholder="Ajouter la durée donservation prem âge">
+                                <mat-error
+                                    *ngIf="nomenclatureForm.controls.dureeConservationPremAge.hasError('required')">
+                                    Durée Conservation Prem Age est obligatoire
+                                </mat-error>
+
+                            </mat-form-field>
+                        </div>
+                        <div class="flex flex-col gt-xs:flex-row gt-xs:items-baseline">
+                            <span class="font-semibold mb-1 gt-xs:text-right gt-xs:min-w-32 gt-xs:mr-4
+                            gt-xs:mb-0">Durée Conservation Sec Age</span>
+                            <mat-form-field class="fuse-mat-dense flex-auto">
+                                <input matInput [formControlName]="'dureeConservationSecAge'" rows="2"
+                                       placeholder="Ajouter le Durée Conservation Sec Age">
+                                <mat-error
+                                    *ngIf="nomenclatureForm.controls.dureeConservationSecAge.hasError('required')">
+                                    Durée Conservation Sec Age est obligatoire
+                                </mat-error>
+
+                            </mat-form-field>
+                        </div>
+                        <div class="flex flex-col gt-xs:flex-row gt-xs:items-baseline">
+                            <span class="font-semibold mb-1 gt-xs:text-right gt-xs:min-w-32 gt-xs:mr-4
+                            gt-xs:mb-0">Valeur historique trois âge</span>
+                            <mat-form-field class="fuse-mat-dense flex-auto">
+                                <input matInput [formControlName]="'valeurHistoriqueTroiAge'" rows="2"
+                                       placeholder="Ajouter le Valeur historique trois âge">
+                                <mat-error
+                                    *ngIf="nomenclatureForm.controls.valeurHistoriqueTroiAge.hasError('required')">
+                                    Valeur historique trois âge est obligatoire
+                                </mat-error>
+
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-end mt-10">
+                    <button mat-button>
+                        Cancel
+                    </button>
+                    <button (click)="editNomenclature()" *ngIf="isUpdate else onCreate"
+                            class="px-6 ml-3"
+                            mat-flat-button
+                            [disabled]="!nomenclatureForm.valid"
+                            [color]="'warn'">
+                         Update
+                    </button>
+                    <ng-template #onCreate>
+
+                        <button (click)="createNomenclature()"
+                                class="px-6 ml-3"
+                                mat-flat-button
+                                [disabled]="!nomenclatureForm.valid"
+                                [color]="'primary'">
+                            Save
+                        </button>
+                    </ng-template>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

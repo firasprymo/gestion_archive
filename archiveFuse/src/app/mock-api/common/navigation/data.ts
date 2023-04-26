@@ -25,7 +25,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 type: 'basic',
                 icon: 'heroicons_outline:pencil-alt',
                 link: '/pages/add-document',
-                meta: 'ROLE_USER',
+            meta: 'ROLE_AGENT',
 
             },
             {
@@ -86,7 +86,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 title: 'Ajouter structure',
                 type: 'basic',
                 icon: 'heroicons_outline:pencil-alt',
-                link: '/pages/add-structure-central',
+                link: '/pages/add-structure',
                 meta: 'ROLE_ADMIN',
             },
             {
@@ -94,7 +94,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 title: 'Afficher structure',
                 type: 'basic',
                 icon: 'heroicons_outline:chart-pie',
-                link: '/pages/show-structure-central',
+                link: '/pages/show-structures',
                 meta: 'ROLE_ADMIN',
             },
         ]
@@ -226,6 +226,32 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 type: 'basic',
                 icon: 'heroicons_outline:academic-cap',
                 link: '/pages/show-centre',
+                meta: 'ROLE_ADMIN',
+            },
+        ]
+    },
+    {
+        id: 'nomenclatures',
+        title: 'Nomenclature',
+        subtitle: '',
+        type: 'group',
+        icon: 'heroicons_outline:home',
+        meta: 'ROLE_ADMIN',
+        children: [
+            {
+                id: 'nomenclatures.add',
+                title: 'Ajouter nomenclature',
+                type: 'basic',
+                icon: 'heroicons_outline:academic-cap',
+                link: '/pages/add-nomenclature',
+                meta: 'ROLE_ADMIN',
+            },
+            {
+                id: 'nomenclatures.show',
+                title: 'Afficher nomenclature',
+                type: 'basic',
+                icon: 'heroicons_outline:academic-cap',
+                link: '/pages/show-nomenclatures',
                 meta: 'ROLE_ADMIN',
             },
         ]

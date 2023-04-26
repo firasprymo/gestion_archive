@@ -1,13 +1,15 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {AddStructureCentralComponent} from './add-structure-central.component';
-import {DirectionRegionalResolvers} from '../../../../../shared/resolver/direction-regional.resolvers';
+import {
+    structureCentralByIdResolver,
+} from '../../../../../shared/resolver/structure-central.resolvers';
 
 const routes: Routes = [{
     path: '',
     component: AddStructureCentralComponent,
     resolve: {
-        directions: DirectionRegionalResolvers
+        structureCentral: structureCentralByIdResolver
     }
 }];
 

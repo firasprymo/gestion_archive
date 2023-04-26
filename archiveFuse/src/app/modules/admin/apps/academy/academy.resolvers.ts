@@ -4,7 +4,7 @@ import {Observable, throwError} from 'rxjs';
 import {catchError} from 'rxjs/operators';
 import {AcademyService} from 'app/modules/admin/apps/academy/academy.service';
 import {DocumentsService} from '../../../../shared/service/documents.service';
-import {Document} from '../../../../shared/model/documents.types';
+import {Documents} from '../../../../shared/model/documents.types';
 import {Category} from '../../../../shared/model/category.types';
 
 @Injectable({
@@ -52,7 +52,7 @@ export class AcademydocumentsResolver implements Resolve<any> {
      * @param route
      * @param state
      */
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Document[]> {
+    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Documents[]> {
         return this._documentService.getDocuments();
     }
 }

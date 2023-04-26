@@ -25,7 +25,6 @@ export class DirectionRegionalService {
      * Getter for DirectionRegional
      */
     get directionRegionals$(): Observable<DirectionRegional[]> {
-        console.log(this._directionRegionals);
         return this._directionRegionals.asObservable();
     }
 

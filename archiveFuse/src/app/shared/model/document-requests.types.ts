@@ -1,8 +1,8 @@
 import {Users} from './users.types';
-import {Document} from './documents.types';
+import {Documents} from './documents.types';
 
 export interface DocumentRequest {
     id: number;
-      document: Document;
+      document: Documents;
       user: Users;
 }
