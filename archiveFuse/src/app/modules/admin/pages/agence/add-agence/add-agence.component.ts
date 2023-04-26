@@ -64,7 +64,7 @@ export class AddAgenceComponent implements OnInit, OnDestroy {
         this._agenceService.addAgence(body).subscribe((newAgence) => {
             // Mark for check
             this._changeDetectorRef.markForCheck();
-            this._router.navigate(['pages/show-agence']);
+            this._router.navigate(['pages/show-agences']);
 
         });
     }

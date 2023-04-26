@@ -2,15 +2,20 @@ package com.pfe.najd.service.implementation;
 
 import com.pfe.najd.dao.RoleDao;
 import com.pfe.najd.dao.UserDao;
+import com.pfe.najd.entities.Agence;
 import com.pfe.najd.entities.Role;
 import com.pfe.najd.entities.User;
 import com.pfe.najd.exeptions.UserExistsException;
 import com.pfe.najd.repository.UserRepository;
 import com.pfe.najd.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -47,6 +52,15 @@ public class UserServiceImpl implements UserService {
 
     public User getMe(String username) {
         return userRepository.findByUsername(username);
+
+    }
+
+
+    @Transactional
+    public Page<User> pageUsers(Pageable pageable) {
+        Page<User> users = userDao.findAll(pageable);
+
+        return new PageImpl<>(users.getContent(), users.getPageable(), users.getTotalElements());
 
     }
 }

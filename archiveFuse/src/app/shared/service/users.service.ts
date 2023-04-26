@@ -40,7 +40,7 @@ export class UsersService {
 
     addUser(body): Observable<any> {
         console.log(body);
-        return this._apiService.post(`${ApiService.apiUser}/create-user`, body)
+        return this._apiService.post(`${ApiService.apiUser}/register`, body)
             .pipe(map(res => res));
 
     }

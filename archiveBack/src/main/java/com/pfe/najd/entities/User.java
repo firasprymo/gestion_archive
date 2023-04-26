@@ -23,6 +23,7 @@ public class User extends AbstractEntity {
     private String username;
     @JsonIgnore
     private String password;
+    private String email;
     private String lieuAffectation;
 
     @ManyToMany

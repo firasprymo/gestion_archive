@@ -21,6 +21,7 @@ public class CentrePreArchiveServiceImpl implements CentrePreArchiveService {
     private final CentrePreArchiveRepository centrePreArchiveDao;
 
     public CentrePreArchive createCentrePreArchive(CentrePreArchive centrePreArchive) {
+        centrePreArchive.setCodeCentrePreArchive("CP" + centrePreArchive.getCodeCentrePreArchive());
         if (centrePreArchiveDao.existsByCodeCentrePreArchive(centrePreArchive.getCodeCentrePreArchive())) {
             throw new RuntimeException("centre de pre-Archive avec code = " + centrePreArchive.getCodeCentrePreArchive() + " existe");
         } else {

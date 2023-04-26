@@ -7,13 +7,12 @@ import {
     InventoryVendorsResolver
 } from '../../../apps/ecommerce/inventory/inventory.resolvers';
 import {UsersResolvers} from '../../../../../shared/resolver/users.resolvers';
-import {SkillsResolvers} from '../../../../../shared/resolver/skills.resolvers';
 
 const routes: Routes = [{
     path: '',
     component: ShowUsersComponent,
     resolve: {
-        brands: InventoryBrandsResolver,
+        users: UsersResolvers,
         categories: InventoryCategoriesResolver,
         trainers: UsersResolvers,
         // skills: SkillsResolvers,

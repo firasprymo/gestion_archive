@@ -1,36 +1,10 @@
 <div class="flex flex-col flex-auto min-w-0">
-    <div
-        class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-6 sm:py-8 sm:px-10 border-b bg-card dark:bg-transparent">
-        <div class="flex-1 min-w-0">
-            <!-- Breadcrumbs -->
-            <div class="flex flex-wrap items-center font-medium">
-                <div>
-                    <a class="whitespace-nowrap text-primary-500">Users</a>
-                </div>
-                <div class="flex items-center ml-1 whitespace-nowrap">
-                    <mat-icon
-                        class="icon-size-5 text-secondary"
-                        [svgIcon]="'heroicons_solid:chevron-right'"></mat-icon>
-                    <a class="ml-1 text-primary-500">Add</a>
-                </div>
-            </div>
-            <!-- Title -->
-            <!--            <div class="mt-2">-->
-            <!--                <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate">-->
-            <!--                    Layouts-->
-            <!--                </h2>-->
-            <!--            </div>-->
-        </div>
-    </div>
     <!-- Main -->
     <div class="flex-auto p-6 sm:p-10">
         <div class="max-w-3xl">
             <!-- Sectioned form with separate cards #3 -->
             <form [formGroup]="userForm">
                 <div class="flex flex-col  bg-card shadow rounded overflow-hidden">
-                    <div class="p-8 bg-gray-50 dark:bg-gray-700">
-                        <p class="text-lg font-medium">User access data</p>
-                    </div>
                     <mat-divider></mat-divider>
                     <div class="p-8 pb-4">
                         <div class="flex flex-col gt-xs:flex-row gt-xs:items-baseline">
@@ -85,92 +59,26 @@
                             <span
                                 class="font-semibold mb-1 gt-xs:text-right gt-xs:min-w-32 gt-xs:mr-4 gt-xs:mb-0">Role</span>
                             <mat-form-field class="fuse-mat-dense flex-auto">
-                                <mat-select [value]="'Choose the role'" [formControlName]="'roleName'">
+                                <mat-select [value]="'Choose the role'" [formControlName]="'roleNames'">
                                     <mat-option [value]="'Choose the trainer'">Choose the Role</mat-option>
-                                    <mat-option [value]="'ROLE_USER'">User</mat-option>
+                                    <mat-option [value]="'ROLE_AGENT'">AGENT</mat-option>
                                     <mat-option [value]="'ROLE_ADMIN'">Admin</mat-option>
+                                    <mat-option [value]="'ROLE_RESPONSABLE'">RESPONSABLE</mat-option>
+                                    <mat-option [value]="'ROLE_RESOPONSABLE_CENTRE_ARCHIVE'">RESOPONSABLE CENTRE ARCHIVE</mat-option>
+                                    <mat-option [value]="'ROLE_RESOPONSABLE_CENTRE_PRE_ARCHIVE'">RESOPONSABLE CENTRE PRE ARCHIVE</mat-option>
                                 </mat-select>
                             </mat-form-field>
                         </div>
-                    </div>
-                </div>
-                <div class="flex flex-col  bg-card shadow rounded overflow-hidden">
-                    <div class="p-8 bg-gray-50 dark:bg-gray-700">
-                        <p class="text-lg font-medium">User details</p>
-                    </div>
-                    <mat-divider></mat-divider>
-                    <div class="p-8 pb-4">
                         <div class="flex flex-col gt-xs:flex-row gt-xs:items-baseline">
                             <span
                                 class="font-semibold mb-1 gt-xs:text-right gt-xs:min-w-32 gt-xs:mr-4 gt-xs:mb-0">Address</span>
                             <mat-form-field class="fuse-mat-dense flex-auto">
-                                <input matInput [formControlName]="'address'"
-                                       placeholder="Add user address">
-                                <mat-error *ngIf="userForm.get('address').hasError('required')">
+                                <input matInput [formControlName]="'lieuAffectation'"
+                                       placeholder="Add user lieuAffectation">
+                                <mat-error *ngIf="userForm.get('lieuAffectation').hasError('required')">
                                     Address is required
                                 </mat-error>
                             </mat-form-field>
-                        </div>
-                        <div class="flex flex-col gt-xs:flex-row gt-xs:items-baseline">
-                            <span
-                                class="font-semibold mb-1 gt-xs:text-right gt-xs:min-w-32 gt-xs:mr-4 gt-xs:mb-0">Phone number</span>
-                            <mat-form-field class="fuse-mat-dense flex-auto">
-                                <input matInput [formControlName]="'phoneNumber'" type="number" maxlength="8"
-                                       placeholder="Add user phoneNumber" #postalCode>
-                                <mat-hint align="end">{{postalCode.value.length}} / 8</mat-hint>
-                                <mat-error *ngIf="userForm.get('phoneNumber').hasError('required')">
-                                    Address is required
-                                </mat-error>
-                            </mat-form-field>
-                        </div>
-                        <div class="flex flex-col gt-xs:flex-row gt-xs:items-baseline">
-                            <mat-form-field
-                                class="flex-auto">
-                                <mat-label>Choose a date</mat-label>
-                                <input [formControlName]="'birthDate'"
-                                       matInput
-                                       [matDatepicker]="picker1">
-                                <mat-datepicker-toggle
-                                    matSuffix
-                                    [for]="picker1"></mat-datepicker-toggle>
-                                <mat-datepicker #picker1></mat-datepicker>
-                                <mat-error *ngIf="userForm.get('phoneNumber').hasError('required')">
-                                    Email is required
-                                </mat-error>
-
-                            </mat-form-field>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="flex flex-col flex-auto mt-8 bg-card shadow rounded overflow-hidden">
-                    <div class="p-8 bg-gray-50 dark:bg-gray-700">
-                        <p class="text-lg font-medium">File</p>
-                        <p class="text-secondary">Can you add your cover picture </p>
-                    </div>
-                    <mat-divider></mat-divider>
-                    <div class="p-8 pb-4">
-                        <div class="flex flex-col gt-xs:flex-row gt-xs:items-baseline">
-                            <span class="font-semibold mb-1 gt-xs:text-right gt-xs:min-w-32 gt-xs:mr-4 gt-xs:mb-0">User picture</span>
-                            <div>
-                                <input
-                                    id="image-file-input"
-                                    class="absolute h-0 w-0 opacity-0 invisible pointer-events-none"
-                                    type="file"
-                                    [accept]="'image/jpeg, image/png'"
-                                    (change)="uploadImage(imageFileInput.files)"
-                                    #imageFileInput>
-                                <label
-                                    class="flex items-center justify-center w-10 h-10 rounded-full cursor-pointer hover:bg-gray-400 hover:bg-opacity-20 dark:hover:bg-black dark:hover:bg-opacity-5"
-                                    for="image-file-input"
-                                    matRipple>
-                                    <mat-icon [svgIcon]="'heroicons_outline:photograph'"></mat-icon>
-                                </label>
-                                <!--                                {{userForm.get('picture').errors | json}}-->
-                                <!--                                <mat-error *ngIf="userForm.get('picture').hasError('required')">-->
-                                <!--                                    Picture is required-->
-                                <!--                                </mat-error>-->
-                            </div>
                         </div>
                     </div>
                 </div>
