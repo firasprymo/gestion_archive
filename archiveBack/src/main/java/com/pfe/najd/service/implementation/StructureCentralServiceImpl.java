@@ -24,7 +24,9 @@ public class StructureCentralServiceImpl implements StructureCentralService {
     private AgenceServiceImpl agenceService;
 
     public StructureCentral createStructureCentral(StructureCentral structureCentral) {
-            return structureCentralDao.save(structureCentral);
+        structureCentral.setCodeStructure("SC" + structureCentral.getCodeStructure());
+
+        return structureCentralDao.save(structureCentral);
     }
 
     public List<StructureCentral> getAllStructureCentral() {

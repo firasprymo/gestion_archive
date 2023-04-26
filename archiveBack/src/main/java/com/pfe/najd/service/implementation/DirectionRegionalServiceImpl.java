@@ -24,7 +24,9 @@ public class DirectionRegionalServiceImpl implements DirectionRegionalService {
 
     //TODO: change the code of create to verify if the codeStartWith "DR"
     public DirectionRegional createDirectionRegional(DirectionRegional directionRegional) {
-            return directionRegionalDao.save(directionRegional);
+        directionRegional.setCodeDirection("DR" + directionRegional.getCodeDirection());
+
+        return directionRegionalDao.save(directionRegional);
     }
 
 
