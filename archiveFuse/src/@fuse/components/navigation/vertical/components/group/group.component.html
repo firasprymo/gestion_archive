@@ -1,5 +1,5 @@
 <!-- Item wrapper -->
-<div
+<div *ngIf="item?.meta.indexOf(userRole)>-1"
     class="fuse-vertical-navigation-item-wrapper"
     [class.fuse-vertical-navigation-item-has-subtitle]="!!item.subtitle"
     [ngClass]="item.classes?.wrapper">
@@ -43,9 +43,7 @@
     </div>
 
 </div>
-
 <ng-container *ngFor="let item of item.children; trackBy: trackByFn">
-
     <!-- Skip the hidden items -->
     <ng-container *ngIf="item?.meta.indexOf(userRole)>-1 && (item.hidden && !item.hidden(item)) || !item.hidden">
 

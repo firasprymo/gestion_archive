@@ -20,7 +20,7 @@ export class FuseVerticalNavigationGroupItemComponent implements OnInit, OnDestr
     @Input() autoCollapse: boolean;
     @Input() item: FuseNavigationItem;
     @Input() name: string;
-    userRole = this._authService.getUser.role;
+    userRole = this._authService.getUser.roles[0].roleName;
 
     private _fuseVerticalNavigationComponent: FuseVerticalNavigationComponent;
     private _unsubscribeAll: Subject<any> = new Subject<any>();

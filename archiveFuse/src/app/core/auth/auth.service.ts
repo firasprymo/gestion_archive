@@ -50,6 +50,7 @@ export class AuthService {
     }
 
     get getUser(): Users {
+        console.log(localStorage.getItem(environment.users));
         return JSON.parse(localStorage.getItem(environment.users)) ?? null;
     }
 
