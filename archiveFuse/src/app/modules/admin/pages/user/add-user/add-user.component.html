@@ -70,14 +70,33 @@
                             </mat-form-field>
                         </div>
                         <div class="flex flex-col gt-xs:flex-row gt-xs:items-baseline">
-                            <span
-                                class="font-semibold mb-1 gt-xs:text-right gt-xs:min-w-32 gt-xs:mr-4 gt-xs:mb-0">Address</span>
-                            <mat-form-field class="fuse-mat-dense flex-auto">
-                                <input matInput [formControlName]="'lieuAffectation'"
-                                       placeholder="Add user lieuAffectation">
-                                <mat-error *ngIf="userForm.get('lieuAffectation').hasError('required')">
-                                    Address is required
-                                </mat-error>
+                            <mat-form-field
+                                class="flex-auto gt-xs:pr-3">
+                                <mat-label>Direction régional</mat-label>
+                                <select matNativeControl formControlName="directionRegional">
+                                    <option [ngValue]="directionRegional"
+                                            *ngFor="let directionRegional of directionRegionals$ | async">{{directionRegional?.codeDirection}}</option>
+                                </select>
+                            </mat-form-field>
+                        </div>
+                        <div class="flex flex-col gt-xs:flex-row gt-xs:items-baseline">
+                            <mat-form-field
+                                class="flex-auto gt-xs:pr-3">
+                                <mat-label>Agence</mat-label>
+                                <select matNativeControl formControlName="agence">
+                                    <option [ngValue]="agence"
+                                            *ngFor="let agence of agences$ | async">{{agence?.codeAgence}}</option>
+                                </select>
+                            </mat-form-field>
+                        </div>
+                        <div class="flex flex-col gt-xs:flex-row gt-xs:items-baseline">
+                            <mat-form-field
+                                class="flex-auto gt-xs:pr-3">
+                                <mat-label>Structure Central</mat-label>
+                                <select matNativeControl formControlName="structureCentral">
+                                    <option [ngValue]="structureCentral"
+                                            *ngFor="let structureCentral of structureCentrals$ | async">{{structureCentral?.codeStructure}}</option>
+                                </select>
                             </mat-form-field>
                         </div>
                     </div>

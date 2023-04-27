@@ -5,6 +5,14 @@ import {Skills} from '../../../../../shared/model/skills.types';
 import {Router} from '@angular/router';
 import {MatChipInputEvent} from '@angular/material/chips';
 import {UsersService} from '../../../../../shared/service/users.service';
+import {Observable} from 'rxjs';
+import {Nomenclature} from '../../../../../shared/model/nomenclature.types';
+import {StructureCentral} from '../../../../../shared/model/structure-central.types';
+import {DirectionRegional} from '../../../../../shared/model/direction-regional.types';
+import {Agence} from '../../../../../shared/model/agence.types';
+import {StructureCentralService} from '../../../../../shared/service/structure-central.service';
+import {AgenceService} from '../../../../../shared/service/agence.service';
+import {DirectionRegionalService} from '../../../../../shared/service/direction-regional.service';
 
 @Component({
     selector: 'app-add-user',
@@ -13,9 +21,15 @@ import {UsersService} from '../../../../../shared/service/users.service';
 })
 export class AddUserComponent implements OnInit {
     userForm: FormGroup;
+    structureCentrals$: Observable<StructureCentral[]>;
+    directionRegionals$: Observable<DirectionRegional[]>;
+    agences$: Observable<Agence[]>;
 
     constructor(private _formBuilder: FormBuilder,
                 private _router: Router,
+                private _structureCentralService: StructureCentralService,
+                private _agenceService: AgenceService,
+                private _directionRegionalService: DirectionRegionalService,
                 private _userService: UsersService) {
 
     }
@@ -28,8 +42,13 @@ export class AddUserComponent implements OnInit {
             email: ['', [Validators.required, Validators.email]],
             password: ['', Validators.required],
             roleNames: [[''], Validators.required],
-            lieuAffectation: ['', Validators.required],
+            directionRegional: ['',],
+            structureCentral: ['',],
+            agence: ['',],
         });
+        this.structureCentrals$ = this._structureCentralService.structureCentrals$;
+        this.agences$ = this._agenceService.agences$;
+        this.directionRegionals$ = this._directionRegionalService.directionRegionals$;
 
     }
 
