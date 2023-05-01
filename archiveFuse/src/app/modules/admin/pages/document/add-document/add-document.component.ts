@@ -8,6 +8,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Documents} from '../../../../../shared/model/documents.types';
 import {NomenclatureService} from '../../../../../shared/service/nomenclature.service';
 import {Nomenclature} from '../../../../../shared/model/nomenclature.types';
+import {Users} from '../../../../../shared/model/users.types';
+import {UserService} from '../../../../../core/user/user.service';
 
 @Component({
     selector: 'app-add-document',
@@ -19,6 +21,7 @@ export class AddDocumentComponent implements OnInit, OnDestroy {
     document: Documents;
     document$: Observable<Documents>;
     nomenclatures$: Observable<Nomenclature[]>;
+    user$: Observable<Users>;
     notCorrectType = false;
     isUpdate = false;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
@@ -26,6 +29,7 @@ export class AddDocumentComponent implements OnInit, OnDestroy {
     constructor(private _formBuilder: FormBuilder,
                 private _changeDetectorRef: ChangeDetectorRef,
                 private _documentService: DocumentsService,
+                private _userService: UserService,
                 private _router: Router,
                 private _nomenclatureService: NomenclatureService,
                 private active: ActivatedRoute
@@ -40,18 +44,43 @@ export class AddDocumentComponent implements OnInit, OnDestroy {
             dateCreation: ['',],
             dateReception: ['',],
             codeLieuArchive: ['', Validators.required],
+            nomenclature: ['', Validators.required],
             lieuArchive: ['', Validators.required],
         });
         this._documentService.document$.subscribe((res) => {
-            this.isUpdate = true;
-            this.documentForm.patchValue({
-                id: res.id,
-                nomberPage: res.nomberPage,
-                codeLieuArchive: res.codeLieuArchive,
-                lieuArchive: res.lieuArchive
-            });
+            console.log(res);
+            if (res) {
+                this.isUpdate = true;
+                this.documentForm.patchValue({
+                    id: res?.id,
+                    nomberPage: res?.nomberPage,
+                    codeLieuArchive: res?.codeLieuArchive,
+                    lieuArchive: res?.lieuArchive
+                });
+            }
         });
-        this.nomenclatures$=this._nomenclatureService.nomenclatures$;
+        this._userService.get().subscribe((res: Users) => {
+            console.log(res);
+            if (res.agence) {
+                this.documentForm.patchValue({
+                    lieuArchive: res?.agence?.codeAgence
+                });
+
+            }
+            if (res.structureCentral) {
+                this.documentForm.patchValue({
+                    lieuArchive: res?.structureCentral?.codeStructure
+                });
+
+            }
+            if (res.directionRegional) {
+                this.documentForm.patchValue({
+                    lieuArchive: res?.directionRegional?.codeDirection
+                });
+
+            }
+        });
+        this.nomenclatures$ = this._nomenclatureService.nomenclatures$;
     }
 
     ngOnDestroy(): void {

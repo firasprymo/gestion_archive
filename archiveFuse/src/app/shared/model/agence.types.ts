@@ -1,5 +1,5 @@
 import {StructureCentral} from './structure-central.types';
-import {User} from '../../core/user/user.types';
+import {Users} from './users.types';
 
 export interface Agence {
     id: number;
@@ -8,5 +8,5 @@ export interface Agence {
     lieuArchive: string;
     lieuArchiveSecAge: string;
     structure: StructureCentral;
-    users: User[];
+    users: Users[];
 }

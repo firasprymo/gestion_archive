@@ -4,8 +4,6 @@ import {Observable, Subject} from 'rxjs';
 import {AgenceService} from '../../../../../shared/service/agence.service';
 import {Router} from '@angular/router';
 import {StructureCentral} from '../../../../../shared/model/structure-central.types';
-import {User} from '../../../../../core/user/user.types';
-import {DirectionRegional} from '../../../../../shared/model/direction-regional.types';
 import {StructureCentralService} from '../../../../../shared/service/structure-central.service';
 
 @Component({

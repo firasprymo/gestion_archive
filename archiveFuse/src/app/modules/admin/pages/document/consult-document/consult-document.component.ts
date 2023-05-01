@@ -292,9 +292,7 @@ export class ConsultDocumentComponent implements OnInit, AfterViewInit, OnDestro
 
     isRoleResponsibleInList(value): any {
         return this.user$.subscribe(user =>
-            user.roles.some((obj) => {
-                return obj.roleName === value;
-            })
+            user.roles.some(obj => obj.roleName === value)
         );
     }
 

@@ -30,19 +30,21 @@ public class UserServiceImpl implements UserService {
 
 
 
-    public User createUser(String username, String password, String lieuAffectation, Set<String> roleNames) {
+    public User createUser(User user) {
 
-        if (userDao.findByUsername(username).isPresent()) {
-            throw new UserExistsException("utilisateur " + username + " deja exist.");
+        if (userDao.findByUsername(user.getUsername()).isPresent()) {
+            throw new UserExistsException("utilisateur " + user.getUsername() + " deja exist.");
         }
 
-        User user = new User();
-        user.setUsername(username);
-        user.setPassword(passwordEncoder.encode(password));
-        user.setLieuAffectation(lieuAffectation);
+        User users = new User();
+        users.setUsername(user.getUsername());
+        users.setPassword(passwordEncoder.encode(user.getPassword()));
+        users.setAgence(user.getAgence());
+        users.setStructureCentral(user.getStructureCentral());
+        users.setDirectionRegional(user.getDirectionRegional());
 
-        Set<Role> roles = roleNames.stream()
-                .map(roleName -> roleDao.findByRoleName(roleName).orElseThrow(() -> new RuntimeException("Role introuvable")))
+        Set<Role> roles = user.getRoles().stream()
+                .map(roleName -> roleDao.findByRoleName(roleName.getRoleName()).orElseThrow(() -> new RuntimeException("Role introuvable")))
                 .collect(Collectors.toSet());
 
         user.setRoles(roles);

@@ -26,8 +26,8 @@ public class UserController {
 
     @PreAuthorize("hasAnyAuthority('SCOPE_ROLE_ADMIN','SCOPE_ROLE_RESPONSABLE')")
     @PostMapping("/register")
-    public User createUser(@RequestBody CreateUserRequest request) {
-        return userService.createUser(request.getUsername(), request.getPassword(), request.getLieuAffectation(), request.getRoleNames());
+    public User createUser(@RequestBody User user) {
+        return userService.createUser(user);
     }
 
     @GetMapping("/Me")

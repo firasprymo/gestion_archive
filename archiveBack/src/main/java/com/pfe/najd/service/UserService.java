@@ -9,7 +9,7 @@ import java.util.Set;
 
 public interface UserService {
     User getMe(String username);
-    User createUser(String username, String password, String lieuAffectation, Set<String> roleNames);
+    User createUser(User user);
     Page<User> pageUsers(Pageable pageable);
 
 }

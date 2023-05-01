@@ -8,7 +8,6 @@ import {FuseNavigationItem} from '@fuse/components/navigation/navigation.types';
 import {FuseUtilsService} from '@fuse/services/utils/utils.service';
 import {AuthService} from '../../../../../../app/core/auth/auth.service';
 import {UserService} from '../../../../../../app/core/user/user.service';
-import {User} from '../../../../../../app/core/user/user.types';
 
 @Component({
     selector: 'fuse-horizontal-navigation-basic-item',

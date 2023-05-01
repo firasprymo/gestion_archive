@@ -22,7 +22,7 @@ export const appRoutes: Route[] = [
     // location. This is a small convenience to keep all main routes together here on this file.
     {
         path: 'signed-in-redirect',
-        pathMatch: 'full', redirectTo: '/apps/academy'
+        pathMatch: 'full', redirectTo: 'dashboards/project'
     },
 
     // Auth routes for guests

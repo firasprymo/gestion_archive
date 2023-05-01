@@ -1,5 +1,6 @@
 package com.pfe.najd.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.pfe.najd.Enum.DocumentStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,6 +25,7 @@ public class Document extends AbstractEntity{
     private String lieuArchive;
     @ManyToOne
     @JoinColumn(name="nomenclature_id",nullable = true)
+    @JsonIgnoreProperties("documents")
     private Nomenclature nomenclature;
     @Enumerated(EnumType.STRING)
     private DocumentStatus Status ;

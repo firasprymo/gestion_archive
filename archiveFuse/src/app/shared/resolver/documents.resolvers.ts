@@ -56,6 +56,7 @@ export class documentByIdResolver implements Resolve<any> {
      * @param state
      */
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Documents> {
+        console.log(!route.paramMap.get('id'));
         if (!route.paramMap.get('id')) {
             return;
         }

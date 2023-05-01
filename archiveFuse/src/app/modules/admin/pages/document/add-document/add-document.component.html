@@ -44,7 +44,7 @@
                             <mat-form-field
                                 class="flex-auto gt-xs:pr-3">
                                 <mat-label>Nomenclature</mat-label>
-                                <select matNativeControl formControlName="structure">
+                                <select matNativeControl formControlName="nomenclature">
                                     <option [ngValue]="nomenclature"
                                             *ngFor="let nomenclature of nomenclatures$ | async">{{nomenclature?.designationNomenclature}}</option>
                                 </select>
@@ -57,20 +57,19 @@
                     <button mat-button>
                         Cancel
                     </button>
-                    <button *ngIf="!isUpdate else onCreate" (click)="createDocument()"
+                    <button *ngIf="isUpdate else onCreate" (click)="updateDocument()"
                             class="px-6 ml-3"
                             mat-flat-button
-                            [disabled]="!documentForm.valid"
-                            [color]="'primary'">
-                        Save
+                            [color]="'warn'">
+                        Update
                     </button>
                     <ng-template #onCreate>
-                        <button (click)="updateDocument()"
+                        <button (click)="createDocument()"
                                 class="px-6 ml-3"
                                 mat-flat-button
                                 [disabled]="!documentForm.valid"
-                                [color]="'warn'">
-                            Update
+                                [color]="'primary'">
+                            Save
                         </button>
                     </ng-template>
                 </div>

@@ -24,6 +24,8 @@ public class AgenceServiceImpl implements AgenceService {
         return agenceDao.existsByCodeAgence(codeAgence);
     }
     public Agence createAgence(Agence agence) {
+        agence.setCodeAgence("AG" + agence.getCodeAgence());
+
         return agenceDao.save(agence);
     }
     public Optional<Agence> getAgenceById(Long id) {

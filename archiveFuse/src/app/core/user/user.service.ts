@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable, of, ReplaySubject, throwError} from 'rxjs';
 import {catchError, map, retry, switchMap, tap} from 'rxjs/operators';
-import {User} from 'app/core/user/user.types';
 import {environment} from '../../../environments/environment';
 import {Users} from '../../shared/model/users.types';
 
@@ -12,7 +11,7 @@ const usersURL = environment.apiUrl + environment.users;
     providedIn: 'root'
 })
 export class UserService {
-    private _user: ReplaySubject<User> = new ReplaySubject<User>(1);
+    private _user: ReplaySubject<Users> = new ReplaySubject<Users>(1);
 
     /**
      * Constructor
@@ -29,12 +28,12 @@ export class UserService {
      *
      * @param value
      */
-    set user(value: User) {
+    set user(value: Users) {
         // Store the value
         this._user.next(value);
     }
 
-    get user$(): Observable<User> {
+    get user$(): Observable<Users> {
         return this._user.asObservable();
     }
 
@@ -63,8 +62,8 @@ export class UserService {
      *
      * @param user
      */
-    update(user: User): Observable<any> {
-        return this._httpClient.patch<User>('api/common/user', {user}).pipe(
+    update(user: Users): Observable<any> {
+        return this._httpClient.patch<Users>('api/common/user', {user}).pipe(
             map((response) => {
                 this._user.next(response);
             })
