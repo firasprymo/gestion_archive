@@ -44,7 +44,7 @@ import {InventoryService} from '../../../apps/ecommerce/inventory/inventory.serv
                 }
 
                 @screen lg {
-                    grid-template-columns: 48px 112px auto 112px 96px 96px 72px;
+                    grid-template-columns: 148px 112px auto 112px 96px 96px 72px;
                 }
             }
         `
@@ -119,26 +119,6 @@ export class ShowUsersComponent implements OnInit, AfterViewInit, OnDestroy {
             active: [false]
         });
 
-        // Get the brands
-        this._inventoryService.brands$
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((brands: InventoryBrand[]) => {
-                // Update the brands
-                this.brands = brands;
-                // Mark for check
-                this._changeDetectorRef.markForCheck();
-            });
-
-        // Get the categories
-        this._inventoryService.categories$
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((categories: InventoryCategory[]) => {
-                // Update the categories
-                this.categories = categories;
-                // Mark for check
-                this._changeDetectorRef.markForCheck();
-            });
-
         // Get the pagination
         this._userService.pagination$
             .pipe(takeUntil(this._unsubscribeAll))
@@ -151,30 +131,6 @@ export class ShowUsersComponent implements OnInit, AfterViewInit, OnDestroy {
         // Get the products
         this.users$ = this._userService.users$;
 
-        // Get the tags
-        this._skillsService.skills$
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((skills: Skills[]) => {
-
-                // Update the skills
-                this.skills = skills;
-                this.filteredSkills = skills;
-
-                // Mark for check
-                this._changeDetectorRef.markForCheck();
-            });
-
-        // Get the vendors
-        this._inventoryService.vendors$
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((vendors: InventoryVendor[]) => {
-
-                // Update the vendors
-                this.vendors = vendors;
-
-                // Mark for check
-                this._changeDetectorRef.markForCheck();
-            });
 
         // Subscribe to search input field value changes
         this.searchInputControl.valueChanges
@@ -272,7 +228,7 @@ export class ShowUsersComponent implements OnInit, AfterViewInit, OnDestroy {
     /**
      * Delete the selected product using the form data
      */
-    deleteSelectedUser(user: Users): void {
+    deleteSelectedUser(user: Users, index): void {
         // Open the confirmation dialog
         const confirmation = this._fuseConfirmationService.open({
             title: 'Delete User',
@@ -286,7 +242,6 @@ export class ShowUsersComponent implements OnInit, AfterViewInit, OnDestroy {
 
         // Subscribe to the confirmation dialog closed action
         confirmation.afterClosed().subscribe((result) => {
-
             // If the confirm button pressed...
             if (result === 'confirmed') {
 
@@ -294,7 +249,7 @@ export class ShowUsersComponent implements OnInit, AfterViewInit, OnDestroy {
 
                 // Delete the product on the server
                 this._userService.deleteUser(user).subscribe(() => {
-
+                    this.users$ = this._userService.users$;
                     // Close the details
                     this.closeDetails();
                 });

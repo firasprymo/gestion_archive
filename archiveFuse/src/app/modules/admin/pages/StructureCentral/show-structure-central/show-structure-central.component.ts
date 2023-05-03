@@ -237,6 +237,7 @@ export class ShowStructureCentralComponent implements OnInit, AfterViewInit, OnD
 
                 // Delete the product on the server
                 this._structureCentralService.deleteStructureCentral(structureCentral).subscribe(() => {
+                    this.structureCentrals$ = this._structureCentralService.structureCentrals$;
 
                     // Close the details
                     this.closeDetails();

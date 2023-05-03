@@ -6,6 +6,7 @@ import {CentreArchive} from '../model/centre-archive.types';
 import {ApiService} from './api.service';
 import {HttpClient} from '@angular/common/http';
 import {map, switchMap, take, tap} from 'rxjs/operators';
+import {Nomenclature} from "../model/nomenclature.types";
 
 
 @Injectable({
@@ -65,19 +66,21 @@ export class CentreArchiveService {
      * Get centreArchive by id
      */
     getCentreArchiveById(id): Observable<CentreArchive> {
-        return this._centreArchive.pipe(
-            take(1),
-            map((centreArchiveItem) => {
-                this._centreArchive.next(centreArchiveItem);
-                return centreArchiveItem;
-            }),
-            switchMap((centreArchiveItem) => {
+        return this._httpClient.get<CentreArchive>(`${ApiService.apiCentreArchives}/${id}`).pipe(
+            map((centreArchive) => {
+                // Update the this.centreArchive
+                this._centreArchive.next(centreArchive);
 
-                if (!centreArchiveItem) {
-                    return throwError('Could not found product with id of ' + id + '!');
+                // Return the this.centreArchive
+                return centreArchive;
+            }),
+            switchMap((centreArchive) => {
+
+                if (!centreArchive) {
+                    return throwError('Could not found centreArchive with id of ' + id + '!');
                 }
 
-                return of(centreArchiveItem);
+                return of(centreArchive);
             })
         );
     }

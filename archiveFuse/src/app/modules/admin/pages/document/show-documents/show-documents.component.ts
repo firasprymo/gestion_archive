@@ -25,6 +25,7 @@ import {DocumentsService} from '../../../../../shared/service/documents.service'
 import {SkillsService} from '../../../../../shared/service/skills.service';
 import {debounceTime, map, switchMap, takeUntil} from 'rxjs/operators';
 import {ApiService} from '../../../../../shared/service/api.service';
+import {DocumentStatus} from "../../../../../shared/model/document-status.enum";
 
 @Component({
     selector: 'app-show-documents',
@@ -44,7 +45,7 @@ import {ApiService} from '../../../../../shared/service/api.service';
                 }
 
                 @screen lg {
-                    grid-template-columns: 48px 112px auto 112px 96px 96px 72px;
+                    grid-template-columns: 48px 112px 100px 112px 96px 96px 72px;
                 }
             }
         `
@@ -290,4 +291,7 @@ export class ShowDocumentsComponent implements OnInit, AfterViewInit, OnDestroy 
     }
 
 
+    getEnum(status: DocumentStatus | undefined): any {
+        return DocumentStatus[status];
+    }
 }

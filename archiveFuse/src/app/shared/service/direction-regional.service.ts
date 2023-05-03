@@ -121,7 +121,7 @@ export class DirectionRegionalService {
         return this.directionRegionals$.pipe(
             take(1),
             switchMap(directionRegionalItem =>
-                this._httpClient.delete(`${ApiService.apiVersion}${ApiService.apiDirectionRegional}/${directionRegional.codeDirection}`).pipe(
+                this._httpClient.delete(`${ApiService.apiVersion}${ApiService.apiDirectionRegional}/${directionRegional.id}`).pipe(
                     map(() => {
                         // Find the index of the deleted product
                         const index = directionRegionalItem.findIndex(item => item.codeDirection === directionRegional.codeDirection);

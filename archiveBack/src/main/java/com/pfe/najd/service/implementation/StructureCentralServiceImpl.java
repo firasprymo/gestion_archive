@@ -61,6 +61,7 @@ public class StructureCentralServiceImpl implements StructureCentralService {
 
     }
 
+    @Transactional
     public void deleteStructureCentralById(Long id) {
         if (structureCentralDao.existsById(id)) {
             structureCentralDao.deleteById(id);
@@ -75,7 +76,7 @@ public class StructureCentralServiceImpl implements StructureCentralService {
             StructureCentral structureCentral = structureCentralOptional.get();
             if (agenceService.existsByCodeAgence(agence.getCodeAgence())) {
                 throw new RuntimeException("Agence avec code " + agence.getCodeAgence() + "deja existe ");
-            }else {
+            } else {
 //                agence.setStructureCentral(structureCentral);
 //                structureCentral.getAgences().add(agence);
                 structureCentralDao.save(structureCentral);
@@ -88,7 +89,7 @@ public class StructureCentralServiceImpl implements StructureCentralService {
 
     public List<StructureCentral> getStructureCentralByCodeDirection(String codeDirection) {
 //        return structureCentralDao.findByDirectionRegional_CodeDirection(codeDirection);
-    return null;
+        return null;
     }
 
     public List<StructureCentral> getStrucutureCentralByName(String libelleDirection) {

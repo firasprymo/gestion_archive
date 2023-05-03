@@ -64,7 +64,7 @@ export class AddStructureCentralComponent implements OnInit, OnDestroy {
         this._structureCentralService.addStructureCentral(body).subscribe((newStructureCentral) => {
             // Mark for check
             this._changeDetectorRef.markForCheck();
-            this._router.navigate(['pages/show-nomenclatures']);
+            this._router.navigate(['pages/show-structures']);
 
         });
     }

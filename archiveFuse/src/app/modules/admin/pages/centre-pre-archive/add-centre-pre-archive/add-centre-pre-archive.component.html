@@ -10,13 +10,10 @@
                             <span class="font-semibold mb-1 gt-xs:text-right gt-xs:min-w-32 gt-xs:mr-4
                             gt-xs:mb-0"> Code Centre Pré Archive</span>
                             <mat-form-field class="fuse-mat-dense flex-auto">
-                                <input type="number" matInput [formControlName]="'codeCentrePreArchive'" rows="2"
+                                <input type="text" matInput [formControlName]="'codeCentrePreArchive'" rows="2"
                                        placeholder="Ajouter code centre archive">
                                 <mat-error *ngIf="centreForm.controls.codeCentrePreArchive.hasError('required')">
                                     Code Centre Archive est obligatoire
-                                </mat-error>
-                                <mat-error *ngIf="centreForm.controls.codeCentrePreArchive.hasError('pattern')">
-                                    Nombre only
                                 </mat-error>
 
                             </mat-form-field>
@@ -40,13 +37,22 @@
                     <button mat-button>
                         Cancel
                     </button>
-                    <button (click)="createCentreArchive()"
+                    <button (click)="editCentrePreArchive()" *ngIf="isUpdate else onCreate"
                             class="px-6 ml-3"
                             mat-flat-button
-                            [disabled]="!centreForm.valid"
-                            [color]="'primary'">
-                        Save
+                            [color]="'warn'">
+                        Update
                     </button>
+                    <ng-template #onCreate>
+
+                        <button (click)="createCentreArchive()"
+                                class="px-6 ml-3"
+                                mat-flat-button
+                                [disabled]="!centreForm.valid"
+                                [color]="'primary'">
+                            Save
+                        </button>
+                    </ng-template>
                 </div>
             </form>
         </div>

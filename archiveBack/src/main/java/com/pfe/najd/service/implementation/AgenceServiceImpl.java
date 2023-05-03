@@ -23,10 +23,13 @@ public class AgenceServiceImpl implements AgenceService {
     public boolean existsByCodeAgence(String codeAgence) {
         return agenceDao.existsByCodeAgence(codeAgence);
     }
+
+    @Transactional
     public Agence createAgence(Agence agence) {
         agence.setCodeAgence("AG" + agence.getCodeAgence());
+        agence.setStructure(agence.getStructure());
 
-        return agenceDao.save(agence);
+        return agenceDao.saveAndFlush(agence);
     }
     public Optional<Agence> getAgenceById(Long id) {
         return agenceDao.findById(id);

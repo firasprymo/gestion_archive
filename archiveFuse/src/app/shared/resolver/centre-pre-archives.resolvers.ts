@@ -37,11 +37,10 @@ export class CentrePreArchivesResolvers implements Resolve<any> {
 }
 
 
-
 @Injectable({
     providedIn: 'root'
 })
-export class centreArchivesByIdResolver implements Resolve<any> {
+export class centrePreArchivesByIdResolver implements Resolve<any> {
     /**
      * Constructor
      */
@@ -62,6 +61,9 @@ export class centreArchivesByIdResolver implements Resolve<any> {
      * @param state
      */
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<CentrePreArchive> {
+        if (!route.paramMap.get('id')) {
+            return;
+        }
         return this._centreArchiveService.getCentrePreArchiveById(route.paramMap.get('id'))
             .pipe(
                 // Error here means the requested task is not available

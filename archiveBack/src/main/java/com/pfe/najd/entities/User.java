@@ -35,16 +35,16 @@ public class User extends AbstractEntity {
     private Set<Role> roles;
 
     // Relationships with DirectionRegional, StructureCentral, and Agence
-    @ManyToOne
-    @JoinColumn(name = "direction_regional_code", referencedColumnName = "codeDirection", insertable = false, updatable = true)
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "direction_regional_code", referencedColumnName = "codeDirection")
     private DirectionRegional directionRegional;
 
-    @ManyToOne
-    @JoinColumn(name = "structure_central_code", referencedColumnName = "codeStructure", insertable = false, updatable = true)
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "structure_central_code", referencedColumnName = "codeStructure")
     private StructureCentral structureCentral;
 
-    @ManyToOne
-    @JoinColumn(name = "agence_code", referencedColumnName = "codeAgence", insertable = false, updatable = true)
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "agence_code", referencedColumnName = "codeAgence")
     private Agence agence;
 
 

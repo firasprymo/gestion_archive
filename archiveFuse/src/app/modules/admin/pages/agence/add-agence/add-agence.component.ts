@@ -54,9 +54,7 @@ export class AddAgenceComponent implements OnInit, OnDestroy {
             libelleAgence: this.agenceForm.value.libelleAgence,
             lieuArchive: this.agenceForm.value.lieuArchive,
             lieuArchiveSecAge: this.agenceForm.value.lieuArchiveSecAge,
-            structure: {
-                id: this.agenceForm.value.structure.id
-            },
+            structure: this.agenceForm.value.structure
         };
         // Create the product
         this._agenceService.addAgence(body).subscribe((newAgence) => {

@@ -3,6 +3,7 @@ package com.pfe.najd.controller;
 import com.pfe.najd.entities.Agence;
 
 import com.pfe.najd.entities.StructureCentral;
+import com.pfe.najd.service.AgenceService;
 import com.pfe.najd.service.implementation.AgenceServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class AgenceController {
 
-    private final AgenceServiceImpl agenceService;
+    private final AgenceService agenceService;
 
     @PostMapping("/create")
     public ResponseEntity<Agence> createAgence(@RequestBody Agence agence){

@@ -37,7 +37,8 @@ export class AddNomenclatureComponent implements OnInit, OnDestroy {
             valeurHistoriqueTroiAge: [false, Validators.required],
         });
         this._nomenclatureService.nomenclature$.subscribe((res) => {
-            this.isUpdate = true;
+            if (res)
+                this.isUpdate = true;
             this.nomenclatureForm.patchValue({
                 id: res.id,
                 designationNomenclature: res.designationNomenclature,

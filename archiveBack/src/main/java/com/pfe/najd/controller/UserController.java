@@ -34,7 +34,15 @@ public class UserController {
     public User getMe(@RequestParam  String username) {
         return userService.getMe(username);
     }
-
+    @DeleteMapping("/delete-user/{id}")
+    public ResponseEntity<Void> deleteUserById(@PathVariable("id") Long id){
+        try{
+            userService.deleteUserById(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }catch (RuntimeException e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
     @ExceptionHandler(UserExistsException.class)
     public ResponseEntity<String> handleUserExistsException(UserExistsException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());

@@ -14,9 +14,6 @@ const routes: Routes = [{
     resolve: {
         users: UsersResolvers,
         categories: InventoryCategoriesResolver,
-        trainers: UsersResolvers,
-        // skills: SkillsResolvers,
-        vendors: InventoryVendorsResolver
     }
 }];
 

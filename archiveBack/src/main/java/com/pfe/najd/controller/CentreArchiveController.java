@@ -42,8 +42,8 @@ public class CentreArchiveController {
         List<CentreArchive> centreArchives = centreArchiveService.getAllCentreArchive();
         return new ResponseEntity<>(centreArchives,HttpStatus.OK);
     }
-    @GetMapping("/get-centre-archive/{codeCentreArchive}")
-    public ResponseEntity<CentreArchive> getCentreArchiveById(@PathVariable("codeCentreArchive") Long id){
+    @GetMapping("/{id}")
+    public ResponseEntity<CentreArchive> getCentreArchiveById(@PathVariable("id") Long id){
         Optional<CentreArchive> centreArchive = centreArchiveService.getCentreArchiveById(id);
         if(centreArchive.isPresent()){
             return new ResponseEntity<>(centreArchive.get(),HttpStatus.OK);
@@ -64,7 +64,7 @@ public class CentreArchiveController {
     }
 
     @PreAuthorize("hasAnyAuthority('SCOPE_ROLE_ADMIN')")
-    @PutMapping("/update/{codeCentreArchive}")
+    @PatchMapping("/{codeCentreArchive}")
     public ResponseEntity<CentreArchive> updateCentreArchive(@PathVariable("codeCentreArchive") Long id,
                                                                    @RequestBody CentreArchive updatedCentreArchive){
         try{

@@ -118,7 +118,7 @@ export class StructureCentralService {
     return this.structureCentrals$.pipe(
         take(1),
         switchMap(structureCentralItem =>
-            this._httpClient.delete(`${ApiService.apiStructureCentral}/${structureCentral.codeStructure}`).pipe(
+            this._httpClient.delete(`${ApiService.apiStructureCentral}/${structureCentral.id}`).pipe(
                 map(() => {
                     // Find the index of the deleted product
                     const index = structureCentralItem.findIndex(item => item.codeStructure === structureCentral.codeStructure);

@@ -19,7 +19,6 @@ export const environment = {
     centreArchives: 'api/centre-archives',
     centrePreArchives: 'api/centre-pre-archives',
     documentRequests: 'api/document-requests',
-    quizs: 'quizs',
     steps: 'steps',
     activeUser: 'activeUser',
     agences: 'api/agences'

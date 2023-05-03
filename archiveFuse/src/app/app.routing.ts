@@ -81,14 +81,7 @@ export const appRoutes: Route[] = [
                         path: 'file-manager',
                         loadChildren: () => import('app/layout/file-manager/file-manager.module').then(m => m.FileManagerModule)
                     },
-                    {
-                        path: 'show-exams',
-                        loadChildren: () => import('app/modules/admin/pages/exam/show-exams/show-exams.module').then(m => m.ShowExamsModule)
-                    },
-                    {
-                        path: 'pass-exam/:idQuiz',
-                        loadChildren: () => import('app/modules/admin/pages/exam/pass-exam/pass-exam.module').then(m => m.PassExamModule)
-                    },
+
                 ]
             }
         ]
@@ -144,13 +137,6 @@ export const appRoutes: Route[] = [
             // Dashboards
             {
                 path: 'dashboards', children: [
-                    {
-                        path: 'project',
-                        data: {
-                            role: roleAdmin
-                        },
-                        loadChildren: () => import('app/modules/admin/dashboards/project/project.module').then(m => m.ProjectModule)
-                    },
                     {
                         path: 'analytics',
                         loadChildren: () => import('app/modules/admin/dashboards/analytics/analytics.module').then(m => m.AnalyticsModule)
@@ -313,20 +299,6 @@ export const appRoutes: Route[] = [
                         //     role: roleAdmin
                         // },
                         loadChildren: () => import('app/modules/admin/pages/document/consult-document/consult-document.module').then(m => m.ConsultDocumentModule)
-                    },
-                    {
-                        path: 'add-quiz/:idLesson',
-                        data: {
-                            role: roleAdmin
-                        },
-                        loadChildren: () => import('app/modules/admin/pages/quiz/add-quiz/add-quiz.module').then(m => m.AddQuizModule)
-                    },
-                    {
-                        path: 'show-quizes',
-                        data: {
-                            role: roleAdmin
-                        },
-                        loadChildren: () => import('app/modules/admin/pages/quiz/show-quizes/show-quizes.module').then(m => m.ShowQuizesModule)
                     },
                     {
                         path: 'add-trainer',

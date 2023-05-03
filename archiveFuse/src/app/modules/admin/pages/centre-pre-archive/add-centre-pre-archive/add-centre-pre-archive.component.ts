@@ -16,6 +16,7 @@ import {CentrePreArchiveService} from '../../../../../shared/service/centre-pre-
 export class AddCentrePreArchiveComponent implements OnInit, OnDestroy {
     centreForm: FormGroup;
     center: CentreArchive;
+    isUpdate = false;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     constructor(private _formBuilder: FormBuilder,
@@ -29,12 +30,23 @@ export class AddCentrePreArchiveComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         // Horizontal stepper form
         this.centreForm = this._formBuilder.group({
+            id: [],
             codeCentrePreArchive: ['',
                 [
                     Validators.required,
-                    Validators.pattern('[0-9]+')
                 ]],
             libelleCentrePreArchive: ['', Validators.required],
+        });
+        this._centerService.centrePreArchive$.subscribe((res) => {
+            console.log(res);
+            if (res) {
+                this.isUpdate = true;
+                this.centreForm.patchValue({
+                    id: res.id,
+                    codeCentrePreArchive: res.codeCentrePreArchive,
+                    libelleCentrePreArchive: res.libelleCentrePreArchive,
+                });
+            }
         });
 
     }
@@ -63,4 +75,13 @@ export class AddCentrePreArchiveComponent implements OnInit, OnDestroy {
     }
 
 
+    editCentrePreArchive(): any {
+        this._centerService.editCentrePreArchive(this.centreForm.value, this.centreForm.value.id).subscribe((newCentreArchive) => {
+            // Mark for check
+            this._changeDetectorRef.markForCheck();
+            this._router.navigate(['pages/show-centres-pre']);
+
+        });
+
+    }
 }

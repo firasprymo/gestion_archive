@@ -65,4 +65,13 @@ public class UserServiceImpl implements UserService {
         return new PageImpl<>(users.getContent(), users.getPageable(), users.getTotalElements());
 
     }
+
+
+    public void deleteUserById(Long id) {
+        if (userDao.existsById(id)) {
+            userDao.deleteById(id);
+        } else {
+            throw new RuntimeException("User :" + id + "n'existe pas");
+        }
+    }
 }

@@ -79,8 +79,8 @@ public class StructureCentralController {
     }
     //delete Structure Central by Id
     @PreAuthorize("hasAnyAuthority('SCOPE_ROLE_ADMIN')")
-    @DeleteMapping("/delete/{codeStructure}")
-    public ResponseEntity<Void> deleteCodeStructureById(@PathVariable("codeStructure") Long id){
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteCodeStructureById(@PathVariable("id") Long id){
         try{
             structureCentralService.deleteStructureCentralById(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);

@@ -34,7 +34,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 type: 'basic',
                 icon: 'heroicons_outline:chart-pie',
                 link: '/pages/show-documents',
-                meta: 'ROLE_USER',
+                meta: 'ROLE_AGENT',
             },
             {
                 id: 'documents.consult',
