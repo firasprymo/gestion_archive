@@ -11,6 +11,7 @@ import javax.persistence.*;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -22,6 +23,8 @@ public class Document extends AbstractEntity{
 
     private String nomberPage;
     private String codeLieuArchive;
+    private LocalDate maturitePremAge;
+    private LocalDate maturiteSecAge;
     private String lieuArchive;
     @ManyToOne
     @JoinColumn(name="nomenclature_id",nullable = true)

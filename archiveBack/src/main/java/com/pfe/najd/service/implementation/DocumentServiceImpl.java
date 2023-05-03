@@ -17,6 +17,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,8 +34,11 @@ public class DocumentServiceImpl implements DocumentService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
         User user = userRepository.findByUsername(currentPrincipalName);
-        document.setStatus(DocumentStatus.PENDING);
         Document document1 = documentRepository.save(document);
+        document.setStatus(DocumentStatus.PENDING);
+        document.setMaturitePremAge(LocalDate.from(document.getCreationDate().plusDays(Long.parseLong(document.getNomenclature().getDureeConservationPremAge()))));
+        document.setMaturiteSecAge(LocalDate.from(document.getCreationDate().plusDays(Long.parseLong(document.getNomenclature().getDureeConservationSecAge()))));
+        documentRepository.save(document);
         DocumentRequest documentRequest = new DocumentRequest();
         documentRequest.setDocument(document1);
 
@@ -44,7 +49,19 @@ public class DocumentServiceImpl implements DocumentService {
 
 
     public List<Document> getAllDocument() {
-        return documentRepository.findAll();
+        List<Document> documents = documentRepository.findAll();
+        for (Document item :
+                documents) {
+            if (LocalDate.now().isBefore(item.getMaturitePremAge())) {
+                item.setStatus(DocumentStatus.PRIME_AGE);
+                documentRepository.save(item);
+            }
+            if (LocalDate.now().isBefore(item.getMaturiteSecAge())) {
+                item.setStatus(DocumentStatus.SECOND_AGE);
+                documentRepository.save(item);
+            }
+        }
+        return documents;
     }
 
     public Optional<Document> getDocumentById(Long numDocument) {

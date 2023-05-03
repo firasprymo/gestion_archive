@@ -54,12 +54,16 @@
 Nomber Page
                             </div>
                             <div
-                                [mat-sort-header]="'codeLieuArchive'">
-Code Lieu Archive
-                            </div>
-                            <div
                                 [mat-sort-header]="'lieuArchive'">
 Lieu Archive
+                            </div>
+                            <div
+                                [mat-sort-header]="'maturitePremAge'">
+maturité Premiére Age
+                            </div>
+                            <div
+                                [mat-sort-header]="'maturiteSecAge'">
+maturité seconde Age
                             </div>
                             <div
                                 [mat-sort-header]="'status'">
@@ -82,17 +86,19 @@ Status
 
                                     <!-- Name -->
                                     <div class="truncate">
-                                        {{document?.codeLieuArchive}}
+                                        {{document?.lieuArchive}}
                                     </div>
                                     <div class="truncate">
-                                        {{document?.lieuArchive}}
+                                        {{document?.maturitePremAge}}
+                                    </div>
+                                    <div class="truncate">
+                                        {{document?.maturiteSecAge}}
                                     </div>
                                     <div class="truncate">
                                         {{getEnum(document?.status)}}
                                     </div>
 
                                     <!-- Price -->
-
 
 
                                     <!-- Details button -->
