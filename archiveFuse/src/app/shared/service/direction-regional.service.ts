@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import {environment} from '../../../environments/environment';
 import {BehaviorSubject, Observable, of, throwError} from 'rxjs';
 import {InventoryPagination} from '../../modules/admin/apps/ecommerce/inventory/inventory.types';
 import {DirectionRegional} from '../model/direction-regional.types';
@@ -7,7 +6,6 @@ import {ApiService} from './api.service';
 import {HttpClient} from '@angular/common/http';
 import {map, switchMap, take, tap} from 'rxjs/operators';
 
-const directionRegionalURL = environment.directionRegional;
 
 @Injectable({
     providedIn: 'root'
@@ -65,21 +63,24 @@ export class DirectionRegionalService {
      * Get directionRegional by id
      */
     getDirectionRegionalById(id): Observable<DirectionRegional> {
-        return this._directionRegional.pipe(
-            take(1),
-            map((directionRegionalItem) => {
-                this._directionRegional.next(directionRegionalItem);
-                return directionRegionalItem;
-            }),
-            switchMap((directionRegionalItem) => {
+        return this._httpClient.get<DirectionRegional>(`${ApiService.apiVersion}${ApiService.apiDirectionRegional}/get-direction/${id}`)
+            .pipe(
+                map((directionRegional) => {
+                    // Update the directionRegional
+                    this._directionRegional.next(directionRegional);
 
-                if (!directionRegionalItem) {
-                    return throwError('Could not found product with id of ' + id + '!');
-                }
+                    // Return the directionRegional
+                    return directionRegional;
+                }),
+                switchMap((directionRegionalItem) => {
 
-                return of(directionRegionalItem);
-            })
-        );
+                    if (!directionRegionalItem) {
+                        return throwError('Could not found product with id of ' + id + '!');
+                    }
+
+                    return of(directionRegionalItem);
+                })
+            );
     }
 
     /**

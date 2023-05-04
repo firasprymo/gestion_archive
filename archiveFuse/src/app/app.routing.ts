@@ -314,7 +314,7 @@ export const appRoutes: Route[] = [
                         },
                         loadChildren: () => import('app/modules/admin/pages/direction-regional/add-direction-regional/add-direction-regional.module').then(m => m.AddDirectionRegionalModule)
                     }, {
-                        path: 'add-direction-regional/:iddocument',
+                        path: 'add-direction-regional/:id',
                         data: {
                             role: roleAdmin
                         },
@@ -322,6 +322,13 @@ export const appRoutes: Route[] = [
                     },
                     {
                         path: 'add-user',
+                        data: {
+                            role: roleAdmin
+                        },
+                        loadChildren: () => import('app/modules/admin/pages/user/add-user/add-user.module').then(m => m.AddUserModule)
+                    },
+                    {
+                        path: 'add-user/:id',
                         data: {
                             role: roleAdmin
                         },

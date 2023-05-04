@@ -48,9 +48,10 @@ public class DirectionRegionalController {
 
     // Delete DirectionRegional by code
     @PreAuthorize("hasAnyAuthority('SCOPE_ROLE_ADMIN')")
-    @DeleteMapping("/{codeDirection}")
-    public ResponseEntity<Void> deleteDirectionRegionalById(@PathVariable("codeDirection") Long id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteDirectionRegionalById(@PathVariable("id") Long id) {
         try {
+
             directionRegionalService.deleteDirectionRegionalById(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (RuntimeException e) {
@@ -60,8 +61,8 @@ public class DirectionRegionalController {
 
     // Update DirectionRegional by code
     @PreAuthorize("hasAnyAuthority('SCOPE_ROLE_ADMIN')")
-    @PutMapping("/update/{codeDirection}")
-    public ResponseEntity<DirectionRegional> updateDirectionRegional(@PathVariable("codeDirection") Long id, @RequestBody DirectionRegional updatedDirectionRegional) {
+    @PatchMapping("/{id}")
+    public ResponseEntity<DirectionRegional> updateDirectionRegional(@PathVariable("id") Long id, @RequestBody DirectionRegional updatedDirectionRegional) {
         try {
             DirectionRegional updated = directionRegionalService.updateDirectionRegional(id, updatedDirectionRegional);
             return new ResponseEntity<>(updated, HttpStatus.OK);

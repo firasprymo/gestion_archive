@@ -1,9 +1,7 @@
 import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
-import {AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {DocumentsService} from '../../../../../shared/service/documents.service';
 import {Observable, Subject} from 'rxjs';
-import {Trainers} from '../../../../../shared/model/trainers.types';
-import {TrainerService} from '../../../../../shared/service/trainer.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Documents} from '../../../../../shared/model/documents.types';
 import {NomenclatureService} from '../../../../../shared/service/nomenclature.service';

@@ -18,6 +18,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 export class AddDirectionRegionalComponent implements OnInit {
     idDirectionRegional: string;
     directionRegionalForm: FormGroup;
+    directionRegional: any;
     isUpdate = false;
 
     constructor(@Inject(DOCUMENT) private _document: Document,
@@ -39,6 +40,8 @@ export class AddDirectionRegionalComponent implements OnInit {
         });
 
         this._directionRegionalervice.directionRegional$.subscribe((res) => {
+            console.log(res);
+            this.directionRegional = res.id;
             if (res) {
                 this.isUpdate = true;
                 this.directionRegionalForm.patchValue({
@@ -59,7 +62,6 @@ export class AddDirectionRegionalComponent implements OnInit {
         this._directionRegionalervice.addDirectionRegional(this.directionRegionalForm.value).subscribe((res) => {
             console.log(res);
             this.directionRegionalForm.reset();
-            this._scrollCurrentStepElementIntoView();
             this._router.navigate(['pages/show-direction-regional']);
         });
     }
@@ -98,20 +100,14 @@ export class AddDirectionRegionalComponent implements OnInit {
     }
 
 
-    private _scrollCurrentStepElementIntoView(): void {
-        // Wrap everything into setTimeout so we can make sure that the 'current-step' class points to correct element
-        setTimeout(() => {
 
-            // Get the current step element and scroll it into view
-            const currentStepElement = this._document.getElementsByClassName('current-step')[0];
-            if (currentStepElement) {
-                currentStepElement.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
+
+    editDirectionRegional(): any {
+        this._directionRegionalervice.editDirectionRegional(this.directionRegionalForm.value, this.directionRegional).subscribe((res) => {
+            console.log(res);
+            this.directionRegionalForm.reset();
+            this._router.navigate(['pages/show-direction-regional']);
         });
+
     }
-
-
 }

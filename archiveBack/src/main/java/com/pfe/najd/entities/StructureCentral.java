@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.hibernate.engine.internal.Cascade;
 
 import javax.persistence.*;
 import java.io.Serial;
@@ -29,7 +30,7 @@ public class StructureCentral extends AbstractEntity {
     private String libelleStructure;
     private String lieuArchive;
     private String lieuArchiveSecAge;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "directeur_id", nullable = true)
     private DirectionRegional directeur;
 

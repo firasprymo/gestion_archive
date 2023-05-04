@@ -8,6 +8,7 @@ export interface Users {
     avatar?: string;
     username?: string;
     email?: string;
+    lieuAffectation?: string;
     password?: string;
     active?: boolean;
     picture?: string;

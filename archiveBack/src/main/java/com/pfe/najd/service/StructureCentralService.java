@@ -14,22 +14,25 @@ public interface StructureCentralService {
     StructureCentral createStructureCentral(StructureCentral structureCentral);
 
     List<StructureCentral> getAllStructureCentral();
-    Optional<StructureCentral> getStructureCentralById(Long id) ;
 
-//    List<StructureCentral> findByCodeDirectionRegional(String codeDirection) {
+    Optional<StructureCentral> getStructureCentralById(Long id);
+
+    //    List<StructureCentral> findByCodeDirectionRegional(String codeDirection) {
 //        return structureCentralDao.findByCodeDirectionRegional(codeDirection);
 //    }
-boolean existsByCodeStructure(Long id) ;
+    boolean existsByCodeStructure(Long id);
 
-    StructureCentral updateStructureCentral(Long id,StructureCentral updatedStructureCentral);
+    StructureCentral updateStructureCentral(Long id, StructureCentral updatedStructureCentral);
 
     void deleteStructureCentralById(Long id);
 
-    Agence addNewAgence(Long id, Agence agence );
-    List<StructureCentral> getStructureCentralByCodeDirection(String codeDirection) ;
-    List<StructureCentral> getStrucutureCentralByName(String libelleDirection);
-    Page<StructureCentral> pageStructureCentrals(Pageable pageable);
+    Agence addNewAgence(Long id, Agence agence);
 
+    List<StructureCentral> getStructureCentralByCodeDirection(String codeDirection);
+
+    List<StructureCentral> getStrucutureCentralByName(String libelleDirection);
+
+    Page<StructureCentral> pageStructureCentrals(Pageable pageable);
 
 
 }

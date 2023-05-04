@@ -43,7 +43,7 @@ import {InventoryService} from '../../../apps/ecommerce/inventory/inventory.serv
                 }
 
                 @screen lg {
-                    grid-template-columns: 148px 112px auto 112px 96px 96px 72px;
+                    grid-template-columns: 148px 112px 100px 312px 96px 96px 72px;
                 }
             }
         `
@@ -284,5 +284,6 @@ export class ShowUsersComponent implements OnInit, AfterViewInit, OnDestroy {
     trackByFn(index: number, item: any): any {
         return item.id || index;
     }
+
 
 }

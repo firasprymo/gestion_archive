@@ -52,6 +52,9 @@ public class DirectionRegionalServiceImpl implements DirectionRegionalService {
         if (existingDirectionRegionalOptional.isPresent()) {
             DirectionRegional existingDirectionRegional = existingDirectionRegionalOptional.get();
 
+            if (updatedDirectionRegional.getCodeDirection() != null) {
+                existingDirectionRegional.setCodeDirection(updatedDirectionRegional.getCodeDirection());
+            }
             if (updatedDirectionRegional.getLibelleDirection() != null) {
                 existingDirectionRegional.setLibelleDirection(updatedDirectionRegional.getLibelleDirection());
             }

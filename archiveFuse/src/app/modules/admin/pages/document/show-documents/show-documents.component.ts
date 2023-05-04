@@ -44,7 +44,7 @@ import {DocumentStatus} from '../../../../../shared/model/document-status.enum';
                 }
 
                 @screen lg {
-                    grid-template-columns: 48px 112px 100px 112px 96px 96px 72px;
+                    grid-template-columns: 48px 112px 100px 112px 96px 196px 72px;
                 }
             }
         `
@@ -291,5 +291,9 @@ export class ShowDocumentsComponent implements OnInit, AfterViewInit, OnDestroy 
 
     getEnum(status: DocumentStatus | undefined): any {
         return DocumentStatus[status];
+    }
+
+    demanderConsult(document: Documents) {
+
     }
 }

@@ -107,12 +107,21 @@
                     <button mat-button (click)="cancelUserForm()">
                         Cancel
                     </button>
-                    <button (click)="addUser()"
-                            class="px-6 ml-3" [disabled]="userForm.invalid"
+                    <button *ngIf="isUpdate else onCreate" (click)="updateUser()"
+                            class="px-6 ml-3"
                             mat-flat-button
-                            [color]="'primary'">
-                        Save
+                            [color]="'warn'">
+                        Update
                     </button>
+                    <ng-template #onCreate>
+                        <button (click)="addUser()"
+                                class="px-6 ml-3"
+                                mat-flat-button
+                                [disabled]="!userForm.valid"
+                                [color]="'primary'">
+                            Save
+                        </button>
+                    </ng-template>
                 </div>
             </form>
         </div>

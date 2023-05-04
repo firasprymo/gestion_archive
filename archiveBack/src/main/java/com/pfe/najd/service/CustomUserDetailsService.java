@@ -2,7 +2,7 @@ package com.pfe.najd.service;
 
 import com.pfe.najd.entities.Role;
 import com.pfe.najd.entities.User;
-import com.pfe.najd.dao.UserDao;
+import com.pfe.najd.repository.UserRepository;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,9 +16,9 @@ import java.util.stream.Collectors;
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
-    private final UserDao userDao;
+    private final UserRepository userDao;
 
-    public CustomUserDetailsService(UserDao userDao) {
+    public CustomUserDetailsService(UserRepository userDao) {
         this.userDao = userDao;
     }
 

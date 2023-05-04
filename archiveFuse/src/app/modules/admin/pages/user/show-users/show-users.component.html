@@ -54,6 +54,10 @@
 Email
                             </div>
                             <div
+                                [mat-sort-header]="'lieuAffectation'">
+Lieu Affectation
+                            </div>
+                            <div
                                 [mat-sort-header]="'Role'">
 role
                             </div>
@@ -73,13 +77,16 @@ role
                                     </div>
 
                                     <!-- Price -->
-                                    <div class="hidden sm:block">
-                                        {{user.email}}
+                                    <div class=" sm:block">
+                                        {{user?.email}}
                                     </div>
-                                    <div class="hidden sm:block">
+                                    <div class=" sm:block">
+                                        {{user.lieuAffectation}}
+                                    </div>
+                                    <div class=" sm:block">
                                         <ng-container *ngFor="let role of user.roles">
 
-                                            {{role.name }}
+                                            {{role.roleName }}
                                         </ng-container>
                                     </div>
 
@@ -93,6 +100,14 @@ role
                                             <mat-icon
                                                 class="icon-size-5"
                                                 [svgIcon]="'heroicons_solid:x'"></mat-icon>
+                                        </button>
+                                        <button
+                                            class="min-w-10 min-h-7 h-7 px-2 leading-6"
+                                            mat-stroked-button
+                                            [routerLink]="['/pages/add-user/'+user.id]">
+                                            <mat-icon
+                                                class="icon-size-5"
+                                                [svgIcon]="'mat_solid:post_add'"></mat-icon>
                                         </button>
                                     </div>
                                 </div>

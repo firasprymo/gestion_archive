@@ -2,10 +2,8 @@ import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {CentreArchive} from '../../../../../shared/model/centre-archive.types';
 import {Observable, Subject} from 'rxjs';
-import {Trainers} from '../../../../../shared/model/trainers.types';
 import {CentreArchiveService} from '../../../../../shared/service/centre-archive.service';
 import {Router} from '@angular/router';
-import {TrainerService} from '../../../../../shared/service/trainer.service';
 
 @Component({
     selector: 'app-add-centre-archive',
@@ -22,7 +20,6 @@ export class AddCentreArchiveComponent implements OnInit, OnDestroy {
                 private _changeDetectorRef: ChangeDetectorRef,
                 private _centerService: CentreArchiveService,
                 private _router: Router,
-                private _trainerService: TrainerService,
     ) {
     }
 

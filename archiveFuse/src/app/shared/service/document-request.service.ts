@@ -102,7 +102,7 @@ export class DocumentRequestService {
      * @param order
      * @param search
      */
-    getAllDocuments(page: number = 0, size: number = 5, sort: string = 'document.nomberPage', order: 'asc' | 'desc'
+    getAllDocuments(page: number = 0, size: number = 5, sort: string = 'id', order: 'asc' | 'desc'
         | '' = 'asc', search: string = ''):
         Observable<{ pageable: InventoryPagination; content: DocumentRequest[] }> {
         return this._httpClient.get<{ pageable: InventoryPagination; content: DocumentRequest[] }>

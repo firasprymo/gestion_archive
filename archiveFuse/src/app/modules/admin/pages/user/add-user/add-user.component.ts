@@ -1,18 +1,15 @@
 import {Component, OnInit} from '@angular/core';
-import {environment} from '../../../../../../environments/environment';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Skills} from '../../../../../shared/model/skills.types';
 import {Router} from '@angular/router';
-import {MatChipInputEvent} from '@angular/material/chips';
 import {UsersService} from '../../../../../shared/service/users.service';
 import {Observable} from 'rxjs';
-import {Nomenclature} from '../../../../../shared/model/nomenclature.types';
 import {StructureCentral} from '../../../../../shared/model/structure-central.types';
 import {DirectionRegional} from '../../../../../shared/model/direction-regional.types';
 import {Agence} from '../../../../../shared/model/agence.types';
 import {StructureCentralService} from '../../../../../shared/service/structure-central.service';
 import {AgenceService} from '../../../../../shared/service/agence.service';
 import {DirectionRegionalService} from '../../../../../shared/service/direction-regional.service';
+import {Users} from '../../../../../shared/model/users.types';
 
 @Component({
     selector: 'app-add-user',
@@ -24,6 +21,8 @@ export class AddUserComponent implements OnInit {
     structureCentrals$: Observable<StructureCentral[]>;
     directionRegionals$: Observable<DirectionRegional[]>;
     agences$: Observable<Agence[]>;
+    isUpdate = false;
+    user: Users;
 
     constructor(private _formBuilder: FormBuilder,
                 private _router: Router,
@@ -42,13 +41,25 @@ export class AddUserComponent implements OnInit {
             email: ['', [Validators.required, Validators.email]],
             password: ['', Validators.required],
             roleNames: [[''], Validators.required],
-            directionRegional: ['',],
-            structureCentral: ['',],
-            agence: ['',],
+            directionRegional: [[],],
+            structureCentral: [[],],
+            agence: [[],],
         });
         this.structureCentrals$ = this._structureCentralService.structureCentrals$;
         this.agences$ = this._agenceService.agences$;
         this.directionRegionals$ = this._directionRegionalService.directionRegionals$;
+        this._userService.user$.subscribe((res: any) => {
+            this.user = res.id;
+            console.log(res);
+            if (res) {
+                this.isUpdate = true;
+                this.userForm.patchValue({
+                    id: res.id,
+                    username: res.username,
+                    email: res.email,
+                });
+            }
+        });
 
     }
 
@@ -70,4 +81,13 @@ export class AddUserComponent implements OnInit {
         this.userForm.reset();
     }
 
+    updateUser(): void {
+        console.log(this.userForm.value)
+        this._userService.editUser(this.userForm.value, this.user)
+            .subscribe((res) => {
+                this._router.navigate(['pages/show-users']);
+                return res;
+            });
+
+    }
 }

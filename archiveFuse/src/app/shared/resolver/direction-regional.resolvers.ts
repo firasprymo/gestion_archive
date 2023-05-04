@@ -57,8 +57,8 @@ export class DirectionRegionalByIdResolver implements Resolve<any> {
      * @param state
      */
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<DirectionRegional> {
-        console.log(route.paramMap.get('idLesson'));
-        return this._directionRegionalService.getDirectionRegionalById(route.paramMap.get('idDirectionRegional'))
+       if(!route.paramMap.get('id')) return ;
+        return this._directionRegionalService.getDirectionRegionalById(route.paramMap.get('id'))
             .pipe(
                 // Error here means the requested task is not available
                 catchError((error) => {

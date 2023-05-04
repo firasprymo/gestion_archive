@@ -5,6 +5,7 @@ import {Users} from '../model/users.types';
 import {ApiService} from './api.service';
 import {HttpClient} from '@angular/common/http';
 import {map, switchMap, take, tap} from 'rxjs/operators';
+import {Documents} from "../model/documents.types";
 
 @Injectable({
   providedIn: 'root'
@@ -46,24 +47,20 @@ export class UsersService {
     }
 
     editUser(body, id): Observable<Users> {
-        return this._apiService.patch(`${ApiService.apiUser}/${id}`, body).pipe(map(res => res));
+        console.log(id)
+        return this._apiService.patch(`${ApiService.apiVersion}${ApiService.apiUser}/${id}`, body).pipe(map(res => res));
     }
 
     /**
      * Get user by id
      */
     getUserById(id: string): Observable<Users> {
-        return this._users.pipe(
-            take(1),
-            map((users) => {
-
-                // Find the product
-                const user = users.find(item => item.id === id) || null;
-
-                // Update the product
+        return this._httpClient.get<Users>(`${ApiService.apiVersion}${ApiService.apiUser}/${id}`).pipe(
+            map((user) => {
+                // Update the user
                 this._user.next(user);
 
-                // Return the product
+                // Return the user
                 return user;
             }),
             switchMap((user) => {

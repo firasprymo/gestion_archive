@@ -32,7 +32,7 @@ public class DocumentServiceImpl implements DocumentService {
     public Document createDocument(Document document) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
-        User user = userRepository.findByUsername(currentPrincipalName);
+        User user = userRepository.findByUsername(currentPrincipalName).get();
         Document document1 = documentRepository.save(document);
         document.setStatus(DocumentStatus.PENDING);
         document.setMaturitePremAge(LocalDate.from(document.getCreationDate().plusDays(Long.parseLong(document.getNomenclature().getDureeConservationPremAge()))));
