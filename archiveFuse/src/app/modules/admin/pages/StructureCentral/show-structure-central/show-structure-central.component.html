@@ -51,15 +51,19 @@
 
                             <div [mat-sort-header]="'codeStructure'">Code structure</div>
                             <div [mat-sort-header]="'libelleStructure'">
-                                Libelle structure
+Libelle structure
                             </div>
                             <div
                                 [mat-sort-header]="'lieuArchive'">
-                                Lieu archive
+Lieu archive
                             </div>
                             <div
                                 [mat-sort-header]="'lieuArchiveSecAge'">
-                                Lieu archive sec age
+Lieu archive sec age
+                            </div>
+                            <div
+                                [mat-sort-header]="'directeur'">
+directeur
                             </div>
 
                             <div class="hidden sm:block">Actions</div>
@@ -81,6 +85,9 @@
                                     <div class="hidden md:block truncate">
                                         {{structureCentral?.lieuArchiveSecAge}}
                                     </div>
+                                    <div class="hidden md:block truncate">
+                                        {{structureCentral?.directeur?.codeDirection}}
+                                    </div>
                                     <!-- Details button -->
                                     <div>
                                         <button
@@ -94,7 +101,7 @@
                                         <button
                                             class="min-w-10 min-h-7 h-7 px-2 leading-6"
                                             mat-stroked-button
-                                            [routerLink]="['/pages/add-nomenclature/'+structureCentral.id]">
+                                            [routerLink]="['/pages/add-structure/'+structureCentral.id]">
                                             <mat-icon
                                                 class="icon-size-5"
                                                 [svgIcon]="'mat_solid:post_add'"></mat-icon>

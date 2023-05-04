@@ -25,6 +25,7 @@ import {DocumentRequestService} from '../../../../../shared/service/document-req
 import {fuseAnimations} from '../../../../../../@fuse/animations';
 import {UserService} from '../../../../../core/user/user.service';
 import {Users} from '../../../../../shared/model/users.types';
+import {DocumentStatus} from "../../../../../shared/model/document-status.enum";
 
 @Component({
     selector: 'app-consult-document',
@@ -299,4 +300,11 @@ export class ConsultDocumentComponent implements OnInit, AfterViewInit, OnDestro
     changeStatus(documentRequest: DocumentRequest): any {
         return this._documentReqService.changeStatus(documentRequest).subscribe(res => res);
     }
+
+
+    getEnum(status: DocumentStatus | undefined): any {
+        return DocumentStatus[status];
+    }
+
+
 }

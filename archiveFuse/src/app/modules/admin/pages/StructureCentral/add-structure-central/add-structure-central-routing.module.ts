@@ -4,12 +4,14 @@ import {AddStructureCentralComponent} from './add-structure-central.component';
 import {
     structureCentralByIdResolver,
 } from '../../../../../shared/resolver/structure-central.resolvers';
+import {DirectionRegionalResolvers} from '../../../../../shared/resolver/direction-regional.resolvers';
 
 const routes: Routes = [{
     path: '',
     component: AddStructureCentralComponent,
     resolve: {
-        structureCentral: structureCentralByIdResolver
+        structureCentral: structureCentralByIdResolver,
+        directions: DirectionRegionalResolvers
     }
 }];
 

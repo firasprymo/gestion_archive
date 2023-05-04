@@ -22,10 +22,9 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {FuseConfirmationService} from '@fuse/services/confirmation';
 import {InventoryService} from '../../../apps/ecommerce/inventory/inventory.service';
 import {DocumentsService} from '../../../../../shared/service/documents.service';
-import {SkillsService} from '../../../../../shared/service/skills.service';
 import {debounceTime, map, switchMap, takeUntil} from 'rxjs/operators';
 import {ApiService} from '../../../../../shared/service/api.service';
-import {DocumentStatus} from "../../../../../shared/model/document-status.enum";
+import {DocumentStatus} from '../../../../../shared/model/document-status.enum';
 
 @Component({
     selector: 'app-show-documents',
@@ -84,7 +83,6 @@ export class ShowDocumentsComponent implements OnInit, AfterViewInit, OnDestroy 
         private _formBuilder: FormBuilder,
         private _inventoryService: InventoryService,
         private _documentService: DocumentsService,
-        private _skillsService: SkillsService,
     ) {
     }
 

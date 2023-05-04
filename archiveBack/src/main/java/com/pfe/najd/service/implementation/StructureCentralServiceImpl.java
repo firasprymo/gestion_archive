@@ -1,7 +1,9 @@
 package com.pfe.najd.service.implementation;
 
+import com.pfe.najd.dao.DirectionRegionalDao;
 import com.pfe.najd.dao.StructureCentralDao;
 import com.pfe.najd.entities.Agence;
+import com.pfe.najd.entities.DirectionRegional;
 import com.pfe.najd.entities.StructureCentral;
 import com.pfe.najd.service.StructureCentralService;
 import lombok.RequiredArgsConstructor;
@@ -20,12 +22,15 @@ import java.util.Optional;
 public class StructureCentralServiceImpl implements StructureCentralService {
 
     private final StructureCentralDao structureCentralDao;
+    private final DirectionRegionalDao directionRegionalDao;
     @Autowired
     private AgenceServiceImpl agenceService;
 
     public StructureCentral createStructureCentral(StructureCentral structureCentral) {
         structureCentral.setCodeStructure("SC" + structureCentral.getCodeStructure());
-
+        DirectionRegional directionRegional = directionRegionalDao.findById(structureCentral.getDirecteur().getId())
+                .orElseThrow(() -> new RuntimeException("Directeur doesnt exist"));
+        structureCentral.setDirecteur(directionRegional);
         return structureCentralDao.save(structureCentral);
     }
 
@@ -63,6 +68,9 @@ public class StructureCentralServiceImpl implements StructureCentralService {
 
     @Transactional
     public void deleteStructureCentralById(Long id) {
+        StructureCentral structureCentral = structureCentralDao.findById(id)
+                .orElseThrow(() -> new RuntimeException("Structure doesnt not exist"));
+        structureCentral.getAgences().forEach(agence -> agence.setStructure(null));
         if (structureCentralDao.existsById(id)) {
             structureCentralDao.deleteById(id);
         } else {

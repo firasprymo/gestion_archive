@@ -5,6 +5,7 @@ import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { map, switchMap, take, tap } from 'rxjs/operators';
 import { StructureCentral } from '../model/structure-central.types';
 import { ApiService } from './api.service';
+import {Nomenclature} from "../model/nomenclature.types";
 
 @Injectable({
   providedIn: 'root'
@@ -62,11 +63,13 @@ export class StructureCentralService {
    * Get directionRegional by id
    */
   getStructureCentralById(id): Observable<StructureCentral> {
-      return this._structureCentral.pipe(
-          take(1),
-          map((structureCentralItem) => {
-              this._structureCentral.next(structureCentralItem);
-              return structureCentralItem;
+      return this._httpClient.get<StructureCentral>(`${ApiService.apiStructureCentral}/${id}`).pipe(
+          map((structureCentral) => {
+              // Update the structureCentral
+              this._structureCentral.next(structureCentral);
+
+              // Return the structureCentral
+              return structureCentral;
           }),
           switchMap((structureCentralItem) => {
 

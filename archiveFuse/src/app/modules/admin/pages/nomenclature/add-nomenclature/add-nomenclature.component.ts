@@ -14,8 +14,6 @@ import {DocumentsService} from '../../../../../shared/service/documents.service'
 })
 export class AddNomenclatureComponent implements OnInit, OnDestroy {
     nomenclatureForm: FormGroup;
-    nomenclature$: Observable<Nomenclature>;
-    notCorrectType = false;
     isUpdate = false;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
@@ -37,15 +35,16 @@ export class AddNomenclatureComponent implements OnInit, OnDestroy {
             valeurHistoriqueTroiAge: [false, Validators.required],
         });
         this._nomenclatureService.nomenclature$.subscribe((res) => {
-            if (res)
+            if (res) {
                 this.isUpdate = true;
-            this.nomenclatureForm.patchValue({
-                id: res.id,
-                designationNomenclature: res.designationNomenclature,
-                dureeConservationPremAge: res.dureeConservationPremAge,
-                dureeConservationSecAge: res.dureeConservationSecAge,
-                valeurHistoriqueTroiAge: res.valeurHistoriqueTroiAge,
-            });
+                this.nomenclatureForm.patchValue({
+                    id: res.id,
+                    designationNomenclature: res.designationNomenclature,
+                    dureeConservationPremAge: res.dureeConservationPremAge,
+                    dureeConservationSecAge: res.dureeConservationSecAge,
+                    valeurHistoriqueTroiAge: res.valeurHistoriqueTroiAge,
+                });
+            }
         });
     }
 

@@ -29,14 +29,16 @@ public class StructureCentral extends AbstractEntity {
     private String libelleStructure;
     private String lieuArchive;
     private String lieuArchiveSecAge;
-
-
     @ManyToOne
     @JoinColumn(name = "directeur_id", nullable = true)
-    @JsonIgnoreProperties("structureCentrals")
     private DirectionRegional directeur;
+
+    //    @ManyToOne
+//    @JoinColumn(name = "directeur_id", nullable = true)
+//    @JsonIgnoreProperties("structureCentrals")
+//    private DirectionRegional directeur;
     @OneToMany(mappedBy = "structure", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Agence> agences;
+    private List<Agence> agences = new ArrayList<>();
 //    @OneToMany(mappedBy = "structureCentral", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, fetch = FetchType.LAZY)
 //    private List<User> users = new ArrayList<>();
 }

@@ -50,8 +50,8 @@ public class StructureCentralController {
     }
 
     // Get StructureCentral by code
-    @GetMapping("/get-Structure/{codeStructure}")
-    public ResponseEntity<StructureCentral> getStructureCentralById(@PathVariable("codeStructure") Long id) {
+    @GetMapping("/{id}")
+    public ResponseEntity<StructureCentral> getStructureCentralById(@PathVariable("id") Long id) {
         Optional<StructureCentral> structureCentral = structureCentralService.getStructureCentralById(id);
         if (structureCentral.isPresent()) {
             return new ResponseEntity<>(structureCentral.get(), HttpStatus.OK);

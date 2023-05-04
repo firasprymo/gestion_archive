@@ -15,7 +15,6 @@ import {Users} from '../../../../../shared/model/users.types';
 import {Skills} from '../../../../../shared/model/skills.types';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {FuseConfirmationService} from '../../../../../../@fuse/services/confirmation';
-import {SkillsService} from '../../../../../shared/service/skills.service';
 import {debounceTime, map, switchMap, takeUntil} from 'rxjs/operators';
 import {UsersService} from '../../../../../shared/service/users.service';
 import {ApiService} from '../../../../../shared/service/api.service';
@@ -83,7 +82,6 @@ export class ShowUsersComponent implements OnInit, AfterViewInit, OnDestroy {
         private _formBuilder: FormBuilder,
         private _inventoryService: InventoryService,
         private _userService: UsersService,
-        private _skillsService: SkillsService,
     ) {
     }
 

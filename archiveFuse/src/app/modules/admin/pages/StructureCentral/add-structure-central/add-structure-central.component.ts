@@ -18,6 +18,7 @@ export class AddStructureCentralComponent implements OnInit, OnDestroy {
     structureCentral$: Observable<StructureCentral>;
     directions$: Observable<DirectionRegional[]>;
     notCorrectType = false;
+    isUpdate = false;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     constructor(private _formBuilder: FormBuilder,
@@ -37,7 +38,20 @@ export class AddStructureCentralComponent implements OnInit, OnDestroy {
             lieuArchiveSecAge: ['', Validators.required],
             directeur: ['', Validators.required],
         });
-        this.structureCentral$ = this._structureCentralService.structureCentral$;
+        this._structureCentralService.structureCentral$.subscribe((res) => {
+            console.log(res)
+            if (res) {
+                this.isUpdate = true;
+                this.structureCentralForm.patchValue({
+                    id: res.id,
+                    codeStructure: res.codeStructure,
+                    libelleStructure: res.libelleStructure,
+                    lieuArchive: res.lieuArchive,
+                    lieuArchiveSecAge: res.lieuArchiveSecAge,
+                    directeur: res.directeur,
+                });
+            }
+        });
         this.directions$ = this._directionRegionalService.directionRegionals$;
     }
 

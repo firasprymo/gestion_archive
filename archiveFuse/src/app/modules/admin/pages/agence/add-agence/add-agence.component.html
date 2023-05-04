@@ -53,14 +53,22 @@
                                 </mat-error>
 
                             </mat-form-field>
-                            <mat-form-field
-                                class="flex-auto gt-xs:pr-3">
-                                <mat-label>Structure centrale</mat-label>
-                                <select matNativeControl formControlName="structure">
-                                    <option [ngValue]="structureCentrals"
-                                            *ngFor="let structureCentrals of structureCentrals$ | async">{{structureCentrals?.codeStructure}}</option>
-                                </select>
-                            </mat-form-field>
+                            <p *ngIf="(structureCentrals$ | async).length === 0 else structure">Structure vous
+                                pouvez
+                                l'ajouter
+                                <a routerLink="/pages/add-structure">Ajouter structure</a>
+                            </p>
+                            <ng-template #structure>
+                                <mat-form-field
+                                    class="flex-auto gt-xs:pr-3">
+
+                                    <mat-label>Structure centrale</mat-label>
+                                    <select matNativeControl formControlName="structure">
+                                        <option [ngValue]="structureCentrals"
+                                                *ngFor="let structureCentrals of structureCentrals$ | async">{{structureCentrals?.codeStructure}}</option>
+                                    </select>
+                                </mat-form-field>
+                            </ng-template>
                         </div>
                     </div>
                 </div>

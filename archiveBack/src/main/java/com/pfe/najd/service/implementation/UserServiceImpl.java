@@ -39,9 +39,9 @@ public class UserServiceImpl implements UserService {
         User users = new User();
         users.setUsername(user.getUsername());
         users.setPassword(passwordEncoder.encode(user.getPassword()));
-        users.setAgence(user.getAgence());
-        users.setStructureCentral(user.getStructureCentral());
-        users.setDirectionRegional(user.getDirectionRegional());
+//        users.setAgence(user.getAgence());
+//        users.setStructureCentral(user.getStructureCentral());
+//        users.setDirectionRegional(user.getDirectionRegional());
 
         Set<Role> roles = user.getRoles().stream()
                 .map(roleName -> roleDao.findByRoleName(roleName.getRoleName()).orElseThrow(() -> new RuntimeException("Role introuvable")))

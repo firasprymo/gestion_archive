@@ -301,13 +301,6 @@ export const appRoutes: Route[] = [
                         loadChildren: () => import('app/modules/admin/pages/document/consult-document/consult-document.module').then(m => m.ConsultDocumentModule)
                     },
                     {
-                        path: 'add-trainer',
-                        data: {
-                            role: roleAdmin
-                        },
-                        loadChildren: () => import('app/modules/admin/pages/trainers/add-trainer/add-trainer.module').then(m => m.AddTrainerModule)
-                    },
-                    {
                         path: 'show-direction-regional',
                         data: {
                             role: roleAdmin
@@ -326,13 +319,6 @@ export const appRoutes: Route[] = [
                             role: roleAdmin
                         },
                         loadChildren: () => import('app/modules/admin/pages/direction-regional/add-direction-regional/add-direction-regional.module').then(m => m.AddDirectionRegionalModule)
-                    },
-                    {
-                        path: 'show-trainers',
-                        data: {
-                            role: roleAdmin
-                        },
-                        loadChildren: () => import('app/modules/admin/pages/trainers/show-trainers/show-trainers.module').then(m => m.ShowTrainersModule)
                     },
                     {
                         path: 'add-user',

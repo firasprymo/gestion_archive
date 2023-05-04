@@ -27,8 +27,9 @@ public class Agence extends AbstractEntity {
     private String libelleAgence;
     private String lieuArchive;
     private String lieuArchiveSecAge;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name="structure_id",nullable = true)
+    @JsonIgnoreProperties("agences")
     private StructureCentral structure;
 //
 //    @OneToMany(mappedBy = "agence", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, fetch = FetchType.LAZY)

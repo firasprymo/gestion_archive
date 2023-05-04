@@ -60,7 +60,7 @@ export class structureCentralByIdResolver implements Resolve<any> {
      * @param state
      */
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<StructureCentral> {
-        if(!route.paramMap.get('id')) return ;
+        if(!route.paramMap.get('id')) {return ;}
         return this._structureCentralService.getStructureCentralById(route.paramMap.get('id'))
             .pipe(
                 // Error here means the requested task is not available

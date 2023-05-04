@@ -15,15 +15,10 @@ import {fuseAnimations} from '@fuse/animations';
 import {FuseConfirmationService} from '@fuse/services/confirmation';
 import {InventoryService} from 'app/modules/admin/apps/ecommerce/inventory/inventory.service';
 import {
-    InventoryBrand,
-    InventoryCategory,
     InventoryPagination,
-    InventoryVendor
 } from 'app/modules/admin/apps/ecommerce/inventory/inventory.types';
-import {Skills} from 'app/shared/model/skills.types';
 import {StructureCentral} from 'app/shared/model/structure-central.types';
 import {ApiService} from 'app/shared/service/api.service';
-import {SkillsService} from 'app/shared/service/skills.service';
 import {StructureCentralService} from 'app/shared/service/structure-central.service';
 import {merge, Observable, Subject} from 'rxjs';
 import {debounceTime, map, switchMap, takeUntil} from 'rxjs/operators';
@@ -46,7 +41,7 @@ import {debounceTime, map, switchMap, takeUntil} from 'rxjs/operators';
                 }
 
                 @screen lg {
-                    grid-template-columns: 48px 112px auto 112px 96px 96px 72px;
+                    grid-template-columns: 148px 112px 100px 112px 96px 96px 72px;
                 }
             }
         `
@@ -78,7 +73,6 @@ export class ShowStructureCentralComponent implements OnInit, AfterViewInit, OnD
         private _formBuilder: FormBuilder,
         private _inventoryService: InventoryService,
         private _structureCentralService: StructureCentralService,
-        private _skillsService: SkillsService,
     ) {
     }
 

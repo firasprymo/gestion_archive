@@ -18,11 +18,12 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 export class AddDirectionRegionalComponent implements OnInit {
     idDirectionRegional: string;
     directionRegionalForm: FormGroup;
+    isUpdate = false;
 
     constructor(@Inject(DOCUMENT) private _document: Document,
                 private _formBuilder: FormBuilder,
                 private fuseConfirmationService: FuseConfirmationService,
-                private _DirectionRegionalervice: DirectionRegionalService,
+                private _directionRegionalervice: DirectionRegionalService,
                 private _router: Router,
                 private _active: ActivatedRoute,
                 private _matDialog: MatDialog
@@ -37,8 +38,17 @@ export class AddDirectionRegionalComponent implements OnInit {
             lieuArchiveSecAge: ['', Validators.required],
         });
 
-        this._active.params.subscribe((res) => {
-            this.idDirectionRegional = res.idDirectionRegional;
+        this._directionRegionalervice.directionRegional$.subscribe((res) => {
+            if (res) {
+                this.isUpdate = true;
+                this.directionRegionalForm.patchValue({
+                    id: res.id,
+                    codeDirection: res.codeDirection,
+                    libelleDirection: res.libelleDirection,
+                    lieuArchive: res.lieuArchive,
+                    lieuArchiveSecAge: res.lieuArchiveSecAge,
+                });
+            }
         });
     }
 
@@ -46,16 +56,7 @@ export class AddDirectionRegionalComponent implements OnInit {
      * Create product
      */
     createDirectionRegional(): void {
-        // const fd = new FormData();
-        // fd.append('title', this.directionRegionalForm.value.title);
-        // fd.append('subtitle', this.directionRegionalForm.value.subtitle);
-        // fd.append('description', this.directionRegionalForm.value.description);
-        // fd.append('sectionDTOLists', JSON.stringify(this.directionRegionalForm.value.sections));
-        // fd.append('videoFile', this.directionRegionalForm.value.videoFile);
-        // fd.append('coverFile', this.directionRegionalForm.value.coverFile);
-        // fd.append('document.id', this.idDirectionRegional);
-        // Create the product
-        this._DirectionRegionalervice.addDirectionRegional(this.directionRegionalForm.value).subscribe((res) => {
+        this._directionRegionalervice.addDirectionRegional(this.directionRegionalForm.value).subscribe((res) => {
             console.log(res);
             this.directionRegionalForm.reset();
             this._scrollCurrentStepElementIntoView();

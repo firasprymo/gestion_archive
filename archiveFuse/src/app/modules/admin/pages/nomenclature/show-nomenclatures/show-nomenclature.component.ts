@@ -19,7 +19,6 @@ import {
 } from 'app/modules/admin/apps/ecommerce/inventory/inventory.types';
 import {Nomenclature} from 'app/shared/model/nomenclature.types';
 import {ApiService} from 'app/shared/service/api.service';
-import {SkillsService} from 'app/shared/service/skills.service';
 import {NomenclatureService} from 'app/shared/service/nomenclature.service';
 import {merge, Observable, Subject} from 'rxjs';
 import {debounceTime, map, switchMap, takeUntil} from 'rxjs/operators';
@@ -74,7 +73,6 @@ export class ShowNomenclatureComponent implements OnInit, AfterViewInit, OnDestr
         private _formBuilder: FormBuilder,
         private _inventoryService: InventoryService,
         private _nomenclatureService: NomenclatureService,
-        private _skillsService: SkillsService,
     ) {
     }
 

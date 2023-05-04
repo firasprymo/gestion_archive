@@ -1,6 +1,7 @@
 package com.pfe.najd.service.implementation;
 
 import com.pfe.najd.dao.AgenceDao;
+import com.pfe.najd.dao.StructureCentralDao;
 import com.pfe.najd.entities.Agence;
 import com.pfe.najd.entities.StructureCentral;
 import com.pfe.najd.service.AgenceService;
@@ -19,6 +20,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class AgenceServiceImpl implements AgenceService {
     private final AgenceDao agenceDao;
+    private final StructureCentralDao structureCentralDao;
 
     public boolean existsByCodeAgence(String codeAgence) {
         return agenceDao.existsByCodeAgence(codeAgence);
@@ -27,10 +29,12 @@ public class AgenceServiceImpl implements AgenceService {
     @Transactional
     public Agence createAgence(Agence agence) {
         agence.setCodeAgence("AG" + agence.getCodeAgence());
-        agence.setStructure(agence.getStructure());
-
-        return agenceDao.saveAndFlush(agence);
+        StructureCentral structureCentral = structureCentralDao.findById(agence.getStructure().getId())
+                .orElseThrow(() -> new RuntimeException("Structure doesnt exisr"));
+        agence.setStructure(structureCentral);
+        return agenceDao.save(agence);
     }
+
     public Optional<Agence> getAgenceById(Long id) {
         return agenceDao.findById(id);
     }

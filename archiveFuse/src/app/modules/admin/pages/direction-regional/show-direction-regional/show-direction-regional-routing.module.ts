@@ -1,10 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import {
-    InventoryBrandsResolver,
-    InventoryCategoriesResolver, InventoryVendorsResolver
-} from '../../../apps/ecommerce/inventory/inventory.resolvers';
-import {SkillsResolvers} from '../../../../../shared/resolver/skills.resolvers';
 import {ShowDirectionRegionalComponent} from './show-direction-regional.component';
 import {DirectionRegionalResolvers} from '../../../../../shared/resolver/direction-regional.resolvers';
 

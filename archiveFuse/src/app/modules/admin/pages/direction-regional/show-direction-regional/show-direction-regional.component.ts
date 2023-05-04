@@ -20,7 +20,6 @@ import {
 import {Skills} from '../../../../../shared/model/skills.types';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {FuseConfirmationService} from '@fuse/services/confirmation';
-import {SkillsService} from '../../../../../shared/service/skills.service';
 import {debounceTime, map, switchMap, takeUntil} from 'rxjs/operators';
 import {DirectionRegionalService} from '../../../../../shared/service/direction-regional.service';
 import {DirectionRegional} from '../../../../../shared/model/direction-regional.types';
@@ -81,7 +80,6 @@ export class ShowDirectionRegionalComponent implements OnInit, AfterViewInit, On
         private _formBuilder: FormBuilder,
         private _inventoryService: InventoryService,
         private _directionRegionalService: DirectionRegionalService,
-        private _skillsService: SkillsService,
     ) {
     }
 

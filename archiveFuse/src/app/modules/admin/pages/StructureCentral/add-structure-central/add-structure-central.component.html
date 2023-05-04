@@ -53,14 +53,23 @@
                                 </mat-error>
 
                             </mat-form-field>
-                            <mat-form-field
-                                class="flex-auto gt-xs:pr-3">
-                                <mat-label>Direction régional</mat-label>
-                                <select matNativeControl formControlName="directeur">
-                                    <option [ngValue]="direction"
-                                            *ngFor="let direction of directions$ | async">{{direction?.codeDirection}}</option>
-                                </select>
-                            </mat-form-field>
+                            <p *ngIf="(directions$ | async).length === 0 else direction">
+                                Direction vous
+                                pouvez
+                                l'ajouter
+                                <a routerLink="/pages/add-direction-regional">Ajouter direction</a>
+                            </p>
+                            <ng-template #direction>
+
+                                <mat-form-field
+                                    class="flex-auto gt-xs:pr-3">
+                                    <mat-label>Direction régional</mat-label>
+                                    <select matNativeControl formControlName="directeur">
+                                        <option [ngValue]="direction"
+                                                *ngFor="let direction of directions$ | async">{{direction?.codeDirection}}</option>
+                                    </select>
+                                </mat-form-field>
+                            </ng-template>
                         </div>
                     </div>
                 </div>

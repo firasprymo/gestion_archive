@@ -111,17 +111,22 @@ Nom
                                                 </ng-container>
                                             </ng-container>
                                             <ng-container *ngSwitchCase="'PRIME_AGE'">
-                                                <button class="min-w-10 min-h-7 h-7 px-2 leading-6"
-                                                        mat-stroked-button></button>
+                                                <button
+                                                        class="ml-4"
+                                                        mat-flat-button
+                                                        [color]="'warn'"
+                                                >
+                                                    <span
+                                                        class="ml-2 mr-1">{{getEnum(document?.document.status)}}</span>
+                                                </button>
                                             </ng-container>
                                             <ng-container *ngSwitchCase="'MATURITY_PRIME_AGE'">
                                                 <button
                                                     class="min-w-10 min-h-7 h-7 px-2 leading-6"
                                                     mat-stroked-button
                                                 >
-                                                    <mat-icon
-                                                        class="icon-size-5"
-                                                        [svgIcon]="'heroicons_solid:x'"></mat-icon>
+                                                    <span
+                                                        class="ml-2 mr-1">{{getEnum(document?.document.status)}}</span>
                                                 </button>
                                             </ng-container>
                                             <ng-container *ngSwitchCase="'SECOND_AGE'">
@@ -132,6 +137,9 @@ Nom
                                                     <mat-icon
                                                         class="icon-size-5"
                                                         [svgIcon]="'heroicons_solid:x'"></mat-icon>
+                                                    <span
+                                                        class="ml-2 mr-1">{{getEnum(document?.document.status)}}</span>
+
                                                 </button>
                                             </ng-container>
                                             <ng-container *ngSwitchCase="'MATURITY_SECOND_AGE'">
@@ -142,6 +150,9 @@ Nom
                                                     <mat-icon
                                                         class="icon-size-5"
                                                         [svgIcon]="'heroicons_solid:x'"></mat-icon>
+                                                    <span
+                                                        class="ml-2 mr-1">{{getEnum(document?.document.status)}}</span>
+
                                                 </button>
                                             </ng-container>
                                             <ng-container *ngSwitchCase="'THIRD_AGE'">
@@ -149,6 +160,8 @@ Nom
                                                     class="min-w-10 min-h-7 h-7 px-2 leading-6"
                                                     mat-stroked-button
                                                 >
+                                                    <span
+                                                        class="ml-2 mr-1">{{getEnum(document?.document.status)}}</span>
 
                                                 </button>
                                             </ng-container>
@@ -160,6 +173,9 @@ Nom
                                                     <mat-icon
                                                         class="icon-size-5"
                                                         [svgIcon]="'heroicons_solid:x'"></mat-icon>
+                                                    <span
+                                                        class="ml-2 mr-1">{{getEnum(document?.document.status)}}</span>
+
                                                 </button>
                                             </ng-container>
                                             <ng-container *ngSwitchDefault>

@@ -23,8 +23,8 @@ public class DirectionRegional extends AbstractEntity {
     private String libelleDirection;
     private String lieuArchive;
     private String lieuArchiveSecAge;
-    @OneToMany(mappedBy = "directeur", cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.LAZY)
-    private List<StructureCentral> structureCentrals = new ArrayList<>();
+//    @OneToMany(mappedBy = "directeur", cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.LAZY)
+//    private List<StructureCentral> structureCentrals = new ArrayList<>();
 //    @OneToMany(mappedBy = "directionRegional", fetch = FetchType.LAZY)
 //    private List<User> users = new ArrayList<>();
 }
