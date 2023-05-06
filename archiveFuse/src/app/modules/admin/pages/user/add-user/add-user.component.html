@@ -31,7 +31,7 @@
                                 </mat-error>
                             </mat-form-field>
                         </div>
-                        <div class="flex flex-col gt-xs:flex-row gt-xs:items-baseline">
+                        <div class="flex flex-col gt-xs:flex-row gt-xs:items-baseline" *ngIf="!isUpdate">
                             <span class="font-semibold mb-1 gt-xs:text-right gt-xs:min-w-32 gt-xs:mr-4 gt-xs:mb-0">Mot de passe</span>
                             <mat-form-field class="fuse-mat-dense flex-auto">
                                 <input id="password" matInput type="password" [formControlName]="'password'"
@@ -55,17 +55,14 @@
                                 </mat-error>
                             </mat-form-field>
                         </div>
-                        <div class="flex flex-col gt-xs:flex-row gt-xs:items-baseline">
+                        <div class="flex flex-col gt-xs:flex-row gt-xs:items-baseline" *ngIf="!isUpdate">
                             <span
                                 class="font-semibold mb-1 gt-xs:text-right gt-xs:min-w-32 gt-xs:mr-4 gt-xs:mb-0">Role</span>
                             <mat-form-field class="fuse-mat-dense flex-auto">
-                                <mat-select [value]="'Choose the role'" [formControlName]="'roleNames'">
-                                    <mat-option [value]="'Choose the trainer'">Choose the Role</mat-option>
-                                    <mat-option [value]="'ROLE_AGENT'">AGENT</mat-option>
-                                    <mat-option [value]="'ROLE_ADMIN'">Admin</mat-option>
-                                    <mat-option [value]="'ROLE_RESPONSABLE'">RESPONSABLE</mat-option>
-                                    <mat-option [value]="'ROLE_RESOPONSABLE_CENTRE_ARCHIVE'">RESOPONSABLE CENTRE ARCHIVE</mat-option>
-                                    <mat-option [value]="'ROLE_RESOPONSABLE_CENTRE_PRE_ARCHIVE'">RESOPONSABLE CENTRE PRE ARCHIVE</mat-option>
+                                <mat-select [value]="'Choose the role'" [formControlName]="'roles'">
+                                    <mat-option *ngFor="let role of roles"
+                                                [value]="role?.roleName">{{role?.value}}</mat-option>
+
                                 </mat-select>
                             </mat-form-field>
                         </div>
@@ -74,8 +71,9 @@
                                 class="flex-auto gt-xs:pr-3">
                                 <mat-label>Direction régional</mat-label>
                                 <select matNativeControl formControlName="directionRegional">
-                                    <option [ngValue]="directionRegional"
-                                            *ngFor="let directionRegional of directionRegionals$ | async">{{directionRegional?.codeDirection}}</option>
+                                    <option
+                                        *ngFor="let item of directionRegionals$ | async"
+                                        [value]="item?.id">{{item?.codeDirection}}</option>
                                 </select>
                             </mat-form-field>
                         </div>
@@ -84,8 +82,9 @@
                                 class="flex-auto gt-xs:pr-3">
                                 <mat-label>Agence</mat-label>
                                 <select matNativeControl formControlName="agence">
-                                    <option [ngValue]="agence"
-                                            *ngFor="let agence of agences$ | async">{{agence?.codeAgence}}</option>
+                                    <option
+                                        *ngFor="let item of agences$ | async"
+                                        [value]="item?.id">{{item?.codeAgence}}</option>
                                 </select>
                             </mat-form-field>
                         </div>
@@ -94,8 +93,9 @@
                                 class="flex-auto gt-xs:pr-3">
                                 <mat-label>Structure Central</mat-label>
                                 <select matNativeControl formControlName="structureCentral">
-                                    <option [ngValue]="structureCentral"
-                                            *ngFor="let structureCentral of structureCentrals$ | async">{{structureCentral?.codeStructure}}</option>
+                                    <option
+                                        *ngFor="let item of structureCentrals$ | async"
+                                        [value]="item?.id">{{item?.codeStructure}}</option>
                                 </select>
                             </mat-form-field>
                         </div>

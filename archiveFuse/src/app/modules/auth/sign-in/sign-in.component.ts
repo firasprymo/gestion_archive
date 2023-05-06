@@ -75,13 +75,16 @@ export class AuthSignInComponent implements OnInit {
             .subscribe(
                 (res) => {
                     this._userService.get().subscribe((user: any) => {
+                        console.log(user.roles[0]);
+                        if (user.roles[0].roleName === 'ROLE_ADMIN') {
+                            this._router.navigateByUrl('/pages/show-users');
 
-                        if (user.role === 'ROLE_ADMIN') {
-                            this._router.navigateByUrl('dashboards/project');
+                        } else if (user.roles[0].roleName === 'ROLE_AGENT') {
+                            this._router.navigateByUrl('pages/show-documents');
 
-                        } else {
-                            const redirectURL = this._activatedRoute.snapshot.queryParamMap.get('redirectURL') || '/signed-in-redirect';
-                            this._router.navigateByUrl(redirectURL);
+                        } else if (user.roles[0].roleName === 'ROLE_RESOPONSABLE') {
+                            this._router.navigateByUrl('pages/consult-documents');
+
                         }
                     });
                     //

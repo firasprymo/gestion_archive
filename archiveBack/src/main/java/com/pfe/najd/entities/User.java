@@ -35,16 +35,16 @@ public class User extends AbstractEntity {
     private Set<Role> roles = new HashSet<>();
 
     //    // Relationships with DirectionRegional, StructureCentral, and Agence
-    @ManyToOne(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
-    @JoinColumn(name = "direction_regional_code", referencedColumnName = "id", nullable = true)
+    @ManyToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "direction_regional", referencedColumnName = "id", nullable = true)
     private DirectionRegional directionRegional;
 
-    @ManyToOne(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
-    @JoinColumn(name = "structure_central_code", referencedColumnName = "id", nullable = true)
+    @ManyToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "structure_central", referencedColumnName = "id", nullable = true)
     private StructureCentral structureCentral;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "code_agence", referencedColumnName = "id", nullable = true)
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "agence", referencedColumnName = "id", nullable = true)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Agence agence;
 //

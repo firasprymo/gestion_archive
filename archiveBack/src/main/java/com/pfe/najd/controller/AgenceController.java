@@ -34,8 +34,8 @@ public class AgenceController {
         return new ResponseEntity<>(agences, HttpStatus.OK);
     }
 
-    @GetMapping("get-agence/{codeAgence}")
-    public ResponseEntity<Agence> getAgenceById(@PathVariable("codeAgence") Long id) {
+    @GetMapping("/{id}")
+    public ResponseEntity<Agence> getAgenceById(@PathVariable("id") Long id) {
         Optional<Agence> agence = agenceService.getAgenceById(id);
         if (agence.isPresent()) {
             return new ResponseEntity<>(agence.get(), HttpStatus.OK);
@@ -50,8 +50,8 @@ public class AgenceController {
         return new ResponseEntity<>(agences, HttpStatus.OK);
     }
 
-    @PutMapping("/update-agence/{codeAgence}")
-    public ResponseEntity<Agence> updateAgence(@PathVariable("codeAgence") Long id, @RequestBody Agence updatedAgence) {
+    @PatchMapping("/{id}")
+    public ResponseEntity<Agence> updateAgence(@PathVariable("id") Long id, @RequestBody Agence updatedAgence) {
         try {
             Agence updated = agenceService.updateAgence(id, updatedAgence);
             return new ResponseEntity<>(updated, HttpStatus.OK);
@@ -60,7 +60,7 @@ public class AgenceController {
         }
     }
 
-    @DeleteMapping("/delete-agence/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteAgence(@PathVariable("id") Long id) {
         try {
             agenceService.deleteAgenceById(id);

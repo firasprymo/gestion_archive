@@ -105,7 +105,6 @@ public class StructureCentralServiceImpl implements StructureCentralService {
     }
 
 
-    @Transactional
     public Page<StructureCentral> pageStructureCentrals(Pageable pageable) {
         Page<StructureCentral> documents = structureCentralDao.findAll(pageable);
 

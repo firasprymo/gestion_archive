@@ -13,9 +13,9 @@ import {StructureCentralService} from '../../../../../shared/service/structure-c
 })
 export class AddAgenceComponent implements OnInit, OnDestroy {
     agenceForm: FormGroup;
-
+    agence: any;
     structureCentrals$: Observable<StructureCentral[]>;
-
+    isUpdate = false;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     constructor(private _formBuilder: FormBuilder,
@@ -36,6 +36,20 @@ export class AddAgenceComponent implements OnInit, OnDestroy {
             structure: ['', Validators.required],
         });
         this.structureCentrals$ = this._structureCentralService.structureCentrals$;
+        this._agenceService.agence$.subscribe((res) => {
+            if (res) {
+                this.isUpdate = true;
+                this.agence = res.id;
+                this.agenceForm.patchValue({
+                    id: res.id,
+                    codeAgence: res.codeAgence,
+                    libelleAgence: res.libelleAgence,
+                    lieuArchive: res.lieuArchive,
+                    lieuArchiveSecAge: res.lieuArchiveSecAge,
+                    structure: res.structure,
+                });
+            }
+        });
 
     }
 
@@ -70,4 +84,14 @@ export class AddAgenceComponent implements OnInit, OnDestroy {
     }
 
 
+    editAgence(): any {
+        console.log(this.agence)
+        this._agenceService.editAgence(this.agenceForm.value, this.agence).subscribe((newAgence) => {
+            // Mark for check
+            this._changeDetectorRef.markForCheck();
+            this._router.navigate(['pages/show-agences']);
+
+        });
+
+    }
 }

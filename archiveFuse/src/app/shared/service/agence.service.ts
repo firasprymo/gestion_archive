@@ -5,6 +5,7 @@ import {Agence} from '../model/agence.types';
 import {ApiService} from './api.service';
 import {HttpClient} from '@angular/common/http';
 import {map, switchMap, take, tap} from 'rxjs/operators';
+import {DirectionRegional} from "../model/direction-regional.types";
 
 
 @Injectable({
@@ -64,12 +65,15 @@ export class AgenceService {
      * Get agence by id
      */
     getAgenceById(id): Observable<Agence> {
-        return this._agence.pipe(
-            take(1),
-            map((agenceItem) => {
-                this._agence.next(agenceItem);
-                return agenceItem;
-            }),
+        return this._httpClient.get<Agence>(`${ApiService.apiAgences}/${id}`)
+            .pipe(
+                map((agence) => {
+                    // Update the directionRegional
+                    this._agence.next(agence);
+
+                    // Return the agence
+                    return agence;
+                }),
             switchMap((agenceItem) => {
 
                 if (!agenceItem) {

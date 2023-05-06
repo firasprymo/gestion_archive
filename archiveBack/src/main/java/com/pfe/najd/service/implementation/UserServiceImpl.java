@@ -4,6 +4,7 @@ import com.pfe.najd.dao.AgenceDao;
 import com.pfe.najd.dao.DirectionRegionalDao;
 import com.pfe.najd.dao.RoleDao;
 import com.pfe.najd.dao.StructureCentralDao;
+import com.pfe.najd.dto.UserRequest;
 import com.pfe.najd.entities.*;
 import com.pfe.najd.exeptions.UserExistsException;
 import com.pfe.najd.repository.UserRepository;
@@ -31,28 +32,37 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
 
 
-    public User createUser(User user) {
+    public User createUser(UserRequest user) {
 
         User users = new User();
         users.setUsername(user.getUsername());
         users.setPassword(passwordEncoder.encode(user.getPassword()));
         users.setEmail(user.getEmail());
-        Agence agence = agenceDao.findById(user.getAgence().getId())
-                .orElseThrow(() -> new RuntimeException("Agence doesnt exisr"));
-        users.setAgence(agence);
-        users.setLieuAffectation(agence.getCodeAgence());
-        StructureCentral structureCentral = structureCentralDao.findById(user.getStructureCentral().getId())
-                .orElseThrow(() -> new RuntimeException("Structure Central doesnt exisr"));
-        users.setLieuAffectation(structureCentral.getCodeStructure());
-        users.setStructureCentral(structureCentral);
-        DirectionRegional directionRegional = directionRegionalDao.findById(user.getDirectionRegional().getId())
-                .orElseThrow(() -> new RuntimeException("Direction Regional doesnt exisr"));
-        users.setLieuAffectation(directionRegional.getCodeDirection());
-        users.setDirectionRegional(directionRegional);
-        Set<Role> roles = user.getRoles().stream()
-                .map(roleName -> roleDao.findByRoleName(roleName.getRoleName()).orElseThrow(() -> new RuntimeException("Role introuvable")))
-                .collect(Collectors.toSet());
-        users.setRoles(roles);
+        if (user.getAgence() != null) {
+
+            Agence agence = agenceDao.findById(user.getAgence())
+                    .orElseThrow(() -> new RuntimeException("Agence doesnt exisr"));
+            users.setAgence(agence);
+            users.setLieuAffectation(agence.getCodeAgence());
+        }
+        if (user.getStructureCentral() != null) {
+
+            StructureCentral structureCentral = structureCentralDao.findById(user.getStructureCentral())
+                    .orElseThrow(() -> new RuntimeException("Structure Central doesnt exisr"));
+            users.setLieuAffectation(structureCentral.getCodeStructure());
+            users.setStructureCentral(structureCentral);
+        }
+        if (user.getDirectionRegional() != null) {
+
+            DirectionRegional directionRegional = directionRegionalDao.findById(user.getDirectionRegional())
+                    .orElseThrow(() -> new RuntimeException("Direction Regional doesnt exisr"));
+            users.setLieuAffectation(directionRegional.getCodeDirection());
+            users.setDirectionRegional(directionRegional);
+        }
+        if (user.getRoles() != null) {
+            Role role = roleDao.findFirstByRoleName(user.getRoles());
+            users.getRoles().add(role);
+        }
         return userRepository.save(users);
 
     }
@@ -74,10 +84,37 @@ public class UserServiceImpl implements UserService {
         return userRepository.findById(id);
     }
 
-    public User updateUser(Long id, User updatedUser) {
+    public User updateUser(Long id, UserRequest updatedUser) {
         Optional<User> existingUserOptional = userRepository.findById(id);
         if (existingUserOptional.isPresent()) {
             User existingUser = existingUserOptional.get();
+            if (updatedUser.getUsername() != null) {
+                existingUser.setUsername(updatedUser.getUsername());
+            }
+            if (updatedUser.getEmail() != null) {
+                existingUser.setEmail(updatedUser.getEmail());
+            }
+            if (updatedUser.getRoles() != null) {
+                Role role = roleDao.findFirstByRoleName(updatedUser.getRoles());
+
+                existingUser.getRoles().add(role);
+            }
+            if (updatedUser.getStructureCentral() != null) {
+                StructureCentral structureCentral = structureCentralDao.findById(updatedUser.getStructureCentral())
+                        .orElseThrow(() -> new RuntimeException("Agence doesnt exisr"));
+                existingUser.setStructureCentral(structureCentral);
+
+            }
+            if (updatedUser.getAgence() != null) {
+                Agence agence = agenceDao.findById(updatedUser.getAgence())
+                        .orElseThrow(() -> new RuntimeException("Agence doesnt exisr"));
+                existingUser.setAgence(agence);
+            }
+            if (updatedUser.getDirectionRegional() != null) {
+                DirectionRegional directionRegional = directionRegionalDao.findById(updatedUser.getDirectionRegional())
+                        .orElseThrow(() -> new RuntimeException("Direction Regional doesnt exisr"));
+                existingUser.setDirectionRegional(directionRegional);
+            }
             return userRepository.save(existingUser);
         } else {
             throw new RuntimeException("User avec Code" + id + "deja existe");

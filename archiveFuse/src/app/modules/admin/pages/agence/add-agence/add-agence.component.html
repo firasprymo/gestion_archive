@@ -77,13 +77,22 @@
                     <button mat-button>
                         Cancel
                     </button>
-                    <button (click)="createAgence()"
+                    <button (click)="editAgence()" *ngIf="isUpdate else onCreate"
                             class="px-6 ml-3"
                             mat-flat-button
-                            [disabled]="!agenceForm.valid"
-                            [color]="'primary'">
-                        Save
+                            [color]="'warn'">
+                        Update
                     </button>
+                    <ng-template #onCreate>
+
+                        <button (click)="createAgence()"
+                                class="px-6 ml-3"
+                                mat-flat-button
+                                [disabled]="!agenceForm.valid"
+                                [color]="'primary'">
+                            Save
+                        </button>
+                    </ng-template>
                 </div>
             </form>
         </div>

@@ -33,11 +33,10 @@ export class AgencesResolvers implements Resolve<any> {
 }
 
 
-
 @Injectable({
     providedIn: 'root'
 })
-export class agencesByIdResolver implements Resolve<any> {
+export class AgencesByIdResolver implements Resolve<any> {
     /**
      * Constructor
      */
@@ -58,6 +57,7 @@ export class agencesByIdResolver implements Resolve<any> {
      * @param state
      */
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Agence> {
+        if (!route.paramMap.get('id')) return;
         return this._agenceService.getAgenceById(route.paramMap.get('id'))
             .pipe(
                 // Error here means the requested task is not available

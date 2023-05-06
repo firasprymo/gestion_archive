@@ -1,5 +1,6 @@
 package com.pfe.najd.controller;
 
+import com.pfe.najd.dto.UserRequest;
 import com.pfe.najd.entities.CentreArchive;
 import com.pfe.najd.entities.StructureCentral;
 import com.pfe.najd.exeptions.UserExistsException;
@@ -26,11 +27,17 @@ public class UserController {
         this.userService = userService;
     }
 
+    @GetMapping("/get-all-users")
+    public ResponseEntity<Page<User>> getAllUsers(Pageable pageable) {
+        return ResponseEntity.ok().body(userService.pageUsers(pageable));
+    }
+
     @PreAuthorize("hasAnyAuthority('SCOPE_ROLE_ADMIN','SCOPE_ROLE_RESPONSABLE')")
     @PostMapping("/register")
-    public User createUser(@RequestBody User user) {
+    public User createUser(@RequestBody UserRequest user) {
         return userService.createUser(user);
     }
+
     @GetMapping("/{id}")
     public ResponseEntity<User> getUserById(@PathVariable("id") Long id) {
         Optional<User> user = userService.getUserById(id);
@@ -40,36 +47,36 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
     @GetMapping("/Me")
-    public User getMe(@RequestParam  String username) {
+    public User getMe(@RequestParam String username) {
         return userService.getMe(username);
     }
+
     @DeleteMapping("/delete-user/{id}")
-    public ResponseEntity<Void> deleteUserById(@PathVariable("id") Long id){
-        try{
+    public ResponseEntity<Void> deleteUserById(@PathVariable("id") Long id) {
+        try {
             userService.deleteUserById(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }catch (RuntimeException e){
+        } catch (RuntimeException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
     @PreAuthorize("hasAnyAuthority('SCOPE_ROLE_ADMIN')")
     @PatchMapping("/{id}")
-    public ResponseEntity<User> updateStructureCentral(@PathVariable("id") Long id, @RequestBody User updatedUser){
-        try{
+    public ResponseEntity<User> updateStructureCentral(@PathVariable("id") Long id, @RequestBody UserRequest updatedUser) {
+        try {
             User updated = userService.updateUser(id, updatedUser);
             return new ResponseEntity<>(updated, HttpStatus.OK);
-        }catch (RuntimeException e){
+        } catch (RuntimeException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
     @ExceptionHandler(UserExistsException.class)
     public ResponseEntity<String> handleUserExistsException(UserExistsException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
-    }
-    @GetMapping("/get-all-users")
-    public ResponseEntity<Page<User>> getAllUsers(Pageable pageable) {
-        return ResponseEntity.ok().body(userService.pageUsers(pageable));
     }
 
 

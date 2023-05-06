@@ -158,11 +158,7 @@ export const appRoutes: Route[] = [
                 canActivateChild: [AuthGuard],
                 children: [
 
-                    // Activities
-                    {
-                        path: 'activities',
-                        loadChildren: () => import('app/modules/admin/pages/activities/activities.module').then(m => m.ActivitiesModule)
-                    },
+
                     {
                         path: 'add-document',
                         canActivate: [AuthGuard],

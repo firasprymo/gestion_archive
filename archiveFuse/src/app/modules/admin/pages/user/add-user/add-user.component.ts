@@ -23,7 +23,29 @@ export class AddUserComponent implements OnInit {
     agences$: Observable<Agence[]>;
     isUpdate = false;
     user: Users;
-
+    roles: any =
+        [
+            {
+                roleName: 'ROLE_AGENT',
+                value: 'AGENT'
+            },
+            {
+                roleName: 'ROLE_ADMIN',
+                value: 'Admin'
+            },
+            {
+                roleName: 'ROLE_RESPONSABLE',
+                value: 'RESPONSABLE'
+            },
+            {
+                roleName: 'ROLE_RESOPONSABLE_CENTRE_ARCHIVE',
+                value: 'RESOPONSABLE'
+            },
+            {
+                roleName: 'ROLE_RESOPONSABLE_CENTRE_PRE_ARCHIVE',
+                value: 'RESOPONSABLE CENTRE PRE ARCHIVE'
+            },
+        ];
     constructor(private _formBuilder: FormBuilder,
                 private _router: Router,
                 private _structureCentralService: StructureCentralService,
@@ -40,22 +62,25 @@ export class AddUserComponent implements OnInit {
             username: ['', Validators.required],
             email: ['', [Validators.required, Validators.email]],
             password: ['', Validators.required],
-            roleNames: [[''], Validators.required],
-            directionRegional: [[],],
-            structureCentral: [[],],
-            agence: [[],],
+            roles: [[''], Validators.required],
+            directionRegional: [null],
+            structureCentral: [null],
+            agence: [null],
         });
         this.structureCentrals$ = this._structureCentralService.structureCentrals$;
         this.agences$ = this._agenceService.agences$;
         this.directionRegionals$ = this._directionRegionalService.directionRegionals$;
         this._userService.user$.subscribe((res: any) => {
-            this.user = res.id;
             console.log(res);
             if (res) {
+                this.user = res.id;
                 this.isUpdate = true;
                 this.userForm.patchValue({
                     id: res.id,
                     username: res.username,
+                    structureCentral: res.structureCentral,
+                    agence: res.agence,
+                    directionRegional: res.directionRegional,
                     email: res.email,
                 });
             }

@@ -41,7 +41,7 @@ import {debounceTime, map, switchMap, takeUntil} from 'rxjs/operators';
                 }
 
                 @screen lg {
-                    grid-template-columns: 48px 112px auto 112px 96px 96px 72px;
+                    grid-template-columns: 148px 112px 100px 112px 96px 96px 72px;
                 }
             }
         `

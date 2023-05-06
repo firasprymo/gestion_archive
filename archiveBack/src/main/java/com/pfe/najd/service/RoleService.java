@@ -15,8 +15,8 @@ public class RoleService {
         this.roleDao = roleDao;
     }
 
-    public Optional<Role> findRoleByName(String roleName) {
-        return roleDao.findByRoleName(roleName);
+    public Role findRoleByName(String roleName) {
+        return roleDao.findFirstByRoleName(roleName);
     }
 
     public List<Role> findAll() {
@@ -26,16 +26,17 @@ public class RoleService {
     public Role save(Role role) {
         return roleDao.save(role);
     }
+
     public Role createRoleIfNotFound(String roleName) {
-        Optional<Role> optionalRole = roleDao.findByRoleName(roleName);
-        if (optionalRole.isPresent()) {
-            return optionalRole.get();
+        Role optionalRole = roleDao.findFirstByRoleName(roleName);
+        if (!optionalRole.equals("null")) {
+            return optionalRole;
         } else {
             Role newRole = new Role();
             newRole.setRoleName(roleName);
             return roleDao.save(newRole);
         }
     }
-    
+
 }
 

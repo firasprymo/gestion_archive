@@ -30,8 +30,8 @@ public class StructureCentral extends AbstractEntity {
     private String libelleStructure;
     private String lieuArchive;
     private String lieuArchiveSecAge;
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "directeur_id", nullable = true)
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JoinColumn(name = "directeur", nullable = true)
     private DirectionRegional directeur;
 
     //    @ManyToOne
