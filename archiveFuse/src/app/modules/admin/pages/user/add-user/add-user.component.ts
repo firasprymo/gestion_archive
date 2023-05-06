@@ -34,12 +34,12 @@ export class AddUserComponent implements OnInit {
                 value: 'Admin'
             },
             {
-                roleName: 'ROLE_RESPONSABLE',
+                roleName: 'ROLE_RESOPONSABLE',
                 value: 'RESPONSABLE'
             },
             {
                 roleName: 'ROLE_RESOPONSABLE_CENTRE_ARCHIVE',
-                value: 'RESOPONSABLE'
+                value: 'RESOPONSABLE CENTRE ARCHIVE'
             },
             {
                 roleName: 'ROLE_RESOPONSABLE_CENTRE_PRE_ARCHIVE',
