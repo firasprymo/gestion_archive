@@ -49,6 +49,7 @@ export class UserService {
         if (!username) {return;}
         return this._httpClient.get<Users>(`${usersURL}/Me?username=${username}`).pipe(
             tap((response: any) => {
+                console.log(response)
                 // Store the access token in the local storage
                 this._user.next(response);
                 // Return a new observable with the response

@@ -6,10 +6,11 @@ export const defaultNavigation: FuseNavigationItem[] = [
     {
         id: 'home',
         title: 'Home',
-        meta: 'ROLE_ADMIN',
         type: 'basic',
         icon: 'heroicons_outline:home',
         link: '/dashboards/project',
+        meta: ['ROLE_ADMIN', 'ROLE_RESOPONSABLE', 'ROLE_RESOPONSABLE_CENTRE_PRE_ARCHIVE'],
+
     },
     {
         id: 'documents',
@@ -17,7 +18,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
         subtitle: '',
         type: 'group',
         icon: 'heroicons_outline:home',
-        meta: 'ROLE_ADMIN',
+        meta: ['ROLE_ADMIN', 'ROLE_RESOPONSABLE', 'ROLE_RESOPONSABLE_CENTRE_ARCHIVE', 'ROLE_RESOPONSABLE_CENTRE_PRE_ARCHIVE'],
         children: [
             {
                 id: 'documents.add',
@@ -25,7 +26,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 type: 'basic',
                 icon: 'heroicons_outline:pencil-alt',
                 link: '/pages/add-document',
-            meta: 'ROLE_AGENT',
+                meta: ['ROLE_AGENT'],
 
             },
             {
@@ -34,7 +35,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 type: 'basic',
                 icon: 'heroicons_outline:chart-pie',
                 link: '/pages/show-documents',
-                meta: 'ROLE_AGENT',
+                meta: ['ROLE_AGENT'],
             },
             {
                 id: 'documents.consult',
@@ -42,8 +43,33 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 type: 'basic',
                 icon: 'heroicons_outline:chart-pie',
                 link: '/pages/consult-documents',
-                meta: 'ROLE_RESOPONSABLE',
+                meta: ['ROLE_RESOPONSABLE', 'ROLE_RESOPONSABLE_CENTRE_PRE_ARCHIVE'],
             },
+            {
+                id: 'documents.request',
+                title: 'Valider document',
+                type: 'basic',
+                icon: 'heroicons_outline:chart-pie',
+                link: '/pages/request-documents',
+                meta: ['ROLE_RESOPONSABLE', 'ROLE_RESOPONSABLE_CENTRE_PRE_ARCHIVE'],
+            },
+            {
+                id: 'documents.requestconsult',
+                title: 'Demande de consultation document',
+                type: 'basic',
+                icon: 'heroicons_outline:chart-pie',
+                link: '/pages/request-consult-documents',
+                meta: ['ROLE_RESOPONSABLE_CENTRE_PRE_ARCHIVE', 'ROLE_RESOPONSABLE_CENTRE_ARCHIVE'],
+            },
+            {
+                id: 'documents.Document_mature_premiér_âge',
+                title: 'Document mature premiér âge',
+                type: 'basic',
+                icon: 'heroicons_outline:chart-pie',
+                link: '/pages/document_mature_premier_age',
+                meta: ['ROLE_RESOPONSABLE'],
+            },
+
         ]
     },
     {
@@ -52,7 +78,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
         subtitle: '',
         type: 'group',
         icon: 'heroicons_outline:home',
-        meta: 'ROLE_ADMIN',
+        meta: ['ROLE_ADMIN'],
         children: [
             {
                 id: 'users.add',
@@ -60,7 +86,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 type: 'basic',
                 icon: 'heroicons_outline:pencil-alt',
                 link: '/pages/add-user',
-                meta: 'ROLE_ADMIN',
+                meta: ['ROLE_ADMIN'],
 
             },
             {
@@ -69,7 +95,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 type: 'basic',
                 icon: 'heroicons_outline:chart-pie',
                 link: '/pages/show-users',
-                meta: 'ROLE_ADMIN',
+                meta: ['ROLE_ADMIN'],
             },
         ]
     },
@@ -79,7 +105,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
         subtitle: '',
         type: 'group',
         icon: 'heroicons_outline:home',
-        meta: 'ROLE_ADMIN',
+        meta: ['ROLE_ADMIN'],
         children: [
             {
                 id: 'structures.add',
@@ -87,7 +113,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 type: 'basic',
                 icon: 'heroicons_outline:pencil-alt',
                 link: '/pages/add-structure',
-                meta: 'ROLE_ADMIN',
+                meta: ['ROLE_ADMIN'],
             },
             {
                 id: 'structures.show',
@@ -95,7 +121,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 type: 'basic',
                 icon: 'heroicons_outline:chart-pie',
                 link: '/pages/show-structures',
-                meta: 'ROLE_ADMIN',
+                meta: ['ROLE_ADMIN'],
             },
         ]
     },
@@ -105,7 +131,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
     //     subtitle: '',
     //     type: 'group',
     //     icon: 'heroicons_outline:home',
-    //     meta: 'ROLE_ADMIN',
+    //     meta: ['ROLE_ADMIN'],
     //     children: [
     //         {
     //             id: 'quizes.add',
@@ -113,7 +139,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
     //             type: 'basic',
     //             icon: 'heroicons_outline:pencil-alt',
     //             link: '/pages/add-quiz',
-    //             meta: 'ROLE_ADMIN',
+    //             meta: ['ROLE_ADMIN'],
     //         },
     //         {
     //             id: 'quizes.show',
@@ -121,7 +147,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
     //             type: 'basic',
     //             icon: 'heroicons_outline:chart-pie',
     //             link: '/pages/show-quizes',
-    //             meta: 'ROLE_ADMIN',
+    //             meta: ['ROLE_ADMIN'],
     //         },
     //     ]
     // },
@@ -131,7 +157,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
         subtitle: '',
         type: 'group',
         icon: 'heroicons_outline:home',
-        meta: 'ROLE_ADMIN',
+        meta: ['ROLE_ADMIN'],
         children: [
             {
                 id: 'DirectionRegional.add',
@@ -139,7 +165,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 type: 'basic',
                 icon: 'heroicons_outline:pencil-alt',
                 link: '/pages/add-direction-regional',
-                meta: 'ROLE_ADMIN',
+                meta: ['ROLE_ADMIN'],
             },
             {
                 id: 'DirectionRegional.show',
@@ -147,7 +173,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 type: 'basic',
                 icon: 'heroicons_outline:chart-pie',
                 link: '/pages/show-direction-regional',
-                meta: 'ROLE_ADMIN',
+                meta: ['ROLE_ADMIN'],
             },
         ]
     },
@@ -157,7 +183,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
         subtitle: '',
         type: 'group',
         icon: 'heroicons_outline:home',
-        meta: 'ROLE_ADMIN',
+        meta: ['ROLE_ADMIN'],
         children: [
 
             {
@@ -166,7 +192,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 type: 'basic',
                 icon: 'heroicons_outline:pencil-alt',
                 link: '/pages/add-agence',
-                meta: 'ROLE_ADMIN',
+                meta: ['ROLE_ADMIN'],
             },
             {
                 id: 'agences.show',
@@ -174,7 +200,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 type: 'basic',
                 icon: 'heroicons_outline:chart-pie',
                 link: '/pages/show-agences',
-                meta: 'ROLE_ADMIN',
+                meta: ['ROLE_ADMIN'],
             },
         ]
     },
@@ -184,7 +210,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
         subtitle: '',
         type: 'group',
         icon: 'heroicons_outline:home',
-        meta: 'ROLE_ADMIN',
+        meta: ['ROLE_ADMIN'],
         children: [
             {
                 id: 'prearchives.add',
@@ -192,7 +218,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 type: 'basic',
                 icon: 'heroicons_outline:academic-cap',
                 link: '/pages/add-centre-pre',
-                meta: 'ROLE_ADMIN',
+                meta: ['ROLE_ADMIN'],
             },
             {
                 id: 'prearchives.show',
@@ -200,7 +226,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 type: 'basic',
                 icon: 'heroicons_outline:academic-cap',
                 link: '/pages/show-centres-pre',
-                meta: 'ROLE_ADMIN',
+                meta: ['ROLE_ADMIN'],
             },
         ]
     },
@@ -210,7 +236,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
         subtitle: '',
         type: 'group',
         icon: 'heroicons_outline:home',
-        meta: 'ROLE_ADMIN',
+        meta: ['ROLE_ADMIN'],
         children: [
             {
                 id: 'archives.add',
@@ -218,7 +244,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 type: 'basic',
                 icon: 'heroicons_outline:academic-cap',
                 link: '/pages/add-centre',
-                meta: 'ROLE_ADMIN',
+                meta: ['ROLE_ADMIN'],
             },
             {
                 id: 'archives.show',
@@ -226,7 +252,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 type: 'basic',
                 icon: 'heroicons_outline:academic-cap',
                 link: '/pages/show-centre',
-                meta: 'ROLE_ADMIN',
+                meta: ['ROLE_ADMIN'],
             },
         ]
     },
@@ -236,7 +262,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
         subtitle: '',
         type: 'group',
         icon: 'heroicons_outline:home',
-        meta: 'ROLE_ADMIN',
+        meta: ['ROLE_ADMIN'],
         children: [
             {
                 id: 'nomenclatures.add',
@@ -244,7 +270,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 type: 'basic',
                 icon: 'heroicons_outline:academic-cap',
                 link: '/pages/add-nomenclature',
-                meta: 'ROLE_ADMIN',
+                meta: ['ROLE_ADMIN'],
             },
             {
                 id: 'nomenclatures.show',
@@ -252,7 +278,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 type: 'basic',
                 icon: 'heroicons_outline:academic-cap',
                 link: '/pages/show-nomenclatures',
-                meta: 'ROLE_ADMIN',
+                meta: ['ROLE_ADMIN'],
             },
         ]
     },
@@ -262,7 +288,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
         subtitle: '',
         type: 'group',
         icon: 'heroicons_outline:home',
-        meta: 'ROLE_ADMINR',
+        meta: ['ROLE_ADMIN'],
         children: [
             {
                 id: 'mouvements.add',
@@ -270,7 +296,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 type: 'basic',
                 icon: 'heroicons_outline:academic-cap',
                 link: '/apps/add-mouvements',
-                meta: 'ROLE_ADMIN',
+                meta: ['ROLE_ADMIN'],
             },
             {
                 id: 'mouvements.show',
@@ -278,7 +304,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 type: 'basic',
                 icon: 'heroicons_outline:academic-cap',
                 link: '/apps/show-mouvements',
-                meta: 'ROLE_ADMIN',
+                meta: ['ROLE_ADMIN'],
             },
         ]
     },
@@ -290,7 +316,7 @@ export const compactNavigation: FuseNavigationItem[] = [
         tooltip: 'Dashboards',
         type: 'basic',
         icon: 'heroicons_outline:home',
-        meta: 'ROLE_ADMIN',
+        meta: ['ROLE_ADMIN'],
         link: '/dashboards/project',
     },
     {
@@ -298,7 +324,7 @@ export const compactNavigation: FuseNavigationItem[] = [
         title: 'Resources',
         subtitle: '',
         type: 'group',
-        meta: 'ROLE_USER',
+        meta: ['ROLE_USER'],
         icon: 'heroicons_outline:home',
         children: [
 
@@ -306,7 +332,7 @@ export const compactNavigation: FuseNavigationItem[] = [
                 id: 'resources.show',
                 title: 'Show resources',
                 type: 'basic',
-                meta: '',
+                meta: [''],
                 icon: 'heroicons_outline:chart-pie',
                 link: '/apps/file-manager'
             },
@@ -319,13 +345,13 @@ export const futuristicNavigation: FuseNavigationItem[] = [
         id: 'dashboards',
         title: 'DASHBOARDS',
         type: 'group',
-        meta: 'ROLE_ADMIN',
+        meta: ['ROLE_ADMIN'],
         children: [] // This will be filled from defaultNavigation so we don't have to manage multiple sets of the same navigation
     },
     {
         id: 'resources',
         title: 'Resources',
-        meta: 'ROLE_USER',
+        meta: ['ROLE_USER'],
         subtitle: '',
         type: 'group',
         icon: 'heroicons_outline:home',
@@ -337,7 +363,7 @@ export const futuristicNavigation: FuseNavigationItem[] = [
                 type: 'basic',
                 icon: 'heroicons_outline:chart-pie',
                 link: '/apps/file-manager',
-                meta: ''
+                meta: ['']
             },
         ]
     }
@@ -347,7 +373,7 @@ export const horizontalNavigation: FuseNavigationItem[] = [
     {
         id: 'dashboards',
         title: 'Dashboards',
-        meta: 'ROLE_ADMIN',
+        meta: ['ROLE_ADMIN'],
         type: 'basic',
         icon: 'heroicons_outline:home',
         link: '/dashboards/project',
@@ -360,7 +386,7 @@ export const horizontalNavigation: FuseNavigationItem[] = [
         subtitle: '',
         type: 'basic',
         icon: 'heroicons_outline:home',
-        meta: 'ROLE_USER',
+        meta: ['ROLE_USER'],
         link: '/apps/academy',
     },
     {
@@ -368,7 +394,7 @@ export const horizontalNavigation: FuseNavigationItem[] = [
         title: 'Resources',
         subtitle: '',
         type: 'basic',
-        meta: 'ROLE_USER',
+        meta: ['ROLE_USER'],
         icon: 'heroicons_outline:folder',
         link: '/apps/file-manager'
     },
@@ -378,7 +404,7 @@ export const horizontalNavigation: FuseNavigationItem[] = [
         subtitle: '',
         type: 'basic',
         icon: 'heroicons_outline:shopping-bag',
-        meta: 'ROLE_USER',
+        meta: ['ROLE_USER'],
         link: '/pages/pricing/simple',
     }
 ];

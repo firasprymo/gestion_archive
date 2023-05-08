@@ -23,8 +23,11 @@
                             <span class="font-semibold mb-1 gt-xs:text-right gt-xs:min-w-32 gt-xs:mr-4
                             gt-xs:mb-0">dureeConservationPremAge</span>
                             <mat-form-field class="fuse-mat-dense flex-auto">
-                                <input matInput [formControlName]="'dureeConservationPremAge'" rows="2"
-                                       placeholder="Ajouter la durée donservation prem âge">
+                                <mat-select [value]="'Choose the year'" [formControlName]="'dureeConservationPremAge'">
+                                    <mat-option *ngFor="let year of [].constructor(10);let i=index"
+                                                [value]="i+1">{{i+1}}</mat-option>
+
+                                </mat-select>
                                 <mat-error
                                     *ngIf="nomenclatureForm.controls.dureeConservationPremAge.hasError('required')">
                                     Durée Conservation Prem Age est obligatoire
@@ -36,6 +39,11 @@
                             <span class="font-semibold mb-1 gt-xs:text-right gt-xs:min-w-32 gt-xs:mr-4
                             gt-xs:mb-0">Durée Conservation Sec Age</span>
                             <mat-form-field class="fuse-mat-dense flex-auto">
+                                <mat-select [value]="'Choose the year'" [formControlName]="'dureeConservationSecAge'">
+                                    <mat-option *ngFor="let year of [].constructor(11);let i=index"
+                                                [value]="i">{{i}}</mat-option>
+
+                                </mat-select>
                                 <input matInput [formControlName]="'dureeConservationSecAge'" rows="2"
                                        placeholder="Ajouter le Durée Conservation Sec Age">
                                 <mat-error
@@ -49,8 +57,13 @@
                             <span class="font-semibold mb-1 gt-xs:text-right gt-xs:min-w-32 gt-xs:mr-4
                             gt-xs:mb-0">Valeur historique trois âge</span>
                             <mat-form-field class="fuse-mat-dense flex-auto">
-                                <input matInput [formControlName]="'valeurHistoriqueTroiAge'" rows="2"
-                                       placeholder="Ajouter le Valeur historique trois âge">
+                                <mat-select [value]="'Choose the year'" [formControlName]="'valeurHistoriqueTroiAge'">
+                                    <mat-option
+                                                [value]="false">false</mat-option>
+                                    <mat-option
+                                                [value]="true">true</mat-option>
+
+                                </mat-select>
                                 <mat-error
                                     *ngIf="nomenclatureForm.controls.valeurHistoriqueTroiAge.hasError('required')">
                                     Valeur historique trois âge est obligatoire
@@ -70,7 +83,7 @@
                             mat-flat-button
                             [disabled]="!nomenclatureForm.valid"
                             [color]="'warn'">
-                         Update
+                        Update
                     </button>
                     <ng-template #onCreate>
 

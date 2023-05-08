@@ -17,6 +17,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.security.Principal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -35,8 +36,10 @@ public class DocumentServiceImpl implements DocumentService {
         User user = userRepository.findByUsername(currentPrincipalName).get();
         Document document1 = documentRepository.save(document);
         document.setStatus(DocumentStatus.PENDING);
-        document.setMaturitePremAge(LocalDate.from(document.getCreationDate().plusDays(Long.parseLong(document.getNomenclature().getDureeConservationPremAge()))));
-        document.setMaturiteSecAge(LocalDate.from(document.getCreationDate().plusDays(Long.parseLong(document.getNomenclature().getDureeConservationSecAge()))));
+        document.setMaturitePremAge(LocalDate.from(document.getCreationDate()
+                .plusYears(Long.parseLong(document.getNomenclature().getDureeConservationPremAge()))));
+        document.setMaturiteSecAge(LocalDate.from(document.getMaturitePremAge()
+                .plusYears(Long.parseLong(document.getNomenclature().getDureeConservationSecAge()))));
         documentRepository.save(document);
         DocumentRequest documentRequest = new DocumentRequest();
         documentRequest.setDocument(document1);
@@ -52,11 +55,19 @@ public class DocumentServiceImpl implements DocumentService {
         for (Document item :
                 documents) {
             if (LocalDate.now().isBefore(item.getMaturitePremAge())) {
-                item.setStatus(DocumentStatus.PRIME_AGE);
+                item.setStatus(DocumentStatus.MATURITY_PRIME_AGE);
                 documentRepository.save(item);
             }
             if (LocalDate.now().isBefore(item.getMaturiteSecAge())) {
-                item.setStatus(DocumentStatus.SECOND_AGE);
+                item.setStatus(DocumentStatus.MATURITY_SECOND_AGE);
+                documentRepository.save(item);
+            }
+            if (LocalDate.now().isAfter(item.getMaturiteSecAge()) && item.getNomenclature().getValeurHistoriqueTroiAge()) {
+                item.setStatus(DocumentStatus.THIRD_AGE);
+                documentRepository.save(item);
+            }
+            if (LocalDate.now().isAfter(item.getMaturiteSecAge()) && !item.getNomenclature().getValeurHistoriqueTroiAge()) {
+                item.setStatus(DocumentStatus.DESTRUCTED);
                 documentRepository.save(item);
             }
         }

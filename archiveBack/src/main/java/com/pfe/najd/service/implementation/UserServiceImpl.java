@@ -44,14 +44,14 @@ public class UserServiceImpl implements UserService {
                     .orElseThrow(() -> new RuntimeException("Agence doesnt exisr"));
             users.setAgence(agence);
             users.setLieuAffectation(agence.getCodeAgence());
-        }
+        }else
         if (user.getStructureCentral() != null) {
 
             StructureCentral structureCentral = structureCentralDao.findById(user.getStructureCentral())
                     .orElseThrow(() -> new RuntimeException("Structure Central doesnt exisr"));
             users.setLieuAffectation(structureCentral.getCodeStructure());
             users.setStructureCentral(structureCentral);
-        }
+        }else
         if (user.getDirectionRegional() != null) {
 
             DirectionRegional directionRegional = directionRegionalDao.findById(user.getDirectionRegional())
@@ -60,7 +60,7 @@ public class UserServiceImpl implements UserService {
             users.setDirectionRegional(directionRegional);
         }
         if (user.getRoles() != null) {
-            Role role = roleDao.findFirstByRoleName(user.getRoles());
+            Role role = roleDao.findTopByRoleName(user.getRoles());
             users.getRoles().add(role);
         }
         return userRepository.save(users);
@@ -95,7 +95,7 @@ public class UserServiceImpl implements UserService {
                 existingUser.setEmail(updatedUser.getEmail());
             }
             if (updatedUser.getRoles() != null) {
-                Role role = roleDao.findFirstByRoleName(updatedUser.getRoles());
+                Role role = roleDao.findTopByRoleName(updatedUser.getRoles());
 
                 existingUser.getRoles().add(role);
             }

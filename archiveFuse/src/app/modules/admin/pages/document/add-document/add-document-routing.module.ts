@@ -3,7 +3,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {AddDocumentComponent} from './add-document.component';
 import {documentByIdResolver, DocumentsResolvers} from '../../../../../shared/resolver/documents.resolvers';
 import {NomenclatureResolvers} from '../../../../../shared/resolver/nomenclature.resolvers';
-import {ActiveUserResolvers, UsersResolvers} from "../../../../../shared/resolver/users.resolvers";
+import {ActiveUserResolvers, UsersResolvers} from '../../../../../shared/resolver/users.resolvers';
 
 
 const routes: Routes = [{

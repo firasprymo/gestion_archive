@@ -1,6 +1,8 @@
 package com.pfe.najd.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.pfe.najd.Enum.DocumentStatus;
+import com.pfe.najd.Enum.RequestStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,8 +20,10 @@ public class DocumentRequest  {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @Enumerated(EnumType.STRING)
+    private RequestStatus status;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "document_id", referencedColumnName = "id")
+    @JoinColumn(name = "document_id")
     private Document document;
     @OneToOne
     @JoinColumn(name = "user_id")

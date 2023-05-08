@@ -1,33 +1,35 @@
 import {
-    AfterViewInit,
-    ChangeDetectionStrategy, ChangeDetectorRef,
+    AfterViewInit, ChangeDetectionStrategy,
+    ChangeDetectorRef,
     Component,
     OnDestroy,
     OnInit,
     ViewChild,
     ViewEncapsulation
 } from '@angular/core';
-import {fuseAnimations} from '../../../../../../@fuse/animations';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {merge, Observable, Subject} from 'rxjs';
-import {Users} from '../../../../../shared/model/users.types';
-import {Skills} from '../../../../../shared/model/skills.types';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {FuseConfirmationService} from '../../../../../../@fuse/services/confirmation';
-import {debounceTime, map, switchMap, takeUntil} from 'rxjs/operators';
-import {UsersService} from '../../../../../shared/service/users.service';
 import {ApiService} from '../../../../../shared/service/api.service';
 import {
     InventoryBrand,
     InventoryCategory,
     InventoryPagination, InventoryVendor
 } from '../../../apps/ecommerce/inventory/inventory.types';
-import {InventoryService} from '../../../apps/ecommerce/inventory/inventory.service';
+import {Skills} from '../../../../../shared/model/skills.types';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {FuseConfirmationService} from '../../../../../../@fuse/services/confirmation';
+import {debounceTime, map, switchMap, takeUntil} from 'rxjs/operators';
+import {DocumentRequest} from '../../../../../shared/model/document-requests.types';
+import {DocumentRequestService} from '../../../../../shared/service/document-request.service';
+import {fuseAnimations} from '../../../../../../@fuse/animations';
+import {UserService} from '../../../../../core/user/user.service';
+import {Users} from '../../../../../shared/model/users.types';
+import {DocumentStatus} from '../../../../../shared/model/document-status.enum';
 
 @Component({
-    selector: 'app-show-users',
-    templateUrl: './show-users.component.html',
+    selector: 'app-consult-document',
+    templateUrl: './document_mature_premier_age.component.html',
     styles: [
         /* language=SCSS */
         `
@@ -43,7 +45,7 @@ import {InventoryService} from '../../../apps/ecommerce/inventory/inventory.serv
                 }
 
                 @screen lg {
-                    grid-template-columns: 148px auto 100px 312px 96px 96px 72px;
+                    grid-template-columns: 120px 120px 120px 80px 350px 130px 80px ;
                 }
             }
         `
@@ -52,13 +54,14 @@ import {InventoryService} from '../../../apps/ecommerce/inventory/inventory.serv
     changeDetection: ChangeDetectionStrategy.OnPush,
     animations: fuseAnimations
 })
-export class ShowUsersComponent implements OnInit, AfterViewInit, OnDestroy {
+export class Document_mature_premier_ageComponent implements OnInit, AfterViewInit, OnDestroy {
 
     @ViewChild(MatPaginator) private _paginator: MatPaginator;
     @ViewChild(MatSort) private _sort: MatSort;
-
+    documentRequests$: Observable<DocumentRequest[]>;
+    user$: Observable<Users>;
+    user: Users;
     apiImg = ApiService.apiPicture;
-    users$: Observable<Users[]>;
     brands: InventoryBrand[];
     categories: InventoryCategory[];
     filteredSkills: Skills[];
@@ -66,7 +69,7 @@ export class ShowUsersComponent implements OnInit, AfterViewInit, OnDestroy {
     isLoading: boolean = false;
     pagination: InventoryPagination;
     searchInputControl: FormControl = new FormControl();
-    selectedUser: Users | null = null;
+    selectedDocument: DocumentRequest | null = null;
     selectedProductForm: FormGroup;
     skills: Skills[];
     tagsEditMode: boolean = false;
@@ -80,8 +83,8 @@ export class ShowUsersComponent implements OnInit, AfterViewInit, OnDestroy {
         private _changeDetectorRef: ChangeDetectorRef,
         private _fuseConfirmationService: FuseConfirmationService,
         private _formBuilder: FormBuilder,
-        private _inventoryService: InventoryService,
-        private _userService: UsersService,
+        private userService: UserService,
+        private _documentReqService: DocumentRequestService,
     ) {
     }
 
@@ -116,9 +119,9 @@ export class ShowUsersComponent implements OnInit, AfterViewInit, OnDestroy {
             currentImageIndex: [0], // Image index that is currently being viewed
             active: [false]
         });
-
+        this.user$ = this.userService.user$;
         // Get the pagination
-        this._userService.pagination$
+        this._documentReqService.pagination$
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((pagination: InventoryPagination) => {
                 // Update the pagination
@@ -127,8 +130,8 @@ export class ShowUsersComponent implements OnInit, AfterViewInit, OnDestroy {
                 this._changeDetectorRef.markForCheck();
             });
         // Get the products
-        this.users$ = this._userService.users$;
-
+        this.getDocumentRequest();
+        // Get the vendors
 
         // Subscribe to search input field value changes
         this.searchInputControl.valueChanges
@@ -139,13 +142,19 @@ export class ShowUsersComponent implements OnInit, AfterViewInit, OnDestroy {
                     console.log('loading');
                     this.closeDetails();
                     this.isLoading = true;
-                    return this._userService.getAllUsers(0, 10, 'name', 'asc', query);
+                    return null;
+                    // return this._documentService.getAlldocuments(0, 10, 'name', 'asc', query);
                 }),
                 map(() => {
                     this.isLoading = false;
                 })
             )
             .subscribe();
+    }
+
+    getDocumentRequest() {
+        this.documentRequests$ = this._documentReqService.documentRequests$;
+
     }
 
     /**
@@ -179,7 +188,8 @@ export class ShowUsersComponent implements OnInit, AfterViewInit, OnDestroy {
                 switchMap(() => {
                     this.closeDetails();
                     this.isLoading = true;
-                    return this._userService.getAllUsers(this._paginator.pageIndex, this._paginator.pageSize, this._sort.active, this._sort.direction);
+                    return null;
+                    // return this._documentService.getAlldocuments(this._paginator.pageIndex, this._paginator.pageSize, this._sort.active, this._sort.direction);
                 }),
                 map(() => {
                     this.isLoading = false;
@@ -206,7 +216,7 @@ export class ShowUsersComponent implements OnInit, AfterViewInit, OnDestroy {
      * Close the details
      */
     closeDetails(): void {
-        this.selectedUser = null;
+        this.selectedDocument = null;
     }
 
 
@@ -226,11 +236,11 @@ export class ShowUsersComponent implements OnInit, AfterViewInit, OnDestroy {
     /**
      * Delete the selected product using the form data
      */
-    deleteSelectedUser(user: Users, index): void {
+    deleteSelectedDocument(document: DocumentRequest): void {
         // Open the confirmation dialog
         const confirmation = this._fuseConfirmationService.open({
-            title: 'Delete User',
-            message: 'Are you sure you want to remove this user? This action cannot be undone!',
+            title: 'Delete document',
+            message: 'Are you sure you want to remove this document? This action cannot be undone!',
             actions: {
                 confirm: {
                     label: 'Delete'
@@ -240,14 +250,15 @@ export class ShowUsersComponent implements OnInit, AfterViewInit, OnDestroy {
 
         // Subscribe to the confirmation dialog closed action
         confirmation.afterClosed().subscribe((result) => {
+
             // If the confirm button pressed...
             if (result === 'confirmed') {
 
                 // Get the product object
 
                 // Delete the product on the server
-                this._userService.deleteUser(user).subscribe(() => {
-                    this.users$ = this._userService.users$;
+                this._documentReqService.deleteDocumentRequest(document).subscribe(() => {
+
                     // Close the details
                     this.closeDetails();
                 });
@@ -283,6 +294,25 @@ export class ShowUsersComponent implements OnInit, AfterViewInit, OnDestroy {
      */
     trackByFn(index: number, item: any): any {
         return item.id || index;
+    }
+
+    isRoleResponsibleInList(value): any {
+        return this.user$.subscribe(user =>
+            user.roles.some(obj => obj.roleName === value)
+        );
+    }
+
+    changeStatus(documentRequest: DocumentRequest): any {
+        return this._documentReqService.changeStatus(documentRequest).subscribe((res: any) => {
+            console.log(res)
+            this.getDocumentRequest();
+            return res;
+        });
+    }
+
+
+    getEnum(status: DocumentStatus | undefined): any {
+        return DocumentStatus[status];
     }
 
 

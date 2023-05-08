@@ -12,10 +12,15 @@ export interface Users {
     password?: string;
     active?: boolean;
     picture?: string;
-    roles?: any[];
+    roles?: Role[];
     role?: string;
     directionRegional: DirectionRegional;
     structureCentral: StructureCentral;
     agence: Agence;
+
+}
+export interface Role {
+    id?: string;
+    roleName?: string;
 
 }

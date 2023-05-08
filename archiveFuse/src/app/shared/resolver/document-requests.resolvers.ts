@@ -33,6 +33,56 @@ export class DocumentRequestsResolvers implements Resolve<any> {
         return this._documentsService.getAllDocuments();
     }
 }
+@Injectable({
+    providedIn: 'root'
+})
+export class DocumentPendingRequestsResolvers implements Resolve<any> {
+    /**
+     * Constructor
+     */
+    constructor(private _documentsService: DocumentRequestService) {
+    }
+
+    // -----------------------------------------------------------------------------------------------------
+    // @ Public methods
+    // -----------------------------------------------------------------------------------------------------
+
+    /**
+     * Resolver
+     *
+     * @param route
+     * @param state
+     */
+    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot):
+        Observable<{ pageable: InventoryPagination; content: DocumentRequest[] }> {
+        return this._documentsService.getAllRequestDocuments();
+    }
+}
+@Injectable({
+    providedIn: 'root'
+})
+export class DocumentRequestsConsultResolvers implements Resolve<any> {
+    /**
+     * Constructor
+     */
+    constructor(private _documentsService: DocumentRequestService) {
+    }
+
+    // -----------------------------------------------------------------------------------------------------
+    // @ Public methods
+    // -----------------------------------------------------------------------------------------------------
+
+    /**
+     * Resolver
+     *
+     * @param route
+     * @param state
+     */
+    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot):
+        Observable<{ pageable: InventoryPagination; content: DocumentRequest[] }> {
+        return this._documentsService.getAllRequestConsultDocuments();
+    }
+}
 
 
 

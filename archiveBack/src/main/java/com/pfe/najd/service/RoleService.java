@@ -16,7 +16,7 @@ public class RoleService {
     }
 
     public Role findRoleByName(String roleName) {
-        return roleDao.findFirstByRoleName(roleName);
+        return roleDao.findTopByRoleName(roleName);
     }
 
     public List<Role> findAll() {
@@ -28,7 +28,7 @@ public class RoleService {
     }
 
     public Role createRoleIfNotFound(String roleName) {
-        Role optionalRole = roleDao.findFirstByRoleName(roleName);
+        Role optionalRole = roleDao.findTopByRoleName(roleName);
         if (!optionalRole.equals("null")) {
             return optionalRole;
         } else {

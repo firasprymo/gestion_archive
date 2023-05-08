@@ -1,5 +1,8 @@
 package com.pfe.najd.service;
 
+import com.pfe.najd.Enum.RequestStatus;
+import com.pfe.najd.controller.RequestStatusDTO;
+import com.pfe.najd.entities.Document;
 import com.pfe.najd.entities.DocumentRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,20 +14,26 @@ import java.util.Optional;
 public interface DocumentRequestService {
     Page<DocumentRequest> pageDocumentRequests(Pageable pageable);
 
+    Page<DocumentRequest> getAllPendingDocuments(Pageable pageable);
 
-    public DocumentRequest createDocumentRequest(DocumentRequest document) ;
-
-
-    public List<DocumentRequest> getAllDocumentRequest() ;
-
-    public Optional<DocumentRequest> getDocumentRequestById(Long id) ;
-
-    public void deleteDocumentRequestById(Long id) ;
-
-    public DocumentRequest updateDocumentRequest(Long id, DocumentRequest updatedDocumentRequest) ;
+    DocumentRequest createDocumentRequest(DocumentRequest document);
 
 
+    List<DocumentRequest> getAllDocumentRequest();
 
-    public List<DocumentRequest> getDocumentRequestByName(String libelleDirection);
-    public DocumentRequest changeStatus(Long id, String status);
+    Optional<DocumentRequest> getDocumentRequestById(Long id);
+
+    void deleteDocumentRequestById(Long id);
+
+    DocumentRequest updateDocumentRequest(Long id, DocumentRequest updatedDocumentRequest);
+
+
+    List<DocumentRequest> getDocumentRequestByName(String libelleDirection);
+
+    DocumentRequest changeStatus(Long id, String status);
+    DocumentRequest changeRequestStatus(Long id, RequestStatusDTO status);
+
+    DocumentRequest requestDocument(Document document);
+
+    Page<DocumentRequest> getAllRequestConsultDocuments(Pageable pageable);
 }

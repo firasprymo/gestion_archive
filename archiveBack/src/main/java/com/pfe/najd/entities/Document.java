@@ -22,6 +22,7 @@ import java.time.LocalDateTime;
 public class Document extends AbstractEntity{
 
     private String nomberPage;
+    private String numDocument;
     private String codeLieuArchive;
     private LocalDate maturitePremAge;
     private LocalDate maturiteSecAge;

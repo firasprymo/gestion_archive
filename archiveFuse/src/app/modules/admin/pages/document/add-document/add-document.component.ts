@@ -1,5 +1,5 @@
 import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
-import { FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {DocumentsService} from '../../../../../shared/service/documents.service';
 import {Observable, Subject} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -39,6 +39,7 @@ export class AddDocumentComponent implements OnInit, OnDestroy {
         this.documentForm = this._formBuilder.group({
             id: [''],
             nomberPage: ['', Validators.required],
+            numDocument: ['', Validators.required],
             dateCreation: ['',],
             dateReception: ['',],
             codeLieuArchive: ['', Validators.required],
@@ -52,6 +53,7 @@ export class AddDocumentComponent implements OnInit, OnDestroy {
                 this.documentForm.patchValue({
                     id: res?.id,
                     nomberPage: res?.nomberPage,
+                    numDocument: res?.numDocument,
                     codeLieuArchive: res?.codeLieuArchive,
                     lieuArchive: res?.lieuArchive
                 });
@@ -61,19 +63,20 @@ export class AddDocumentComponent implements OnInit, OnDestroy {
             console.log(res);
             if (res.agence) {
                 this.documentForm.patchValue({
-                    lieuArchive: res?.agence?.codeAgence
+                    codeLieuArchive: res?.agence?.codeAgence,
+                    lieuArchive: res?.agence?.lieuArchive
                 });
 
-            }
-            if (res.structureCentral) {
+            } else if (res.structureCentral) {
                 this.documentForm.patchValue({
-                    lieuArchive: res?.structureCentral?.codeStructure
+                    codeLieuArchive: res?.structureCentral?.codeStructure,
+                    lieuArchive: res?.structureCentral?.lieuArchive
                 });
 
-            }
-            if (res.directionRegional) {
+            } else if (res.directionRegional) {
                 this.documentForm.patchValue({
-                    lieuArchive: res?.directionRegional?.codeDirection
+                    codeLieuArchive: res?.directionRegional?.codeDirection,
+                    lieuArchive: res?.directionRegional?.lieuArchive
                 });
 
             }

@@ -25,6 +25,9 @@ import {DocumentsService} from '../../../../../shared/service/documents.service'
 import {debounceTime, map, switchMap, takeUntil} from 'rxjs/operators';
 import {ApiService} from '../../../../../shared/service/api.service';
 import {DocumentStatus} from '../../../../../shared/model/document-status.enum';
+import {DocumentRequestService} from "../../../../../shared/service/document-request.service";
+import {UserService} from "../../../../../core/user/user.service";
+import {Users} from "../../../../../shared/model/users.types";
 
 @Component({
     selector: 'app-show-documents',
@@ -59,6 +62,7 @@ export class ShowDocumentsComponent implements OnInit, AfterViewInit, OnDestroy 
     @ViewChild(MatSort) private _sort: MatSort;
 
     documents$: Observable<Documents[]>;
+    user$: Observable<Users>;
     apiImg = ApiService.apiPicture;
     brands: InventoryBrand[];
     categories: InventoryCategory[];
@@ -83,6 +87,8 @@ export class ShowDocumentsComponent implements OnInit, AfterViewInit, OnDestroy 
         private _formBuilder: FormBuilder,
         private _inventoryService: InventoryService,
         private _documentService: DocumentsService,
+        private _userService: UserService,
+        private _documentRequestService: DocumentRequestService,
     ) {
     }
 
@@ -129,6 +135,7 @@ export class ShowDocumentsComponent implements OnInit, AfterViewInit, OnDestroy 
         // Get the products
         this.documents$ = this._documentService.documents$;
         // Get the vendors
+        this.user$ = this._userService.get();
 
         // Subscribe to search input field value changes
         this.searchInputControl.valueChanges
@@ -163,7 +170,6 @@ export class ShowDocumentsComponent implements OnInit, AfterViewInit, OnDestroy 
 
             // Mark for check
             this._changeDetectorRef.markForCheck();
-
             // If the user changes the sort order...
             this._sort.sortChange
                 .pipe(takeUntil(this._unsubscribeAll))
@@ -293,7 +299,13 @@ export class ShowDocumentsComponent implements OnInit, AfterViewInit, OnDestroy 
         return DocumentStatus[status];
     }
 
-    demanderConsult(document: Documents) {
+    requestConsult(document: Documents): any {
+        const body = {
+                id: document.id
+        };
+        this._documentRequestService.requestConsultDocument(body).subscribe(() => {
+            // Close the details
+        });
 
     }
 }

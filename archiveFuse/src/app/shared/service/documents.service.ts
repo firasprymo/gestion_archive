@@ -49,16 +49,16 @@ export class DocumentsService {
             take(1),
             switchMap(documents =>
                 this._httpClient.post<Documents>(`${ApiService.apiDocuments}/create`, document)
-                .pipe(
-                    map((newDocument) => {
+                    .pipe(
+                        map((newDocument) => {
 
-                        // Update the documents with the new product-
-                        this._documents.next([newDocument]);
+                            // Update the documents with the new product-
+                            this._documents.next([newDocument]);
 
-                        // Return the new product
-                        return newDocument;
-                    })
-                ))
+                            // Return the new product
+                            return newDocument;
+                        })
+                    ))
         );
     }
 
@@ -143,11 +143,12 @@ export class DocumentsService {
     }
 
     getDocuments(): Observable<Documents[]> {
-        return this._httpClient.get<Documents[]>(`${ApiService.apiVersion}${ApiService.apiDocuments}`).pipe(
+        return this._httpClient.get<Documents[]>(`${ApiService.apiDocuments}`).pipe(
             tap((response: any) => {
                 this._documents.next(response);
             })
         );
     }
+
 
 }

@@ -39,12 +39,12 @@ export class FuseComponentsComponent implements OnInit, OnDestroy {
                 id: 'fuse-components.libraries',
                 title: 'Libraries',
                 type: 'group',
-                meta: '',
+                meta: [''],
                 children: [
                     {
                         id: 'fuse-components.libraries.mock-api',
                         title: 'MockAPI',
-                        meta: '',
+                        meta: [''],
                         type: 'basic',
                         link: '/ui/fuse-components/libraries/mock-api'
                     }
@@ -54,54 +54,54 @@ export class FuseComponentsComponent implements OnInit, OnDestroy {
                 id: 'fuse-components.components',
                 title: 'Components',
                 type: 'group',
-                meta: '',
+                meta: [''],
                 children: [
                     {
                         id: 'fuse-components.components.alert',
                         title: 'Alert',
-                        meta: '',
+                        meta: [''],
                         type: 'basic',
                         link: '/ui/fuse-components/components/alert'
                     },
                     {
                         id: 'fuse-components.components.card',
                         title: 'Card',
-                        meta: '',
+                        meta: [''],
                         type: 'basic',
                         link: '/ui/fuse-components/components/card'
                     },
                     {
                         id: 'fuse-components.components.date-range',
                         title: 'DateRange',
-                        meta: '',
+                        meta: [''],
                         type: 'basic',
                         link: '/ui/fuse-components/components/date-range'
                     },
                     {
                         id: 'fuse-components.components.drawer',
                         title: 'Drawer',
-                        meta: '',
+                        meta: [''],
                         type: 'basic',
                         link: '/ui/fuse-components/components/drawer'
                     },
                     {
                         id: 'fuse-components.components.fullscreen',
                         title: 'Fullscreen',
-                        meta: '',
+                        meta: [''],
                         type: 'basic',
                         link: '/ui/fuse-components/components/fullscreen'
                     },
                     {
                         id: 'fuse-components.components.highlight',
                         title: 'Highlight',
-                        meta: '',
+                        meta: [''],
                         type: 'basic',
                         link: '/ui/fuse-components/components/highlight'
                     },
                     {
                         id: 'fuse-components.components.masonry',
                         title: 'Masonry',
-                        meta: '',
+                        meta: [''],
                         type: 'basic',
                         link: '/ui/fuse-components/components/masonry'
                     },
@@ -109,7 +109,7 @@ export class FuseComponentsComponent implements OnInit, OnDestroy {
                         id: 'fuse-components.components.navigation',
                         title: 'Navigation',
                         type: 'basic',
-                        meta: '',
+                        meta: [''],
                         link: '/ui/fuse-components/components/navigation'
                     }
                 ]
@@ -118,19 +118,19 @@ export class FuseComponentsComponent implements OnInit, OnDestroy {
                 id: 'fuse-components.directives',
                 title: 'Directives',
                 type: 'group',
-                meta: '',
+                meta: [''],
                 children: [
                     {
                         id: 'fuse-components.directives.scrollbar',
                         title: 'Scrollbar',
-                        meta: '',
+                        meta: [''],
                         type: 'basic',
                         link: '/ui/fuse-components/directives/scrollbar'
                     },
                     {
                         id: 'fuse-components.directives.scroll-reset',
                         title: 'ScrollReset',
-                        meta: '',
+                        meta: [''],
                         type: 'basic',
                         link: '/ui/fuse-components/directives/scroll-reset'
                     }
@@ -140,27 +140,27 @@ export class FuseComponentsComponent implements OnInit, OnDestroy {
                 id: 'fuse-components.services',
                 title: 'Services',
                 type: 'group',
-                meta: '',
+                meta: [''],
                 children: [
                     {
                         id: 'fuse-components.services.config',
                         title: 'Config',
                         type: 'basic',
-                        meta: '',
+                        meta: [''],
                         link: '/ui/fuse-components/services/config'
                     },
                     {
                         id: 'fuse-components.services.confirmation',
                         title: 'Confirmation',
                         type: 'basic',
-                        meta: '',
+                        meta: [''],
                         link: '/ui/fuse-components/services/confirmation'
                     },
                     {
                         id: 'fuse-components.services.splash-screen',
                         title: 'SplashScreen',
                         type: 'basic',
-                        meta: '',
+                        meta: [''],
                         link: '/ui/fuse-components/services/splash-screen'
                     },
                     {
@@ -168,7 +168,7 @@ export class FuseComponentsComponent implements OnInit, OnDestroy {
                         title: 'MediaWatcher',
                         type: 'basic',
                         link: '/ui/fuse-components/services/media-watcher',
-                        meta: '',
+                        meta: [''],
                     }
                 ]
             },
@@ -176,14 +176,14 @@ export class FuseComponentsComponent implements OnInit, OnDestroy {
                 id: 'fuse-components.pipes',
                 title: 'Pipes',
                 type: 'group',
-                meta: '',
+                meta: [''],
                 children: [
                     {
                         id: 'fuse-components.pipes.find-by-key',
                         title: 'FindByKey',
                         type: 'basic',
                         link: '/ui/fuse-components/pipes/find-by-key',
-                        meta: '',
+                        meta: [''],
                     }
                 ]
             },
@@ -191,14 +191,14 @@ export class FuseComponentsComponent implements OnInit, OnDestroy {
                 id: 'fuse-components.validators',
                 title: 'Validators',
                 type: 'group',
-                meta: '',
+                meta: [''],
                 children: [
                     {
                         id: 'fuse-components.validators.must-match',
                         title: 'MustMatch',
                         type: 'basic',
                         link: '/ui/fuse-components/validators/must-match',
-                        meta: '',
+                        meta: [''],
                     }
                 ]
             }

@@ -50,7 +50,7 @@ public class DocumentController {
     }
 
     // Delete Document by code
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_RESOPONSABLE')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteDocumentById(@PathVariable("id") Long id) {
         try {

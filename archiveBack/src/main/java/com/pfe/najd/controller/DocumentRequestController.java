@@ -1,5 +1,7 @@
 package com.pfe.najd.controller;
 
+import com.pfe.najd.Enum.RequestStatus;
+import com.pfe.najd.entities.Document;
 import com.pfe.najd.entities.DocumentRequest;
 import com.pfe.najd.service.DocumentRequestService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,37 +16,55 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-
 @RequestMapping("/api/document-requests")
 public class DocumentRequestController {
     @Autowired
     private DocumentRequestService documentService;
 
-//    @PreAuthorize("hasAnyAuthority('SCOPE_ROLE_ADMIN')")
+    //    @PreAuthorize("hasAnyAuthority('SCOPE_ROLE_ADMIN')")
     @PostMapping("/create")
-    public ResponseEntity<DocumentRequest> createDocument(@RequestBody DocumentRequest document){
-        DocumentRequest createdDocument  = documentService.createDocumentRequest(document);
+    public ResponseEntity<DocumentRequest> createDocument(@RequestBody DocumentRequest document) {
+        DocumentRequest createdDocument = documentService.createDocumentRequest(document);
         return new ResponseEntity<>(createdDocument, HttpStatus.CREATED);
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<DocumentRequest>> getAllDocument(){
+    public ResponseEntity<List<DocumentRequest>> getAllDocument() {
         List<DocumentRequest> documents = documentService.getAllDocumentRequest();
         return new ResponseEntity<>(documents, HttpStatus.OK);
     }
+
     @GetMapping("/get-all-documents")
     public ResponseEntity<Page<DocumentRequest>> getAllDocuments(Pageable pageable) {
         return ResponseEntity.ok().body(documentService.pageDocumentRequests(pageable));
     }
+
+    @PostMapping("/request-consult")
+    public ResponseEntity<DocumentRequest> requestDocument(@RequestBody Document document) {
+        try {
+            DocumentRequest updated = documentService.requestDocument(document);
+            return new ResponseEntity<>(updated, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
     @GetMapping("/get-document/{numDocument}")
-    public ResponseEntity<DocumentRequest> getDocumentById(@PathVariable("numDocument") Long id){
+    public ResponseEntity<DocumentRequest> getDocumentById(@PathVariable("numDocument") Long id) {
         Optional<DocumentRequest> document = documentService.getDocumentRequestById(id);
         return document.map(value -> new ResponseEntity<>(value, HttpStatus.OK)).orElseGet(() ->
                 new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
+    @GetMapping("/get-all-request-documents")
+    public ResponseEntity<Page<DocumentRequest>> getAllPendingDocuments(Pageable pageable) {
+        return ResponseEntity.ok().body(documentService.getAllPendingDocuments(pageable));
+    }
+    @GetMapping("/get-all-request-consult-documents")
+    public ResponseEntity<Page<DocumentRequest>> getAllRequestConsultDocuments(Pageable pageable) {
+        return ResponseEntity.ok().body(documentService.getAllRequestConsultDocuments(pageable));
+    }
 
     // Delete Document by code
-    @PreAuthorize("hasAnyAuthority('SCOPE_ROLE_ADMIN')")
+    @PreAuthorize("hasAnyAuthority('SCOPE_ROLE_RESOPONSABLE')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteDocumentById(@PathVariable("id") Long id) {
         try {
@@ -69,9 +89,11 @@ public class DocumentRequestController {
     }
 
 
+
+
     @GetMapping("/search-by-name/{numDocument}")
     public ResponseEntity<List<DocumentRequest>> getDocumentByName(@PathVariable("numDocument")
-                                                                String numDocument) {
+                                                                   String numDocument) {
         List<DocumentRequest> documents = documentService.getDocumentRequestByName(numDocument);
         return new ResponseEntity<>(documents, HttpStatus.OK);
     }
@@ -79,6 +101,10 @@ public class DocumentRequestController {
     @PutMapping("/change-status/{id}")
     public DocumentRequest updateDocumentRequestStatus(@PathVariable Long id, @RequestBody String status) {
         return documentService.changeStatus(id, status);
+    }
+    @PutMapping("/change-request-status/{id}")
+    public DocumentRequest changeDocumentRequestStatus(@PathVariable Long id, @RequestBody RequestStatusDTO status) {
+        return documentService.changeRequestStatus(id, status);
     }
 
 

@@ -25,14 +25,7 @@
                     [placeholder]="'Search documents'">
             </mat-form-field>
             <!-- Add product button -->
-            <button
-                class="ml-4"
-                mat-flat-button
-                [color]="'primary'"
-                [routerLink]="['/pages/add-document']">
-                <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
-                <span class="ml-2 mr-1">Add</span>
-            </button>
+
         </div>
     </div>
 
@@ -40,7 +33,7 @@
     <div class="flex flex-auto overflow-hidden">
         <!-- Trainers list -->
         <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
-            <ng-container *ngIf="(documents$ | async) as documents">
+            <ng-container *ngIf="(documentLists$ | async) as documents">
                 <ng-container *ngIf="documents.length > 0; else nodocuments">
                     <div class="grid">
                         <!-- Header -->
@@ -49,21 +42,17 @@
                             matSort
                             matSortDisableClear>
 
-                            <div [mat-sort-header]="'nomberPage'">
-Nomber Page
+                            <div [mat-sort-header]="'user'">
+Utilisateur
+                            </div>
+                            <div [mat-sort-header]="'lieuAffectation'">
+Lieu Affectation
                             </div>
                             <div
-                                [mat-sort-header]="'lieuArchive'">
-Lieu Archive
+                                [mat-sort-header]="'numDocument'">
+Numéro document
                             </div>
-                            <div
-                                [mat-sort-header]="'maturitePremAge'">
-maturité Premiére Age
-                            </div>
-                            <div
-                                [mat-sort-header]="'maturiteSecAge'">
-maturité seconde Age
-                            </div>
+
                             <div
                                 [mat-sort-header]="'status'">
 Status
@@ -73,71 +62,50 @@ Status
 Demande de consultation de document
                             </div>
 
-                            <div class="hidden sm:block" *ngIf="(user$|async) as user ">
-                                <ng-container *ngIf="user.roles[0].roleName==='ROLE_RESOPONSABLE'">
-                                    <p>
-                                        Actions
-                                    </p>
-                                </ng-container>
-                            </div>
+
                         </div>
                         <!-- Rows -->
-                        <ng-container *ngIf="(documents$ | async) as documents">
+                        <ng-container *ngIf="(documentLists$ | async) as documents">
                             <ng-container *ngFor="let document of documents; trackBy: trackByFn">
                                 <div class="inventory-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b">
                                     <!-- SKU -->
 
                                     <div class="hidden md:block truncate">
-                                        {{document.nomberPage}}
+                                        {{document?.user.username}}
+                                    </div>
+                                    <div class="hidden md:block truncate">
+                                        {{document?.user.lieuAffectation}}
                                     </div>
 
                                     <!-- Name -->
                                     <div class="truncate">
-                                        {{document?.lieuArchive}}
+                                        {{document?.document?.numDocument}}
                                     </div>
                                     <div class="truncate">
-                                        {{document?.maturitePremAge}}
+                                        {{getEnum(document?.document?.status)}}
                                     </div>
-                                    <div class="truncate">
-                                        {{document?.maturiteSecAge}}
-                                    </div>
-                                    <div class="truncate">
-                                        {{getEnum(document?.status)}}
-                                    </div>
-
-                                    <!-- Price -->
                                     <div>
                                         <button
-                                            *ngIf="document?.status==='SECOND_AGE' || document?.status==='THIRD_AGE'"
-                                            class="min-w-10 min-h-7 h-7 px-2 leading-6"
-                                            mat-stroked-button
-                                            (click)="requestConsult(document)">
-                                            Demande de consultation
+                                            class="ml-4"
+                                            mat-flat-button
+                                            [color]="'primary'"
+                                            (click)="changeStatus(document, 'ACCEPTED')">
+                                            <span class="ml-2 mr-1">Accepter demande de consultation</span>
+                                        </button>
+                                        <button
+                                            [color]="'warn'"
+                                            (click)="changeStatus(document,'REFUSED')"
+                                            class="ml-4"
+                                            mat-flat-button
+
+                                        >
+                                            <span class="ml-2 mr-1">
+                                            Refuser demande de consultation
+                                            </span>
                                         </button>
 
                                     </div>
-                                    <ng-template *ngIf="(user$|async) as user ">
 
-                                        <!-- Details button -->
-                                        <div *ngIf="(user$|async).roles[0].roleName==='ROLE_RESOPONSABLE' ">
-                                            <button
-                                                class="min-w-10 min-h-7 h-7 px-2 leading-6"
-                                                mat-stroked-button
-                                                (click)="deleteSelectedDocument(document)">
-                                                <mat-icon
-                                                    class="icon-size-5"
-                                                    [svgIcon]="'heroicons_solid:x'"></mat-icon>
-                                            </button>
-                                            <button
-                                                class="min-w-10 min-h-7 h-7 px-2 leading-6"
-                                                mat-stroked-button
-                                                [routerLink]="['/pages/add-document/'+document.id]">
-                                                <mat-icon
-                                                    class="icon-size-5"
-                                                    [svgIcon]="'mat_solid:post_add'"></mat-icon>
-                                            </button>
-                                        </div>
-                                    </ng-template>
                                 </div>
 
                             </ng-container>

@@ -9,7 +9,7 @@ import java.util.Optional;
 @Repository
 public interface RoleDao extends JpaRepository<Role, Long> {
 
-    Role findFirstByRoleName(String roleName);
+    Role findTopByRoleName(String roleName);
 
     interface StructureCentralDao {
     }

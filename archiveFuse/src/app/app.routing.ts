@@ -166,7 +166,16 @@ export const appRoutes: Route[] = [
                         //     role: roleUser
                         // },
                         loadChildren: () => import('app/modules/admin/pages/document/add-document/add-document.module').then(m => m.AddDocumentModule)
-                    }, {
+                    },    {
+                        path: 'request-documents',
+                        canActivate: [AuthGuard],
+                        // data: {
+                        //     role: roleUser
+                        // },
+                        loadChildren: () => import('app/modules/admin/pages/document/request-document/request-document.module').then(m => m.RequestDocumentModule)
+                    },
+
+                    {
                         path: 'add-document/:id',
                         canActivate: [AuthGuard],
                         // data: {
@@ -295,6 +304,14 @@ export const appRoutes: Route[] = [
                         //     role: roleAdmin
                         // },
                         loadChildren: () => import('app/modules/admin/pages/document/consult-document/consult-document.module').then(m => m.ConsultDocumentModule)
+                    },
+                    {
+                        path: 'request-consult-documents',
+                        // data: {
+                        //     role: roleAdmin
+                        // },
+                        loadChildren: () => import('app/modules/admin/pages/document/request-consult-documents/request-consult-documents.module')
+                            .then(m => m.RequestConsultDocumentsModule)
                     },
                     {
                         path: 'show-direction-regional',

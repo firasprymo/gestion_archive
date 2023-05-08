@@ -5,6 +5,7 @@ import {DocumentRequest} from '../model/document-requests.types';
 import {ApiService} from './api.service';
 import {HttpClient} from '@angular/common/http';
 import {map, switchMap, take, tap} from 'rxjs/operators';
+import {Documents} from "../model/documents.types";
 
 @Injectable({
     providedIn: 'root'
@@ -123,6 +124,67 @@ export class DocumentRequestService {
     }
 
     /**
+     * Get documents
+     *
+     *
+     * @param page
+     * @param size
+     * @param sort
+     * @param order
+     * @param search
+     */
+    getAllRequestDocuments(page: number = 0, size: number = 5, sort: string = 'id', order: 'asc' | 'desc'
+        | '' = 'asc', search: string = ''):
+        Observable<{ pageable: InventoryPagination; content: DocumentRequest[] }> {
+        return this._httpClient.get<{ pageable: InventoryPagination; content: DocumentRequest[] }>
+        (`${ApiService.apiDocumentRequests}/get-all-request-documents`, {
+            params: {
+                page: '' + page,
+                size: '' + size,
+                sort,
+                order,
+                search
+            }
+        }).pipe(
+            tap((response) => {
+                this._pagination.next(response.pageable);
+                this._documentRequests.next(response.content);
+            })
+        );
+    }
+
+    /**
+     * Get documents
+     *
+     *
+     * @param page
+     * @param size
+     * @param sort
+     * @param order
+     * @param search
+     */
+    getAllRequestConsultDocuments(page: number = 0, size: number = 5, sort: string = 'id', order: 'asc' | 'desc'
+        | '' = 'asc', search: string = ''):
+        Observable<{ pageable: InventoryPagination; content: DocumentRequest[] }> {
+        return this._httpClient.get<{ pageable: InventoryPagination; content: DocumentRequest[] }>
+        (`${ApiService.apiDocumentRequests}/get-all-request-consult-documents`, {
+            params: {
+                page: '' + page,
+                size: '' + size,
+                sort,
+                order,
+                search
+            }
+        }).pipe(
+            tap((response) => {
+                console.log(response)
+                this._pagination.next(response.pageable);
+                this._documentRequests.next(response.content);
+            })
+        );
+    }
+
+    /**
      * Delete the document
      *
      * @param document
@@ -162,6 +224,29 @@ export class DocumentRequestService {
             tap((response: any) => {
                 this._documentRequests.next(response);
             })
+        );
+
+    }
+
+    changeRequestStatus(document, statusRequest): any {
+        console.log(statusRequest);
+        console.log(document);
+        const status = {
+            status: statusRequest
+        };
+        return this._httpClient.put<DocumentRequest[]>
+        (`${ApiService.apiDocumentRequests}/change-request-status/${document?.id}`,
+            status).pipe(
+            tap((response: any) => {
+                this._documentRequests.next(response);
+            })
+        );
+
+    }
+
+    requestConsultDocument(document: any): Observable<any> {
+        return this._httpClient.post<any[]>(`${ApiService.apiDocumentRequests}/request-consult`, document).pipe(
+            tap((response: any) => response)
         );
 
     }

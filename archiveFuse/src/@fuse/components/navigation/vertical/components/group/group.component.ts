@@ -20,7 +20,7 @@ export class FuseVerticalNavigationGroupItemComponent implements OnInit, OnDestr
     @Input() autoCollapse: boolean;
     @Input() item: FuseNavigationItem;
     @Input() name: string;
-    userRole = this._authService.getUser.roles[0].roleName;
+    userRole: string = this._authService.getUser.roles[0].roleName;
 
     private _fuseVerticalNavigationComponent: FuseVerticalNavigationComponent;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
@@ -76,5 +76,13 @@ export class FuseVerticalNavigationGroupItemComponent implements OnInit, OnDestr
      */
     trackByFn(index: number, item: any): any {
         return item.id || index;
+    }
+
+    filter(items): boolean {
+        return items.findIndex(res => {
+            console.log(res);
+            console.log(this.userRole);
+           return  res === this.userRole;
+        })>-1;
     }
 }
