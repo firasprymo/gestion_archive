@@ -58,6 +58,13 @@ public class DocumentRequestController {
     public ResponseEntity<Page<DocumentRequest>> getAllPendingDocuments(Pageable pageable) {
         return ResponseEntity.ok().body(documentService.getAllPendingDocuments(pageable));
     }
+    @GetMapping("/get-all-prime-age-documents")
+    public ResponseEntity<Page<DocumentRequest>> getAllMatutiryPrimeAgeDocuments(Pageable pageable) {
+        return ResponseEntity.ok().body(documentService.getAllDocumentPrimeAge(pageable));
+    }
+
+
+
     @GetMapping("/get-all-request-consult-documents")
     public ResponseEntity<Page<DocumentRequest>> getAllRequestConsultDocuments(Pageable pageable) {
         return ResponseEntity.ok().body(documentService.getAllRequestConsultDocuments(pageable));
