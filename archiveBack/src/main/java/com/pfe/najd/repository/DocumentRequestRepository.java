@@ -16,9 +16,10 @@ public interface DocumentRequestRepository extends JpaRepository<DocumentRequest
         JpaSpecificationExecutor<DocumentRequest> {
 
     boolean existsById(Long id);
+    @Query("select dr  from DocumentRequest dr where dr.document.Status='PENDING_VERSEMENT' and dr.document.codeLieuArchive=?1 ")
+    Page<DocumentRequest> findAllByDocumentStatusAndLieuAffectationOrderById(String lieuAffectation, Pageable pageable);
     @Query("select dr  from DocumentRequest dr where dr.document.Status='MATURITY_PRIME_AGE' and dr.document.codeLieuArchive=?1 ")
     Page<DocumentRequest> findAllByDocumentStatusAndLieuAffectationOrderByDocument(String lieuAffectation, Pageable pageable);
-
     @Query("select dr  from DocumentRequest dr where dr.document.Status='PENDING' and dr.document.codeLieuArchive=?1 ")
     Page<DocumentRequest> findAllByDocumentStatusAndLieuAffectation(String lieuAffectation, Pageable pageable);
     @Query("select dr  from DocumentRequest dr where dr.status='PENDING' and dr.document.codeLieuArchive=?1 ")

@@ -47,6 +47,11 @@ public class DocumentRequestController {
         return ResponseEntity.ok().body(documentService.getAllDocumentPrimeAge(pageable));
     }
 
+    @GetMapping("/get-all-prime-age-documents")
+    public ResponseEntity<Page<DocumentRequest>> getAllDemandeVersement(Pageable pageable) {
+        return ResponseEntity.ok().body(documentService.getAllDocumentVersementRequest(pageable));
+    }
+
     @PostMapping("/request-consult")
     public ResponseEntity<DocumentRequest> requestDocument(@RequestBody Document document) {
         try {

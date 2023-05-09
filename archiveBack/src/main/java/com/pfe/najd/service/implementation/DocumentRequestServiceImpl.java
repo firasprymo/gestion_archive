@@ -147,11 +147,21 @@ public class DocumentRequestServiceImpl implements DocumentRequestService {
 
     }
 
+    
     public Page<DocumentRequest> getAllDocumentPrimeAge(Pageable pageable) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
         User user = userRepository.findByUsername(currentPrincipalName).get();
         Page<DocumentRequest> documents = documentReqRepository.findAllByDocumentStatusAndLieuAffectationOrderByDocument(user.getLieuAffectation(), pageable);
+        return new PageImpl<>(documents.getContent(), documents.getPageable(), documents.getTotalElements());
+    }
+
+    @Transactional
+    public Page<DocumentRequest>getAllDocumentVersementRequest(Pageable pageable){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+        User user = userRepository.findByUsername(currentPrincipalName).get();
+        Page<DocumentRequest> documents = documentReqRepository.findAllByDocumentStatusAndLieuAffectationOrderById(user.getLieuAffectation(), pageable);
         return new PageImpl<>(documents.getContent(), documents.getPageable(), documents.getTotalElements());
     }
 
