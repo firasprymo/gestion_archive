@@ -28,8 +28,8 @@ import {Users} from '../../../../../shared/model/users.types';
 import {DocumentStatus} from '../../../../../shared/model/document-status.enum';
 
 @Component({
-    selector: 'app-consult-document',
-    templateUrl: './document_mature_premier_age.component.html',
+    selector: 'app-document-mature-premier-age',
+    templateUrl: './document-mature-premier-age.component.html',
     styles: [
         /* language=SCSS */
         `
@@ -45,7 +45,7 @@ import {DocumentStatus} from '../../../../../shared/model/document-status.enum';
                 }
 
                 @screen lg {
-                    grid-template-columns: 120px 120px 120px 80px 350px 130px 80px ;
+                    grid-template-columns: auto 120px 120px 80px 350px 130px 80px ;
                 }
             }
         `
@@ -54,7 +54,7 @@ import {DocumentStatus} from '../../../../../shared/model/document-status.enum';
     changeDetection: ChangeDetectionStrategy.OnPush,
     animations: fuseAnimations
 })
-export class Document_mature_premier_ageComponent implements OnInit, AfterViewInit, OnDestroy {
+export class DocumentMaturePremierAgeComponent implements OnInit, AfterViewInit, OnDestroy {
 
     @ViewChild(MatPaginator) private _paginator: MatPaginator;
     @ViewChild(MatSort) private _sort: MatSort;
@@ -152,9 +152,8 @@ export class Document_mature_premier_ageComponent implements OnInit, AfterViewIn
             .subscribe();
     }
 
-    getDocumentRequest() {
+    getDocumentRequest(): any {
         this.documentRequests$ = this._documentReqService.documentRequests$;
-
     }
 
     /**
@@ -304,7 +303,6 @@ export class Document_mature_premier_ageComponent implements OnInit, AfterViewIn
 
     changeStatus(documentRequest: DocumentRequest): any {
         return this._documentReqService.changeStatus(documentRequest).subscribe((res: any) => {
-            console.log(res)
             this.getDocumentRequest();
             return res;
         });
@@ -316,4 +314,22 @@ export class Document_mature_premier_ageComponent implements OnInit, AfterViewIn
     }
 
 
+    getStatus(status: DocumentStatus | undefined): any {
+        return DocumentStatus[status];
+    }
+
+    versementDocument(docs: any): any {
+        console.log(docs);
+        docs.subscribe((res) => {
+            console.log(res);
+            const body = [];
+            for (const item of res) {
+
+                body.push(item.document);
+            }
+            this._documentReqService.sendDocumentVersement(body).subscribe((re) => {
+                console.log(re);
+            });
+        });
+    }
 }

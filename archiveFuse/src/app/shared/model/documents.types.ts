@@ -1,4 +1,5 @@
 import {DocumentStatus} from './document-status.enum';
+import {Nomenclature} from "./nomenclature.types";
 
 export interface Documents {
     id: number;
@@ -12,4 +13,5 @@ export interface Documents {
     codeLieuArchive: string;
     lieuArchive: string;
     status: DocumentStatus;
+    nomenclature: Nomenclature;
 }

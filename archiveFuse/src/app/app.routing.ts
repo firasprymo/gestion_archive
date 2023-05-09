@@ -314,6 +314,14 @@ export const appRoutes: Route[] = [
                             .then(m => m.RequestConsultDocumentsModule)
                     },
                     {
+                        path: 'document_mature_premier_age',
+                        // data: {
+                        //     role: roleAdmin
+                        // },
+                        loadChildren: () => import('app/modules/admin/pages/document/document_mature_premier_age/document-mature-premier-age.module')
+                            .then(m => m.DocumentMaturePremierAgeModule)
+                    },
+                    {
                         path: 'show-direction-regional',
                         data: {
                             role: roleAdmin

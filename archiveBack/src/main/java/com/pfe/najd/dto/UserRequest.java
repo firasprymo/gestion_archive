@@ -24,6 +24,8 @@ public class UserRequest {
     private String lieuAffectation;
     private String roles ;
     private Long directionRegional;
+    private Long centreArchive;
+    private Long centrePreArchive;
     private Long structureCentral;
     private Long agence;
 

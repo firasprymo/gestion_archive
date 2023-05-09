@@ -5,6 +5,8 @@ import {StructureCentralResolvers} from '../../../../../shared/resolver/structur
 import {DirectionRegionalResolvers} from '../../../../../shared/resolver/direction-regional.resolvers';
 import {AgencesResolvers} from '../../../../../shared/resolver/agences.resolvers';
 import {UserByIdResolver} from '../../../../../shared/resolver/users.resolvers';
+import {CentreArchivesResolvers} from '../../../../../shared/resolver/centre-archives.resolvers';
+import {CentrePreArchivesResolvers} from '../../../../../shared/resolver/centre-pre-archives.resolvers';
 
 const routes: Routes = [{
     path: '',
@@ -12,9 +14,11 @@ const routes: Routes = [{
     resolve: {
         structureCentrals: StructureCentralResolvers,
         directionRegionals: DirectionRegionalResolvers,
+        centreArchives: CentreArchivesResolvers,
+        centrePreArchives: CentrePreArchivesResolvers,
         agences: AgencesResolvers,
         user: UserByIdResolver,
-}
+    }
 }];
 
 @NgModule({

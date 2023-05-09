@@ -10,6 +10,10 @@ import {StructureCentralService} from '../../../../../shared/service/structure-c
 import {AgenceService} from '../../../../../shared/service/agence.service';
 import {DirectionRegionalService} from '../../../../../shared/service/direction-regional.service';
 import {Users} from '../../../../../shared/model/users.types';
+import {CentreArchive} from "../../../../../shared/model/centre-archive.types";
+import {CentrePreArchive} from "../../../../../shared/model/centre-pre-archive.types";
+import {CentreArchiveService} from "../../../../../shared/service/centre-archive.service";
+import {CentrePreArchiveService} from "../../../../../shared/service/centre-pre-archive.service";
 
 @Component({
     selector: 'app-add-user',
@@ -20,6 +24,8 @@ export class AddUserComponent implements OnInit {
     userForm: FormGroup;
     structureCentrals$: Observable<StructureCentral[]>;
     directionRegionals$: Observable<DirectionRegional[]>;
+    centreArchive$: Observable<CentreArchive[]>;
+    centrePreArchive$: Observable<CentrePreArchive[]>;
     agences$: Observable<Agence[]>;
     isUpdate = false;
     user: Users;
@@ -51,6 +57,8 @@ export class AddUserComponent implements OnInit {
                 private _structureCentralService: StructureCentralService,
                 private _agenceService: AgenceService,
                 private _directionRegionalService: DirectionRegionalService,
+                private _centreArchiveService: CentreArchiveService,
+                private _centrePreArchiveService: CentrePreArchiveService,
                 private _userService: UsersService) {
 
     }
@@ -66,10 +74,14 @@ export class AddUserComponent implements OnInit {
             directionRegional: [null],
             structureCentral: [null],
             agence: [null],
+            centreArchive: [null],
+            centrePreArchive: [null],
         });
         this.structureCentrals$ = this._structureCentralService.structureCentrals$;
         this.agences$ = this._agenceService.agences$;
         this.directionRegionals$ = this._directionRegionalService.directionRegionals$;
+        this.centreArchive$ = this._centreArchiveService.centreArchives$;
+        this.centrePreArchive$ = this._centrePreArchiveService.centrePreArchives$;
         this._userService.user$.subscribe((res: any) => {
             console.log(res);
             if (res) {
@@ -81,6 +93,8 @@ export class AddUserComponent implements OnInit {
                     structureCentral: res.structureCentral,
                     agence: res.agence,
                     directionRegional: res.directionRegional,
+                    centreArchive: res.centreArchive,
+                    centrePreArchive: res.centrePreArchive,
                     email: res.email,
                 });
             }
@@ -107,7 +121,7 @@ export class AddUserComponent implements OnInit {
     }
 
     updateUser(): void {
-        console.log(this.userForm.value)
+        console.log(this.userForm.value);
         this._userService.editUser(this.userForm.value, this.user)
             .subscribe((res) => {
                 this._router.navigate(['pages/show-users']);

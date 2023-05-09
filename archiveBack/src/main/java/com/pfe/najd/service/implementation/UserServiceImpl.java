@@ -7,6 +7,8 @@ import com.pfe.najd.dao.StructureCentralDao;
 import com.pfe.najd.dto.UserRequest;
 import com.pfe.najd.entities.*;
 import com.pfe.najd.exeptions.UserExistsException;
+import com.pfe.najd.repository.CentreArchiveRepository;
+import com.pfe.najd.repository.CentrePreArchiveRepository;
 import com.pfe.najd.repository.UserRepository;
 import com.pfe.najd.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +30,8 @@ public class UserServiceImpl implements UserService {
     private final AgenceDao agenceDao;
     private final StructureCentralDao structureCentralDao;
     private final DirectionRegionalDao directionRegionalDao;
+    private final CentreArchiveRepository centreArchiveRepository;
+    private final CentrePreArchiveRepository centrePreArchiveRepository;
     private final RoleDao roleDao;
     private final PasswordEncoder passwordEncoder;
 
@@ -58,6 +62,18 @@ public class UserServiceImpl implements UserService {
                     .orElseThrow(() -> new RuntimeException("Direction Regional doesnt exisr"));
             users.setLieuAffectation(directionRegional.getCodeDirection());
             users.setDirectionRegional(directionRegional);
+        }
+        if (user.getCentreArchive() != null) {
+
+            CentreArchive centreArchive = centreArchiveRepository.findById(user.getCentreArchive())
+                    .orElseThrow(() -> new RuntimeException("Centre archive doesnt exisr"));
+            users.setCentreArchive(centreArchive);
+        }
+        if (user.getCentrePreArchive() != null) {
+
+            CentrePreArchive centrePreArchive = centrePreArchiveRepository.findById(user.getCentrePreArchive())
+                    .orElseThrow(() -> new RuntimeException("Centre Pre Archive doesnt exisr"));
+            users.setCentrePreArchive(centrePreArchive);
         }
         if (user.getRoles() != null) {
             Role role = roleDao.findTopByRoleName(user.getRoles());
@@ -114,6 +130,15 @@ public class UserServiceImpl implements UserService {
                 DirectionRegional directionRegional = directionRegionalDao.findById(updatedUser.getDirectionRegional())
                         .orElseThrow(() -> new RuntimeException("Direction Regional doesnt exisr"));
                 existingUser.setDirectionRegional(directionRegional);
+            } if (updatedUser.getCentreArchive() != null) {
+                CentreArchive centreArchive = centreArchiveRepository.findById(updatedUser.getCentreArchive())
+                        .orElseThrow(() -> new RuntimeException("Direction Regional doesnt exisr"));
+                existingUser.setCentreArchive(centreArchive);
+            }
+            if (updatedUser.getCentrePreArchive() != null) {
+                CentrePreArchive centrePreArchive = centrePreArchiveRepository.findById(updatedUser.getCentrePreArchive())
+                        .orElseThrow(() -> new RuntimeException("Direction Regional doesnt exisr"));
+                existingUser.setCentrePreArchive(centrePreArchive);
             }
             return userRepository.save(existingUser);
         } else {

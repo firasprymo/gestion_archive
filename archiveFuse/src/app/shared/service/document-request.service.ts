@@ -5,7 +5,6 @@ import {DocumentRequest} from '../model/document-requests.types';
 import {ApiService} from './api.service';
 import {HttpClient} from '@angular/common/http';
 import {map, switchMap, take, tap} from 'rxjs/operators';
-import {Documents} from "../model/documents.types";
 
 @Injectable({
     providedIn: 'root'
@@ -14,7 +13,6 @@ export class DocumentRequestService {
     private _pagination: BehaviorSubject<InventoryPagination | null> = new BehaviorSubject(null);
     private _documentRequests: BehaviorSubject<DocumentRequest[] | null> = new BehaviorSubject(null);
     private _documentRequest: BehaviorSubject<DocumentRequest | null> = new BehaviorSubject(null);
-    private _DirectionRegionaldocument: BehaviorSubject<DocumentRequest | null> = new BehaviorSubject(null);
 
     constructor(private _apiService: ApiService,
                 private _httpClient: HttpClient) {
@@ -93,6 +91,7 @@ export class DocumentRequestService {
             );
     }
 
+
     /**
      * Get documents
      *
@@ -108,6 +107,36 @@ export class DocumentRequestService {
         Observable<{ pageable: InventoryPagination; content: DocumentRequest[] }> {
         return this._httpClient.get<{ pageable: InventoryPagination; content: DocumentRequest[] }>
         (`${ApiService.apiDocumentRequests}/get-all-documents`, {
+            params: {
+                page: '' + page,
+                size: '' + size,
+                sort,
+                order,
+                search
+            }
+        }).pipe(
+            tap((response) => {
+                this._pagination.next(response.pageable);
+                this._documentRequests.next(response.content);
+            })
+        );
+    }
+
+    /**
+     * Get documents
+     *
+     *
+     * @param page
+     * @param size
+     * @param sort
+     * @param order
+     * @param search
+     */
+    documentMaturePremierAge(page: number = 0, size: number = 5, sort: string = 'id', order: 'asc' | 'desc'
+        | '' = 'asc', search: string = ''):
+        Observable<{ pageable: InventoryPagination; content: DocumentRequest[] }> {
+        return this._httpClient.get<{ pageable: InventoryPagination; content: DocumentRequest[] }>
+        (`${ApiService.apiDocumentRequests}/get-all-prime-age-documents`, {
             params: {
                 page: '' + page,
                 size: '' + size,
@@ -177,7 +206,6 @@ export class DocumentRequestService {
             }
         }).pipe(
             tap((response) => {
-                console.log(response)
                 this._pagination.next(response.pageable);
                 this._documentRequests.next(response.content);
             })
@@ -221,6 +249,21 @@ export class DocumentRequestService {
         return this._httpClient.put<DocumentRequest[]>
         (`${ApiService.apiDocumentRequests}/change-status/${document?.id}`,
             document?.document?.status).pipe(
+            tap((response: any) => {
+                this._documentRequests.next(response);
+            })
+        );
+
+    }
+
+    sendDocumentVersement(document): any {
+        console.log(document);
+        const body = {
+            document
+        };
+        return this._httpClient.post<DocumentRequest[]>
+        (`${ApiService.apiDocumentRequests}/demande-versement`,
+            body).pipe(
             tap((response: any) => {
                 this._documentRequests.next(response);
             })

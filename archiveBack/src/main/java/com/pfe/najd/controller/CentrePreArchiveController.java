@@ -76,6 +76,7 @@ public class CentrePreArchiveController {
         List<CentrePreArchive> centrePreArchives = centrePreArchiveService.getCentrePreArchiveByName(libelleCentrePreArchive);
         return new ResponseEntity<>(centrePreArchives, HttpStatus.OK);
     }
+
     @ExceptionHandler(RuntimeException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
     public ResponseEntity<String> handleConflict(RuntimeException ex) {

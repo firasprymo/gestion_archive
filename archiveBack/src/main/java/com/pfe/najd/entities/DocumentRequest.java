@@ -22,7 +22,7 @@ public class DocumentRequest  {
     private Long id;
     @Enumerated(EnumType.STRING)
     private RequestStatus status;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "document_id")
     private Document document;
     @OneToOne

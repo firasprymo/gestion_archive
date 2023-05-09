@@ -2,6 +2,7 @@ package com.pfe.najd.service;
 
 import com.pfe.najd.Enum.RequestStatus;
 import com.pfe.najd.controller.RequestStatusDTO;
+import com.pfe.najd.entities.CentrePreArchive;
 import com.pfe.najd.entities.Document;
 import com.pfe.najd.entities.DocumentRequest;
 import org.springframework.data.domain.Page;
@@ -37,4 +38,7 @@ public interface DocumentRequestService {
 
     Page<DocumentRequest> getAllRequestConsultDocuments(Pageable pageable);
     Page<DocumentRequest>getAllDocumentPrimeAge(Pageable pageable);
+
+    void createDemandeVersement(List<Document> documents);
+
 }

@@ -16,11 +16,16 @@ public interface CentrePreArchiveService {
     public CentrePreArchive createCentrePreArchive(CentrePreArchive centrePreArchive);
 
     public List<CentrePreArchive> getAllCentrePreArchive();
+
     public Optional<CentrePreArchive> getCentrePreArchiveById(Long id);
+
     public void deleteCentrePreArchiveId(Long id);
+
     Page<CentrePreArchive> pageCentrePreArchives(Pageable pageable);
 
     public CentrePreArchive updateCentrePreArchive(Long id, CentrePreArchive updatedCentrePreArchive);
 
     public List<CentrePreArchive> getCentrePreArchiveByName(String libelleCentrePreArchive);
+
+
 }

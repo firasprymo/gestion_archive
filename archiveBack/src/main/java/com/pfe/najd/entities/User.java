@@ -47,6 +47,16 @@ public class User extends AbstractEntity {
     @JoinColumn(name = "agence", referencedColumnName = "id", nullable = true)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Agence agence;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "centreArchive", referencedColumnName = "id", nullable = true)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private CentreArchive centreArchive;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "centrePreArchive", referencedColumnName = "id", nullable = true)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private CentrePreArchive centrePreArchive;
 //
 //
 //    //ask if i should be able to see the collumns in the database

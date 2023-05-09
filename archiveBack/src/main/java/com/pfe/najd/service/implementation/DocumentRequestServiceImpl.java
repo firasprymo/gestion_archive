@@ -3,6 +3,8 @@ package com.pfe.najd.service.implementation;
 import com.pfe.najd.Enum.DocumentStatus;
 import com.pfe.najd.Enum.RequestStatus;
 import com.pfe.najd.controller.RequestStatusDTO;
+import com.pfe.najd.dto.DocumentVersementDTO;
+import com.pfe.najd.entities.CentrePreArchive;
 import com.pfe.najd.entities.Document;
 import com.pfe.najd.entities.DocumentRequest;
 import com.pfe.najd.entities.User;
@@ -82,12 +84,13 @@ public class DocumentRequestServiceImpl implements DocumentRequestService {
         }
         return documentReqRepository.save(documentRequest);
     }
+
     @Override
     public DocumentRequest changeRequestStatus(Long id, RequestStatusDTO requestStatusDTO) {
         DocumentRequest documentRequest = documentReqRepository.findById(id).
                 orElseThrow(() ->
                         new RuntimeException("Document doesn't exist"));
-            documentRequest.setStatus(requestStatusDTO.getStatus());
+        documentRequest.setStatus(requestStatusDTO.getStatus());
         return documentReqRepository.save(documentRequest);
     }
 
@@ -132,6 +135,7 @@ public class DocumentRequestServiceImpl implements DocumentRequestService {
         return new PageImpl<>(documents.getContent(), documents.getPageable(), documents.getTotalElements());
 
     }
+
     @Transactional
     public Page<DocumentRequest> getAllRequestConsultDocuments(Pageable pageable) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -142,14 +146,33 @@ public class DocumentRequestServiceImpl implements DocumentRequestService {
         return new PageImpl<>(documents.getContent(), documents.getPageable(), documents.getTotalElements());
 
     }
-    public Page<DocumentRequest>getAllDocumentPrimeAge(Pageable pageable){
+
+    public Page<DocumentRequest> getAllDocumentPrimeAge(Pageable pageable) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
         User user = userRepository.findByUsername(currentPrincipalName).get();
-        Page<DocumentRequest> documents = documentReqRepository.findAllByDocumentStatusAndLieuAffectationOrderByDocument(user.getLieuAffectation(),pageable);
+        Page<DocumentRequest> documents = documentReqRepository.findAllByDocumentStatusAndLieuAffectationOrderByDocument(user.getLieuAffectation(), pageable);
         return new PageImpl<>(documents.getContent(), documents.getPageable(), documents.getTotalElements());
     }
 
+    @Transactional
+    public void createDemandeVersement(List<Document> documentList) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+        User user = userRepository.findByUsername(currentPrincipalName).get();
+
+        for (Document document : documentList) {
+            DocumentRequest documentRequests = new DocumentRequest();
+            Document documentRequested=documentRepository.findById(document.getId()).orElseThrow(RuntimeException::new);
+            documentRequested.setStatus(DocumentStatus.PENDING_VERSEMENT);
+            documentRepository.save(documentRequested);
+            documentRequests.setDocument(documentRequested);
+            documentRequests.setUser(user);
+            documentReqRepository.save(documentRequests);
+        }
+        ;
+
+    }
 
     public DocumentRequest requestDocument(Document document) {
         DocumentRequest documentRequest = new DocumentRequest();

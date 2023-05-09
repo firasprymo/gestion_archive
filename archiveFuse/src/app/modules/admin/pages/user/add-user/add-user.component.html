@@ -99,6 +99,28 @@
                                 </select>
                             </mat-form-field>
                         </div>
+                        <div class="flex flex-col gt-xs:flex-row gt-xs:items-baseline">
+                            <mat-form-field
+                                class="flex-auto gt-xs:pr-3">
+                                <mat-label>Centre Archive</mat-label>
+                                <select matNativeControl formControlName="centreArchive">
+                                    <option
+                                        *ngFor="let item of centreArchive$ | async"
+                                        [value]="item?.id">{{item?.codeCentreArchive}}</option>
+                                </select>
+                            </mat-form-field>
+                        </div>
+                        <div class="flex flex-col gt-xs:flex-row gt-xs:items-baseline">
+                            <mat-form-field
+                                class="flex-auto gt-xs:pr-3">
+                                <mat-label>Centre pré Archive</mat-label>
+                                <select matNativeControl formControlName="centrePreArchive">
+                                    <option
+                                        *ngFor="let item of centrePreArchive$ | async"
+                                        [value]="item?.id">{{item?.codeCentrePreArchive}}</option>
+                                </select>
+                            </mat-form-field>
+                        </div>
                     </div>
                 </div>
 

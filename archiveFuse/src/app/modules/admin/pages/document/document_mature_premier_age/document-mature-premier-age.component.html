@@ -10,30 +10,14 @@ j=>
             <mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>
         </div>
         <!-- Title -->
-        <div class="text-4xl font-extrabold tracking-tight">Valider demande de création</div>
+        <div class="text-4xl font-extrabold tracking-tight">Document mature premiér âge</div>
         <!-- Actions -->
         <div class="flex flex-shrink-0 items-center mt-6 sm:mt-0 sm:ml-4">
-            <!-- Search -->
-            <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded min-w-64">
-                <mat-icon
-                    class="icon-size-5"
-                    matPrefix
-                    [svgIcon]="'heroicons_solid:search'"></mat-icon>
-                <input
-                    matInput
-                    [formControl]="searchInputControl"
-                    [autocomplete]="'off'"
-                    [placeholder]="'Search documents'">
-            </mat-form-field>
+
+<!-- Search -->
+
             <!-- Add product button -->
-            <button
-                class="ml-4"
-                mat-flat-button
-                [color]="'primary'"
-                [routerLink]="['/pages/add-document']">
-                <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
-                <span class="ml-2 mr-1">Add</span>
-            </button>
+
         </div>
     </div>
 
@@ -54,19 +38,15 @@ j=>
 Status
                             </div>
                             <div
-                                [mat-sort-header]="'document.codeLieuArchive'">
-Code Lieu Archive
-                            </div>
-                            <div
                                 [mat-sort-header]="'document.lieuArchive'">
 Lieu Archive
                             </div>
                             <div
-                                [mat-sort-header]="'user.username'">
-Nom
+                                [mat-sort-header]="'document.nomenclature.designationNomenclature'">
+Désignation Nomenclature
                             </div>
 
-                            <div class="hidden sm:block">Actions status</div>
+
                         </div>
                         <!-- Rows -->
                         <ng-container *ngIf="(documentRequests$ | async) as documentRequests">
@@ -75,46 +55,22 @@ Nom
                                     <!-- SKU -->
 
                                     <div class="hidden md:block truncate">
-                                        {{document?.document.status}}
+                                        {{getStatus(document?.document.status)}}
                                     </div>
 
                                     <!-- Name -->
                                     <div class="truncate">
-                                        {{document?.document?.codeLieuArchive}}
-                                    </div>
-                                    <div class="truncate">
                                         {{document?.document?.lieuArchive}}
                                     </div>
                                     <div class="truncate">
-                                        {{document?.user?.username}}
+                                        {{document?.document?.nomenclature?.designationNomenclature}}
                                     </div>
 
                                     <!-- Price -->
 
 
                                     <!-- Details button -->
-                                    <div>
-                                        <div [ngSwitch]="document?.document.status">
-                                            <ng-container *ngIf="(user$|async)  as user">
-                                                <ng-container *ngSwitchCase="'PENDING'">
 
-                                                    <button *ngIf="isRoleResponsibleInList('ROLE_RESPONSABLE')"
-                                                            class="ml-4"
-                                                            mat-flat-button
-                                                            [color]="'primary'"
-                                                            (click)="changeStatus(document)"
-                                                    >
-                                                        <span
-                                                            class="ml-2 mr-1">Accepter Demande d'ajout de document</span>
-                                                    </button>
-                                                </ng-container>
-                                            </ng-container>
-                                            <ng-container *ngSwitchDefault>
-                                                <p>I don't know what that is.</p>
-                                            </ng-container>
-                                        </div>
-
-                                    </div>
                                     <div>
                                         <button *ngIf="isRoleResponsibleInList('ROLE_RESPONSABLE')"
                                                 class="ml-4"
@@ -128,9 +84,15 @@ Nom
                                     </div>
 
                                 </div>
-
                             </ng-container>
                         </ng-container>
+                        <button
+                            class="ml-4"
+                            mat-flat-button
+                            [color]="'primary'"
+                            (click)="versementDocument(documentRequests$)">
+                            <span class="ml-2 mr-1">Passer une demande de versement</span>
+                        </button>
                     </div>
 
                     <mat-paginator

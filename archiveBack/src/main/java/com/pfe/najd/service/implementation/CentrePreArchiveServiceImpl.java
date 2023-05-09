@@ -1,9 +1,12 @@
 package com.pfe.najd.service.implementation;
 
 import com.pfe.najd.entities.CentreArchive;
+import com.pfe.najd.entities.DocumentRequest;
 import com.pfe.najd.repository.CentrePreArchiveRepository;
 import com.pfe.najd.entities.CentrePreArchive;
+import com.pfe.najd.repository.DocumentRequestRepository;
 import com.pfe.najd.service.CentrePreArchiveService;
+import com.pfe.najd.service.DocumentRequestService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,6 +22,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class CentrePreArchiveServiceImpl implements CentrePreArchiveService {
     private final CentrePreArchiveRepository centrePreArchiveDao;
+    private final DocumentRequestRepository documentReqRepository;
 
     public CentrePreArchive createCentrePreArchive(CentrePreArchive centrePreArchive) {
         centrePreArchive.setCodeCentrePreArchive("CP" + centrePreArchive.getCodeCentrePreArchive());
@@ -28,6 +32,10 @@ public class CentrePreArchiveServiceImpl implements CentrePreArchiveService {
             return centrePreArchiveDao.save(centrePreArchive);
         }
     }
+
+
+
+
 
     @Transactional
     public Page<CentrePreArchive> pageCentrePreArchives(Pageable pageable) {
