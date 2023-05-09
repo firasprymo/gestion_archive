@@ -45,7 +45,7 @@ import {DocumentStatus} from '../../../../../shared/model/document-status.enum';
                 }
 
                 @screen lg {
-                    grid-template-columns: auto 120px 120px 80px 350px 130px 80px ;
+                    grid-template-columns: auto 120px 120px auto ;
                 }
             }
         `
@@ -296,18 +296,14 @@ export class DocumentMaturePremierAgeComponent implements OnInit, AfterViewInit,
     }
 
     isRoleResponsibleInList(value): any {
-        return this.user$.subscribe(user =>
-            user.roles.some(obj => obj.roleName === value)
+        this.user$.subscribe(user =>
+            user.roles.filter(obj => {
+                console.log(obj.roleName)
+                console.log(value)
+                return obj.roleName === value
+            })
         );
     }
-
-    changeStatus(documentRequest: DocumentRequest): any {
-        return this._documentReqService.changeStatus(documentRequest).subscribe((res: any) => {
-            this.getDocumentRequest();
-            return res;
-        });
-    }
-
 
     getEnum(status: DocumentStatus | undefined): any {
         return DocumentStatus[status];
@@ -324,12 +320,18 @@ export class DocumentMaturePremierAgeComponent implements OnInit, AfterViewInit,
             console.log(res);
             const body = [];
             for (const item of res) {
-
-                body.push(item.document);
+                if (item.document.status === 'MATURITY_PRIME_AGE') {
+                    body.push(item.document);
+                }
             }
             this._documentReqService.sendDocumentVersement(body).subscribe((re) => {
                 console.log(re);
             });
         });
+    }
+
+    changeStatus(document: DocumentRequest, maturitysecondage: string) {
+        return this._documentReqService.changeStatus(document, maturitysecondage).subscribe(res => res);
+
     }
 }

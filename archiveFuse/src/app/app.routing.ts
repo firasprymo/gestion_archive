@@ -322,6 +322,14 @@ export const appRoutes: Route[] = [
                             .then(m => m.DocumentMaturePremierAgeModule)
                     },
                     {
+                        path: 'request-versement-document',
+                        // data: {
+                        //     role: roleAdmin
+                        // },
+                        loadChildren: () => import('app/modules/admin/pages/document/request-versement-document/request-versement-document.module')
+                            .then(m => m.RequestVersementDocumentModule)
+                    },
+                    {
                         path: 'show-direction-regional',
                         data: {
                             role: roleAdmin

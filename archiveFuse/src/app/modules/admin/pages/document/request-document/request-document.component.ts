@@ -302,8 +302,8 @@ export class RequestDocumentComponent implements OnInit, AfterViewInit, OnDestro
         );
     }
 
-    changeStatus(documentRequest: DocumentRequest): any {
-        return this._documentReqService.changeStatus(documentRequest).subscribe((res: any) => {
+    changeStatus(documentRequest: DocumentRequest, status): any {
+        return this._documentReqService.changeStatus(documentRequest, status).subscribe((res: any) => {
             console.log(res)
             this.getDocumentRequest();
             return res;

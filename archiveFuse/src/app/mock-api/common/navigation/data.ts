@@ -69,6 +69,14 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 link: '/pages/document_mature_premier_age',
                 meta: ['ROLE_RESOPONSABLE'],
             },
+            {
+                id: 'documents.request-versement-document',
+                title: 'Accepter demande de versement',
+                type: 'basic',
+                icon: 'heroicons_outline:chart-pie',
+                link: '/pages/request-versement-document',
+                meta: ['ROLE_RESOPONSABLE_CENTRE_PRE_ARCHIVE', 'ROLE_RESOPONSABLE_CENTRE_ARCHIVE'],
+            },
 
         ]
     },

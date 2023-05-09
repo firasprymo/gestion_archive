@@ -79,8 +79,22 @@ public class DocumentRequestServiceImpl implements DocumentRequestService {
         DocumentRequest documentRequest = documentReqRepository.findById(id).
                 orElseThrow(() ->
                         new RuntimeException("Document doesn't exist"));
-        if (DocumentStatus.valueOf(status) == DocumentStatus.PENDING) {
-            documentRequest.getDocument().setStatus(DocumentStatus.PRIME_AGE);
+        documentRequest.getDocument().setStatus(DocumentStatus.valueOf(status));
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+        User user = userRepository.findByUsername(currentPrincipalName).get();
+
+        if (documentRequest.getDocument().getStatus().equals(DocumentStatus.SECOND_AGE)) {
+            if (user.getAgence() != null) {
+
+                documentRequest.getDocument().setLieuArchive(user.getAgence().getLieuArchiveSecAge());
+            } else if (user.getDirectionRegional() != null) {
+                documentRequest.getDocument().setLieuArchive(user.getDirectionRegional().getLieuArchiveSecAge());
+
+            } else if (user.getStructureCentral() != null) {
+                documentRequest.getDocument().setLieuArchive(user.getStructureCentral().getLieuArchiveSecAge());
+
+            }
         }
         return documentReqRepository.save(documentRequest);
     }
@@ -147,7 +161,7 @@ public class DocumentRequestServiceImpl implements DocumentRequestService {
 
     }
 
-    
+
     public Page<DocumentRequest> getAllDocumentPrimeAge(Pageable pageable) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
@@ -157,7 +171,7 @@ public class DocumentRequestServiceImpl implements DocumentRequestService {
     }
 
     @Transactional
-    public Page<DocumentRequest>getAllDocumentVersementRequest(Pageable pageable){
+    public Page<DocumentRequest> getAllDocumentVersementRequest(Pageable pageable) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
         User user = userRepository.findByUsername(currentPrincipalName).get();
@@ -170,18 +184,15 @@ public class DocumentRequestServiceImpl implements DocumentRequestService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
         User user = userRepository.findByUsername(currentPrincipalName).get();
-
         for (Document document : documentList) {
             DocumentRequest documentRequests = new DocumentRequest();
-            Document documentRequested=documentRepository.findById(document.getId()).orElseThrow(RuntimeException::new);
+            Document documentRequested = documentRepository.findById(document.getId()).orElseThrow(RuntimeException::new);
             documentRequested.setStatus(DocumentStatus.PENDING_VERSEMENT);
             documentRepository.save(documentRequested);
             documentRequests.setDocument(documentRequested);
             documentRequests.setUser(user);
             documentReqRepository.save(documentRequests);
         }
-        ;
-
     }
 
     public DocumentRequest requestDocument(Document document) {

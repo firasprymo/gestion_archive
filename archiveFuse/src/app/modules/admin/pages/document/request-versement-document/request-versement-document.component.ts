@@ -25,11 +25,11 @@ import {DocumentRequestService} from '../../../../../shared/service/document-req
 import {fuseAnimations} from '../../../../../../@fuse/animations';
 import {UserService} from '../../../../../core/user/user.service';
 import {Users} from '../../../../../shared/model/users.types';
-import {DocumentStatus} from "../../../../../shared/model/document-status.enum";
+import {DocumentStatus} from '../../../../../shared/model/document-status.enum';
 
 @Component({
     selector: 'app-consult-document',
-    templateUrl: './consult-document.component.html',
+    templateUrl: './request-versement-document.component.html',
     styles: [
         /* language=SCSS */
         `
@@ -45,7 +45,7 @@ import {DocumentStatus} from "../../../../../shared/model/document-status.enum";
                 }
 
                 @screen lg {
-                    grid-template-columns: 180px 80px 120px 80px 350px 130px 80px ;
+                    grid-template-columns: auto 120px 120px 80px 350px 130px 80px ;
                 }
             }
         `
@@ -54,7 +54,7 @@ import {DocumentStatus} from "../../../../../shared/model/document-status.enum";
     changeDetection: ChangeDetectionStrategy.OnPush,
     animations: fuseAnimations
 })
-export class ConsultDocumentComponent implements OnInit, AfterViewInit, OnDestroy {
+export class RequestVersementDocumentComponent implements OnInit, AfterViewInit, OnDestroy {
 
     @ViewChild(MatPaginator) private _paginator: MatPaginator;
     @ViewChild(MatSort) private _sort: MatSort;
@@ -130,7 +130,7 @@ export class ConsultDocumentComponent implements OnInit, AfterViewInit, OnDestro
                 this._changeDetectorRef.markForCheck();
             });
         // Get the products
-        this.documentRequests$ = this._documentReqService.documentRequests$;
+        this.getDocumentRequest();
         // Get the vendors
 
         // Subscribe to search input field value changes
@@ -150,6 +150,11 @@ export class ConsultDocumentComponent implements OnInit, AfterViewInit, OnDestro
                 })
             )
             .subscribe();
+    }
+
+    getDocumentRequest(): any {
+        this.documentRequests$ = this._documentReqService.documentRequests$;
+
     }
 
     /**
@@ -216,72 +221,6 @@ export class ConsultDocumentComponent implements OnInit, AfterViewInit, OnDestro
 
 
     /**
-     * Filter tags
-     *
-     * @param event
-     */
-    filterSkills(event): void {
-        // Get the value
-        const value = event.target.value.toLowerCase();
-
-        // Filter the tags
-        this.filteredSkills = this.skills.filter(tag => tag.title.toLowerCase().includes(value));
-    }
-
-    /**
-     * Delete the selected product using the form data
-     */
-    deleteSelectedDocument(document: DocumentRequest): void {
-        // Open the confirmation dialog
-        const confirmation = this._fuseConfirmationService.open({
-            title: 'Delete document',
-            message: 'Are you sure you want to remove this document? This action cannot be undone!',
-            actions: {
-                confirm: {
-                    label: 'Delete'
-                }
-            }
-        });
-
-        // Subscribe to the confirmation dialog closed action
-        confirmation.afterClosed().subscribe((result) => {
-
-            // If the confirm button pressed...
-            if (result === 'confirmed') {
-
-                // Get the product object
-
-                // Delete the product on the server
-                this._documentReqService.deleteDocumentRequest(document).subscribe(() => {
-
-                    // Close the details
-                    this.closeDetails();
-                });
-            }
-        });
-    }
-
-    /**
-     * Show flash message
-     */
-    showFlashMessage(type: 'success' | 'error'): void {
-        // Show the message
-        this.flashMessage = type;
-
-        // Mark for check
-        this._changeDetectorRef.markForCheck();
-
-        // Hide it after 3 seconds
-        setTimeout(() => {
-
-            this.flashMessage = null;
-
-            // Mark for check
-            this._changeDetectorRef.markForCheck();
-        }, 3000);
-    }
-
-    /**
      * Track by function for ngFor loops
      *
      * @param index
@@ -297,14 +236,38 @@ export class ConsultDocumentComponent implements OnInit, AfterViewInit, OnDestro
         );
     }
 
-    changeStatus(documentRequest: DocumentRequest, status): any {
-        return this._documentReqService.changeStatus(documentRequest, status).subscribe(res => res);
-    }
-
-
-    getEnum(status: DocumentStatus | undefined): any {
+    getStatus(status: DocumentStatus | undefined): any {
         return DocumentStatus[status];
     }
 
+    changeRequest(document: DocumentRequest, status): any {
+        // Open the confirmation dialog
+        const confirmation = this._fuseConfirmationService.open({
+            title: 'Accepter Demande',
+            message: 'êtes vous sûr d\'accepter ce versement?',
+            actions: {
+                confirm: {
+                    label: 'Valider'
+                }
+            }
+        });
 
+        // Subscribe to the confirmation dialog closed action
+        confirmation.afterClosed().subscribe((result) => {
+
+            // If the confirm button pressed...
+            if (result === 'confirmed') {
+
+                // Get the product object
+
+                // Delete the product on the server
+                return this._documentReqService.changeStatus(document, status).subscribe((res: any) => {
+                    this.getDocumentRequest();
+                    this.closeDetails();
+
+                    return res;
+                });
+            }
+        });
+    }
 }

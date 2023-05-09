@@ -121,6 +121,35 @@ export class DocumentRequestService {
             })
         );
     }
+    /**
+     * Get documents
+     *
+     *
+     * @param page
+     * @param size
+     * @param sort
+     * @param order
+     * @param search
+     */
+    getAllRequestVersementDocuments(page: number = 0, size: number = 5, sort: string = 'id', order: 'asc' | 'desc'
+        | '' = 'asc', search: string = ''):
+        Observable<{ pageable: InventoryPagination; content: DocumentRequest[] }> {
+        return this._httpClient.get<{ pageable: InventoryPagination; content: DocumentRequest[] }>
+        (`${ApiService.apiDocumentRequests}/get-all-demandes-versement`, {
+            params: {
+                page: '' + page,
+                size: '' + size,
+                sort,
+                order,
+                search
+            }
+        }).pipe(
+            tap((response) => {
+                this._pagination.next(response.pageable);
+                this._documentRequests.next(response.content);
+            })
+        );
+    }
 
     /**
      * Get documents
@@ -244,11 +273,14 @@ export class DocumentRequestService {
         );
     }
 
-    changeStatus(document): any {
+    changeStatus(document, statusRequest): any {
         console.log(document?.document);
+        const status = {
+            status: statusRequest
+        };
         return this._httpClient.put<DocumentRequest[]>
         (`${ApiService.apiDocumentRequests}/change-status/${document?.id}`,
-            document?.document?.status).pipe(
+            statusRequest).pipe(
             tap((response: any) => {
                 this._documentRequests.next(response);
             })

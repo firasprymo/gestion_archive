@@ -8,5 +8,7 @@ export enum DocumentStatus {
     SECOND_AGE = 'Deuxième âge',
     MATURITY_SECOND_AGE = 'Maturité deuxième âge',
     THIRD_AGE = 'Troisième âge',
-    DESTRUCTED = 'détruit'
+    DESTRUCTED = 'détruit',
+    PENDING_VERSEMENT = "Versement En attente",
+    ACCEPTED_VERSEMENT = "Versement Accepté",
 }
