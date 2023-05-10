@@ -61,6 +61,56 @@ export class DocumentRequestsVersementResolvers implements Resolve<any> {
 @Injectable({
     providedIn: 'root'
 })
+export class DocumentRequestsVersementTroisiemeResolvers implements Resolve<any> {
+    /**
+     * Constructor
+     */
+    constructor(private _documentsService: DocumentRequestService) {
+    }
+
+    // -----------------------------------------------------------------------------------------------------
+    // @ Public methods
+    // -----------------------------------------------------------------------------------------------------
+
+    /**
+     * Resolver
+     *
+     * @param route
+     * @param state
+     */
+    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot):
+        Observable<{ pageable: InventoryPagination; content: DocumentRequest[] }> {
+        return this._documentsService.getAllRequestVersementDocumentsTroisieme();
+    }
+}
+
+@Injectable({
+    providedIn: 'root'
+})
+export class DocumentRequestsVersementDeuxiemeResolvers implements Resolve<any> {
+    /**
+     * Constructor
+     */
+    constructor(private _documentsService: DocumentRequestService) {
+    }
+
+    // -----------------------------------------------------------------------------------------------------
+    // @ Public methods
+    // -----------------------------------------------------------------------------------------------------
+
+    /**
+     * Resolver
+     *
+     * @param route
+     * @param state
+     */
+    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<{ pageable: InventoryPagination; content: DocumentRequest[] }> {
+        return this._documentsService.getAllDocumentsDeuxieme();
+    }
+}
+@Injectable({
+    providedIn: 'root'
+})
 export class DocumentMaturePremierAgeResolver implements Resolve<any> {
     /**
      * Constructor

@@ -1,8 +1,10 @@
 package com.pfe.najd.service.implementation;
 
 import com.pfe.najd.Enum.DocumentStatus;
+import com.pfe.najd.dao.RoleDao;
 import com.pfe.najd.entities.Document;
 import com.pfe.najd.entities.DocumentRequest;
+import com.pfe.najd.entities.Role;
 import com.pfe.najd.entities.User;
 import com.pfe.najd.repository.DocumentRepository;
 import com.pfe.najd.repository.DocumentRequestRepository;
@@ -19,6 +21,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.security.Principal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,6 +31,7 @@ public class DocumentServiceImpl implements DocumentService {
     private final DocumentRepository documentRepository;
     private final DocumentRequestRepository documentRequestRepository;
     private final UserRepository userRepository;
+    private final RoleDao roleDao;
 
     //TODO: change the code of create to verify if the codeStartWith "DR"
     public Document createDocument(Document document) {
@@ -125,6 +129,23 @@ public class DocumentServiceImpl implements DocumentService {
     public Page<Document> pageDocuments(Pageable pageable) {
         Page<Document> documents = documentRepository.findAll(pageable);
 
+        return new PageImpl<>(documents.getContent(), documents.getPageable(), documents.getTotalElements());
+
+    }
+
+    @Transactional
+    public Page<Document> getAllByDocumentLieuAffectation(Pageable pageable) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+        User user = userRepository.findByUsername(currentPrincipalName).get();
+        List<Document> documentList = new ArrayList<>();
+
+        if (user.getRoles().stream().anyMatch(role -> role.getRoleName().equals("ROLE_RESOPONSABLE_CENTRE_PRE_ARCHIVE"))) {
+            documentList = documentRepository.getAllByDocumentLieuAffectation(user.getLieuAffectation(), DocumentStatus.SECOND_AGE, pageable);
+        } else if (user.getRoles().stream().anyMatch(role -> role.getRoleName().equals("ROLE_RESOPONSABLE_CENTRE_ARCHIVE"))) {
+            documentList = documentRepository.getAllByDocumentLieuAffectation(user.getLieuAffectation(), DocumentStatus.PRIME_AGE, pageable);
+        }
+        Page<Document> documents = new PageImpl<>(documentList);
         return new PageImpl<>(documents.getContent(), documents.getPageable(), documents.getTotalElements());
 
     }

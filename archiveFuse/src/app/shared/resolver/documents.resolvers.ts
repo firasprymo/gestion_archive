@@ -5,6 +5,8 @@ import {DocumentsService} from '../service/documents.service';
 import {Documents} from '../model/documents.types';
 import {InventoryPagination} from '../../modules/admin/apps/ecommerce/inventory/inventory.types';
 import {catchError} from 'rxjs/operators';
+import {UserService} from '../../core/user/user.service';
+import {DocumentRequestService} from "../service/document-request.service";
 
 @Injectable({
     providedIn: 'root'
@@ -28,6 +30,34 @@ export class DocumentsResolvers implements Resolve<any> {
      */
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<{ pageable: InventoryPagination; content: Documents[] }> {
         return this._documentsService.getAllDocuments();
+    }
+}
+
+
+@Injectable({
+    providedIn: 'root'
+})
+export class DocumentsByLieuAffectationResolvers implements Resolve<any> {
+    /**
+     * Constructor
+     */
+    constructor(private _documentsService: DocumentsService,
+                private _userService: UserService) {
+    }
+
+    // -----------------------------------------------------------------------------------------------------
+    // @ Public methods
+    // -----------------------------------------------------------------------------------------------------
+
+    /**
+     * Resolver
+     *
+     * @param route
+     * @param state
+     */
+    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<{ pageable: InventoryPagination; content: Documents[] }> {
+
+        return this._documentsService.getDocumentsByLieuAffectation();
     }
 }
 

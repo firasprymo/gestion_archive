@@ -166,7 +166,7 @@ export const appRoutes: Route[] = [
                         //     role: roleUser
                         // },
                         loadChildren: () => import('app/modules/admin/pages/document/add-document/add-document.module').then(m => m.AddDocumentModule)
-                    },    {
+                    }, {
                         path: 'request-documents',
                         canActivate: [AuthGuard],
                         // data: {
@@ -322,12 +322,36 @@ export const appRoutes: Route[] = [
                             .then(m => m.DocumentMaturePremierAgeModule)
                     },
                     {
+                        path: 'show-documents-lieu-affectation',
+                        // data: {
+                        //     role: roleAdmin
+                        // },
+                        loadChildren: () => import('app/modules/admin/pages/document/show-documents-lieu-affectation/show-documents-lieu-affectation.module')
+                            .then(m => m.ShowDocumentsLieuAffectationModule)
+                    },
+                    {
                         path: 'request-versement-document',
                         // data: {
                         //     role: roleAdmin
                         // },
                         loadChildren: () => import('app/modules/admin/pages/document/request-versement-document/request-versement-document.module')
                             .then(m => m.RequestVersementDocumentModule)
+                    },
+                    {
+                        path: 'request-versement-document-deuxieme',
+                        // data: {
+                        //     role: roleAdmin
+                        // },
+                        loadChildren: () => import('app/modules/admin/pages/document/request-versement-document-deuxieme/request-versement-document-deuxieme.module')
+                            .then(m => m.RequestVersementDocumentDeuxiemeModule)
+                    },
+                    {
+                        path: 'request-versement-document-troisieme',
+                        // data: {
+                        //     role: roleAdmin
+                        // },
+                        loadChildren: () => import('app/modules/admin/pages/document/request-versement-document-troisieme/request-versement-document-troisieme.module')
+                            .then(m => m.RequestVersementDocumentTroisiemeModule)
                     },
                     {
                         path: 'show-direction-regional',

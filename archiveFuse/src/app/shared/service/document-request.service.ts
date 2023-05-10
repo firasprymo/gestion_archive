@@ -5,6 +5,7 @@ import {DocumentRequest} from '../model/document-requests.types';
 import {ApiService} from './api.service';
 import {HttpClient} from '@angular/common/http';
 import {map, switchMap, take, tap} from 'rxjs/operators';
+import {Documents} from "../model/documents.types";
 
 @Injectable({
     providedIn: 'root'
@@ -107,6 +108,63 @@ export class DocumentRequestService {
         Observable<{ pageable: InventoryPagination; content: DocumentRequest[] }> {
         return this._httpClient.get<{ pageable: InventoryPagination; content: DocumentRequest[] }>
         (`${ApiService.apiDocumentRequests}/get-all-documents`, {
+            params: {
+                page: '' + page,
+                size: '' + size,
+                sort,
+                order,
+                search
+            }
+        }).pipe(
+            tap((response) => {
+                this._pagination.next(response.pageable);
+                this._documentRequests.next(response.content);
+            })
+        );
+    }
+    /**
+     * Get documents
+     *
+     *
+     * @param page
+     * @param size
+     * @param sort
+     * @param order
+     * @param search
+     */
+    getAllDocumentsDeuxieme(page: number = 0, size: number = 5, sort: string = 'document.nomberPage', order: 'asc' | 'desc' | '' = 'asc', search: string = ''):
+        Observable<{ pageable: InventoryPagination; content: DocumentRequest[] }> {
+        return this._httpClient.get<{ pageable: InventoryPagination; content: DocumentRequest[] }>
+        (`${ApiService.apiDocumentRequests}/get-all-documents-deuxieme`, {
+            params: {
+                page: '' + page,
+                size: '' + size,
+                sort,
+                order,
+                search
+            }
+        }).pipe(
+            tap((response) => {
+                this._pagination.next(response.pageable);
+                this._documentRequests.next(response.content);
+            })
+        );
+    }
+    /**
+     * Get documents
+     *
+     *
+     * @param page
+     * @param size
+     * @param sort
+     * @param order
+     * @param search
+     */
+    getAllRequestVersementDocumentsTroisieme(page: number = 0, size: number = 5, sort: string = 'id', order: 'asc' | 'desc'
+        | '' = 'asc', search: string = ''):
+        Observable<{ pageable: InventoryPagination; content: DocumentRequest[] }> {
+        return this._httpClient.get<{ pageable: InventoryPagination; content: DocumentRequest[] }>
+        (`${ApiService.apiDocumentRequests}/get-all-documents-troisieme`, {
             params: {
                 page: '' + page,
                 size: '' + size,

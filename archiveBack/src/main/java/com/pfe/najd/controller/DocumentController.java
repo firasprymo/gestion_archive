@@ -27,24 +27,31 @@ public class DocumentController {
 
     private final DocumentRequestService documentRequestService;
 
-//    @PreAuthorize("hasAnyAuthority('SCOPE_ROLE_ADMIN')")
+    //    @PreAuthorize("hasAnyAuthority('SCOPE_ROLE_ADMIN')")
     @PostMapping("/create")
-    public ResponseEntity<Document> createDocument(@RequestBody Document document){
-        Document createdDocument  = documentService.createDocument(document);
+    public ResponseEntity<Document> createDocument(@RequestBody Document document) {
+        Document createdDocument = documentService.createDocument(document);
         return new ResponseEntity<>(createdDocument, HttpStatus.CREATED);
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<Document>> getAllDocument(){
+    public ResponseEntity<List<Document>> getAllDocument() {
         List<Document> documents = documentService.getAllDocument();
         return new ResponseEntity<>(documents, HttpStatus.OK);
     }
+
     @GetMapping("/get-all-documents")
     public ResponseEntity<Page<Document>> getAllDocuments(Pageable pageable) {
         return ResponseEntity.ok().body(documentService.pageDocuments(pageable));
     }
+
+    @GetMapping("/get-document-by-lieu-affectation")
+    public ResponseEntity<Page<Document>> getAllByDocumentLieuAffectation(Pageable pageable) {
+        return ResponseEntity.ok().body(documentService.getAllByDocumentLieuAffectation(pageable));
+    }
+
     @GetMapping("/get-document/{numDocument}")
-    public ResponseEntity<Document> getDocumentById(@PathVariable("numDocument") Long id){
+    public ResponseEntity<Document> getDocumentById(@PathVariable("numDocument") Long id) {
         Optional<Document> document = documentService.getDocumentById(id);
         return document.map(value -> new ResponseEntity<>(value, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
@@ -81,8 +88,6 @@ public class DocumentController {
 //        return new ResponseEntity<>(documents, HttpStatus.OK);
 //    }
     // update document Status : 
-
-    
 
 
     @ExceptionHandler(RuntimeException.class)

@@ -35,7 +35,15 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 type: 'basic',
                 icon: 'heroicons_outline:chart-pie',
                 link: '/pages/show-documents',
-                meta: ['ROLE_AGENT'],
+                meta: ['ROLE_AGENT',],
+            },
+            {
+                id: 'documents.showlieu',
+                title: 'Show documents',
+                type: 'basic',
+                icon: 'heroicons_outline:chart-pie',
+                link: '/pages/show-documents-lieu-affectation',
+                meta: ['ROLE_RESOPONSABLE_CENTRE_ARCHIVE','ROLE_RESOPONSABLE_CENTRE_PRE_ARCHIVE'],
             },
             {
                 id: 'documents.consult',
@@ -43,7 +51,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 type: 'basic',
                 icon: 'heroicons_outline:chart-pie',
                 link: '/pages/consult-documents',
-                meta: ['ROLE_RESOPONSABLE', 'ROLE_RESOPONSABLE_CENTRE_PRE_ARCHIVE'],
+                meta: ['ROLE_RESOPONSABLE', 'ROLE_AGENT'],
             },
             {
                 id: 'documents.request',
@@ -51,7 +59,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 type: 'basic',
                 icon: 'heroicons_outline:chart-pie',
                 link: '/pages/request-documents',
-                meta: ['ROLE_RESOPONSABLE', 'ROLE_RESOPONSABLE_CENTRE_PRE_ARCHIVE'],
+                meta: ['ROLE_RESOPONSABLE'],
             },
             {
                 id: 'documents.requestconsult',
@@ -75,7 +83,23 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 type: 'basic',
                 icon: 'heroicons_outline:chart-pie',
                 link: '/pages/request-versement-document',
-                meta: ['ROLE_RESOPONSABLE_CENTRE_PRE_ARCHIVE', 'ROLE_RESOPONSABLE_CENTRE_ARCHIVE'],
+                meta: ['ROLE_RESOPONSABLE_CENTRE_ARCHIVE'],
+            },
+            {
+                id: 'request-versement-document-deuxieme',
+                title: 'Accepter demande de versement deuxiéme âge',
+                type: 'basic',
+                icon: 'heroicons_outline:chart-pie',
+                link: '/pages/request-versement-document-deuxieme',
+                meta: ['ROLE_RESOPONSABLE_CENTRE_PRE_ARCHIVE'],
+            },
+            {
+                id: 'request-versement-document-deuxieme',
+                title: 'Passer demande de versement troisiéme âge',
+                type: 'basic',
+                icon: 'heroicons_outline:chart-pie',
+                link: '/pages/request-versement-document-troisieme',
+                meta: ['ROLE_RESOPONSABLE_CENTRE_PRE_ARCHIVE'],
             },
 
         ]

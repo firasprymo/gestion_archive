@@ -79,7 +79,14 @@ public class DocumentRequestController {
     public ResponseEntity<Page<DocumentRequest>> getAllRequestConsultDocuments(Pageable pageable) {
         return ResponseEntity.ok().body(documentService.getAllRequestConsultDocuments(pageable));
     }
-
+    @GetMapping("/get-all-documents-deuxieme")
+    public ResponseEntity<Page<DocumentRequest>> getAllDocumentsDeuxieme(Pageable pageable) {
+        return ResponseEntity.ok().body(documentService.getAllDocumentsDeuxieme(pageable));
+    }
+    @GetMapping("/get-all-documents-troisieme")
+    public ResponseEntity<Page<DocumentRequest>> getAllDocumentsTroisieme(Pageable pageable) {
+        return ResponseEntity.ok().body(documentService.getAllDocumentsTroisieme(pageable));
+    }
     // Delete Document by code
     @PreAuthorize("hasAnyAuthority('SCOPE_ROLE_RESOPONSABLE')")
     @DeleteMapping("/{id}")

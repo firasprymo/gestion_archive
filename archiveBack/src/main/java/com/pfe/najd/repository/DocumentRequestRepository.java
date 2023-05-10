@@ -30,4 +30,8 @@ public interface DocumentRequestRepository extends JpaRepository<DocumentRequest
 
     @Query("select dr  from DocumentRequest dr where dr.status='PENDING' and dr.document.codeLieuArchive=?1 ")
     Page<DocumentRequest> findAllByStatusAndLieuAffectation(String lieuAffectation, Pageable pageable);
+    @Query("select dr  from DocumentRequest dr where dr.document.Status='SECOND_AGE' and dr.document.codeLieuArchive=?1 ")
+    Page<DocumentRequest> getAllDeuxiemeAge(String lieuAffectation, Pageable pageable);
+    @Query("select dr  from DocumentRequest dr where dr.document.Status='MATURITY_SECOND_AGE' and dr.document.codeLieuArchive=?1 ")
+    Page<DocumentRequest> getAllTroisiemeAge(String lieuAffectation, Pageable pageable);
 }

@@ -37,6 +37,8 @@ public interface DocumentRequestService {
     DocumentRequest requestDocument(Document document);
 
     Page<DocumentRequest> getAllRequestConsultDocuments(Pageable pageable);
+    Page<DocumentRequest> getAllDocumentsDeuxieme(Pageable pageable);
+    Page<DocumentRequest> getAllDocumentsTroisieme(Pageable pageable);
     Page<DocumentRequest>getAllDocumentVersementRequest(Pageable pageable);
     Page<DocumentRequest>getAllDocumentPrimeAge(Pageable pageable);
     void createDemandeVersement(List<Document> documents);

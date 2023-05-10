@@ -88,11 +88,14 @@ public class DocumentRequestServiceImpl implements DocumentRequestService {
             if (user.getAgence() != null) {
 
                 documentRequest.getDocument().setLieuArchive(user.getAgence().getLieuArchiveSecAge());
+                documentRequest.getDocument().setCodeLieuArchive(user.getAgence().getLieuArchiveSecAge());
             } else if (user.getDirectionRegional() != null) {
                 documentRequest.getDocument().setLieuArchive(user.getDirectionRegional().getLieuArchiveSecAge());
+                documentRequest.getDocument().setCodeLieuArchive(user.getDirectionRegional().getLieuArchiveSecAge());
 
             } else if (user.getStructureCentral() != null) {
                 documentRequest.getDocument().setLieuArchive(user.getStructureCentral().getLieuArchiveSecAge());
+                documentRequest.getDocument().setCodeLieuArchive(user.getStructureCentral().getLieuArchiveSecAge());
 
             }
         }
@@ -194,7 +197,28 @@ public class DocumentRequestServiceImpl implements DocumentRequestService {
             documentReqRepository.save(documentRequests);
         }
     }
+    @Transactional
+    public Page<DocumentRequest> getAllDocumentsDeuxieme(Pageable pageable) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+        User user = userRepository.findByUsername(currentPrincipalName).get();
 
+        Page<DocumentRequest> documents = documentReqRepository.getAllDeuxiemeAge(user.getLieuAffectation(), pageable);
+
+        return new PageImpl<>(documents.getContent(), documents.getPageable(), documents.getTotalElements());
+
+    }
+    @Transactional
+    public Page<DocumentRequest> getAllDocumentsTroisieme(Pageable pageable) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+        User user = userRepository.findByUsername(currentPrincipalName).get();
+
+        Page<DocumentRequest> documents = documentReqRepository.getAllTroisiemeAge(user.getLieuAffectation(), pageable);
+
+        return new PageImpl<>(documents.getContent(), documents.getPageable(), documents.getTotalElements());
+
+    }
     public DocumentRequest requestDocument(Document document) {
         DocumentRequest documentRequest = new DocumentRequest();
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

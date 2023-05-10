@@ -119,6 +119,36 @@ export class DocumentsService {
     }
 
     /**
+     * Get documents
+     *
+     *
+     * @param page
+     * @param size
+     * @param sort
+     * @param order
+     * @param search
+     */
+    getDocumentsByLieuAffectation(page: number = 0, size: number = 5, sort: string = 'nomberPage', order: 'asc' | 'desc' | '' = 'asc', search: string = ''):
+        Observable<{ pageable: InventoryPagination; content: Documents[] }> {
+        return this._httpClient.get<{ pageable: InventoryPagination; content: Documents[] }>
+        (`${ApiService.apiDocuments}/get-document-by-lieu-affectation`, {
+            params: {
+                page: '' + page,
+                size: '' + size,
+                sort,
+                order,
+                search
+            }
+        }).pipe(
+            tap((response) => {
+                console.log(response)
+                this._pagination.next(response.pageable);
+                this._documents.next(response.content);
+            })
+        );
+    }
+
+    /**
      * Delete the document
      *
      * @param document

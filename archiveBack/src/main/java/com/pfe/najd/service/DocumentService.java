@@ -14,6 +14,7 @@ import java.util.Optional;
 
 public interface DocumentService {
     Page<Document> pageDocuments(Pageable pageable);
+    Page<Document> getAllByDocumentLieuAffectation(Pageable pageable);
 
 
     Document createDocument(Document document) ;
