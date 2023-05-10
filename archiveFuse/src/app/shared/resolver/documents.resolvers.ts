@@ -6,7 +6,7 @@ import {Documents} from '../model/documents.types';
 import {InventoryPagination} from '../../modules/admin/apps/ecommerce/inventory/inventory.types';
 import {catchError} from 'rxjs/operators';
 import {UserService} from '../../core/user/user.service';
-import {DocumentRequestService} from "../service/document-request.service";
+import {DocumentRequestService} from '../service/document-request.service';
 
 @Injectable({
     providedIn: 'root'

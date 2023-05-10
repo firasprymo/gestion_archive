@@ -51,7 +51,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 type: 'basic',
                 icon: 'heroicons_outline:chart-pie',
                 link: '/pages/consult-documents',
-                meta: ['ROLE_RESOPONSABLE', 'ROLE_AGENT'],
+                meta: ['ROLE_RESOPONSABLE'],
             },
             {
                 id: 'documents.request',

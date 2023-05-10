@@ -62,18 +62,22 @@ public class UserServiceImpl implements UserService {
                     .orElseThrow(() -> new RuntimeException("Direction Regional doesnt exisr"));
             users.setLieuAffectation(directionRegional.getCodeDirection());
             users.setDirectionRegional(directionRegional);
-        }
+        }else
         if (user.getCentreArchive() != null) {
 
             CentreArchive centreArchive = centreArchiveRepository.findById(user.getCentreArchive())
                     .orElseThrow(() -> new RuntimeException("Centre archive doesnt exisr"));
             users.setCentreArchive(centreArchive);
-        }
+            users.setLieuAffectation(centreArchive.getCodeCentreArchive());
+
+        }else
         if (user.getCentrePreArchive() != null) {
 
             CentrePreArchive centrePreArchive = centrePreArchiveRepository.findById(user.getCentrePreArchive())
                     .orElseThrow(() -> new RuntimeException("Centre Pre Archive doesnt exisr"));
             users.setCentrePreArchive(centrePreArchive);
+            users.setLieuAffectation(centrePreArchive.getCodeCentrePreArchive());
+
         }
         if (user.getRoles() != null) {
             Role role = roleDao.findTopByRoleName(user.getRoles());
@@ -119,26 +123,35 @@ public class UserServiceImpl implements UserService {
                 StructureCentral structureCentral = structureCentralDao.findById(updatedUser.getStructureCentral())
                         .orElseThrow(() -> new RuntimeException("Agence doesnt exisr"));
                 existingUser.setStructureCentral(structureCentral);
+                existingUser.setLieuAffectation(structureCentral.getCodeStructure());
 
-            }
+            }else
             if (updatedUser.getAgence() != null) {
                 Agence agence = agenceDao.findById(updatedUser.getAgence())
                         .orElseThrow(() -> new RuntimeException("Agence doesnt exisr"));
                 existingUser.setAgence(agence);
-            }
+                existingUser.setLieuAffectation(agence.getCodeAgence());
+
+            }else
             if (updatedUser.getDirectionRegional() != null) {
                 DirectionRegional directionRegional = directionRegionalDao.findById(updatedUser.getDirectionRegional())
                         .orElseThrow(() -> new RuntimeException("Direction Regional doesnt exisr"));
                 existingUser.setDirectionRegional(directionRegional);
-            } if (updatedUser.getCentreArchive() != null) {
+                existingUser.setLieuAffectation(directionRegional.getCodeDirection());
+
+            }else  if (updatedUser.getCentreArchive() != null) {
                 CentreArchive centreArchive = centreArchiveRepository.findById(updatedUser.getCentreArchive())
                         .orElseThrow(() -> new RuntimeException("Direction Regional doesnt exisr"));
                 existingUser.setCentreArchive(centreArchive);
-            }
+                existingUser.setLieuAffectation(centreArchive.getCodeCentreArchive());
+
+            }else
             if (updatedUser.getCentrePreArchive() != null) {
                 CentrePreArchive centrePreArchive = centrePreArchiveRepository.findById(updatedUser.getCentrePreArchive())
                         .orElseThrow(() -> new RuntimeException("Direction Regional doesnt exisr"));
                 existingUser.setCentrePreArchive(centrePreArchive);
+                existingUser.setLieuAffectation(centrePreArchive.getCodeCentrePreArchive());
+
             }
             return userRepository.save(existingUser);
         } else {

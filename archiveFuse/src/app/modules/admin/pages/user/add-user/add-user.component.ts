@@ -10,10 +10,10 @@ import {StructureCentralService} from '../../../../../shared/service/structure-c
 import {AgenceService} from '../../../../../shared/service/agence.service';
 import {DirectionRegionalService} from '../../../../../shared/service/direction-regional.service';
 import {Users} from '../../../../../shared/model/users.types';
-import {CentreArchive} from "../../../../../shared/model/centre-archive.types";
-import {CentrePreArchive} from "../../../../../shared/model/centre-pre-archive.types";
-import {CentreArchiveService} from "../../../../../shared/service/centre-archive.service";
-import {CentrePreArchiveService} from "../../../../../shared/service/centre-pre-archive.service";
+import {CentreArchive} from '../../../../../shared/model/centre-archive.types';
+import {CentrePreArchive} from '../../../../../shared/model/centre-pre-archive.types';
+import {CentreArchiveService} from '../../../../../shared/service/centre-archive.service';
+import {CentrePreArchiveService} from '../../../../../shared/service/centre-pre-archive.service';
 
 @Component({
     selector: 'app-add-user',
@@ -96,6 +96,7 @@ export class AddUserComponent implements OnInit {
                     centreArchive: res.centreArchive,
                     centrePreArchive: res.centrePreArchive,
                     email: res.email,
+                    roles: res.roles[0].roleName,
                 });
             }
         });
@@ -105,9 +106,19 @@ export class AddUserComponent implements OnInit {
     addUser(): void {
         const roles = [];
         roles.push(this.userForm.value.roleNames);
+
         this.userForm.patchValue({
-            roleNames: roles
+            id: this.userForm.value.id,
+            username: this.userForm.value.username,
+            structureCentral: this.userForm.value.structureCentral?.id,
+            agence: this.userForm.value.agence?.id,
+            directionRegional: this.userForm.value.directionRegional?.id,
+            centreArchive: this.userForm.value.centreArchive?.id,
+            centrePreArchive: this.userForm.value.centrePreArchive?.id,
+            roles: this.userForm.value.roles,
+            email: this.userForm.value.email,
         });
+
         this._userService.addUser(this.userForm.value)
             .subscribe((res) => {
                 this._router.navigate(['pages/show-users']);
@@ -122,6 +133,18 @@ export class AddUserComponent implements OnInit {
 
     updateUser(): void {
         console.log(this.userForm.value);
+        this.userForm.patchValue({
+            id: this.userForm.value.id,
+            username: this.userForm.value.username,
+            structureCentral: this.userForm.value.structureCentral?.id,
+            agence: this.userForm.value.agence?.id,
+            directionRegional: this.userForm.value.directionRegional?.id,
+            centreArchive: this.userForm.value.centreArchive?.id,
+            centrePreArchive: this.userForm.value.centrePreArchive?.id,
+            roles: this.userForm.value.roles,
+            email: this.userForm.value.email,
+        });
+
         this._userService.editUser(this.userForm.value, this.user)
             .subscribe((res) => {
                 this._router.navigate(['pages/show-users']);

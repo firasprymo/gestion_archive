@@ -127,7 +127,7 @@ public class DocumentServiceImpl implements DocumentService {
 
     @Transactional
     public Page<Document> pageDocuments(Pageable pageable) {
-        Page<Document> documents = documentRepository.findAll(pageable);
+        Page<Document> documents = documentRepository.getAllByDocumentLieuAffectationAndStatus(pageable);
 
         return new PageImpl<>(documents.getContent(), documents.getPageable(), documents.getTotalElements());
 

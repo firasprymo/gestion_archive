@@ -18,11 +18,15 @@ public interface DocumentRepository extends JpaRepository<Document, Long>,
         JpaSpecificationExecutor<Document> {
 
     boolean existsById(Long id);
+
     List<DocumentRequest> existsSById(Long id);
 
 
     @Query("select dr  from Document dr where  dr.codeLieuArchive=?1 and dr.Status=?2")
     List<Document> getAllByDocumentLieuAffectation(String lieuAffectation, DocumentStatus status, Pageable pageable);
+
+    @Query("select dr  from Document dr where  dr.Status  IN ('SECOND_AGE','MATURITY_SECOND_AGE','THIRD_AGE')")
+    Page<Document> getAllByDocumentLieuAffectationAndStatus(Pageable pageable);
 
 
 }

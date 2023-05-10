@@ -73,7 +73,7 @@
                                 <select matNativeControl formControlName="directionRegional">
                                     <option
                                         *ngFor="let item of directionRegionals$ | async"
-                                        [value]="item?.id">{{item?.codeDirection}}</option>
+                                        [ngValue]="item">{{item?.codeDirection}}</option>
                                 </select>
                             </mat-form-field>
                         </div>
@@ -84,7 +84,7 @@
                                 <select matNativeControl formControlName="agence">
                                     <option
                                         *ngFor="let item of agences$ | async"
-                                        [value]="item?.id">{{item?.codeAgence}}</option>
+                                        [ngValue]="item">{{item?.codeAgence}}</option>
                                 </select>
                             </mat-form-field>
                         </div>
@@ -95,7 +95,7 @@
                                 <select matNativeControl formControlName="structureCentral">
                                     <option
                                         *ngFor="let item of structureCentrals$ | async"
-                                        [value]="item?.id">{{item?.codeStructure}}</option>
+                                        [ngValue]="item">{{item?.codeStructure}}</option>
                                 </select>
                             </mat-form-field>
                         </div>
@@ -106,7 +106,7 @@
                                 <select matNativeControl formControlName="centreArchive">
                                     <option
                                         *ngFor="let item of centreArchive$ | async"
-                                        [value]="item?.id">{{item?.codeCentreArchive}}</option>
+                                        [ngValue]="item">{{item?.codeCentreArchive}}</option>
                                 </select>
                             </mat-form-field>
                         </div>
@@ -117,7 +117,7 @@
                                 <select matNativeControl formControlName="centrePreArchive">
                                     <option
                                         *ngFor="let item of centrePreArchive$ | async"
-                                        [value]="item?.id">{{item?.codeCentrePreArchive}}</option>
+                                        [ngValue]="item">{{item?.codeCentrePreArchive}}</option>
                                 </select>
                             </mat-form-field>
                         </div>

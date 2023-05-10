@@ -25,9 +25,9 @@ import {DocumentsService} from '../../../../../shared/service/documents.service'
 import {debounceTime, map, switchMap, takeUntil} from 'rxjs/operators';
 import {ApiService} from '../../../../../shared/service/api.service';
 import {DocumentStatus} from '../../../../../shared/model/document-status.enum';
-import {DocumentRequestService} from "../../../../../shared/service/document-request.service";
-import {UserService} from "../../../../../core/user/user.service";
-import {Users} from "../../../../../shared/model/users.types";
+import {DocumentRequestService} from '../../../../../shared/service/document-request.service';
+import {UserService} from '../../../../../core/user/user.service';
+import {Users} from '../../../../../shared/model/users.types';
 
 @Component({
     selector: 'app-show-documents',
@@ -47,7 +47,7 @@ import {Users} from "../../../../../shared/model/users.types";
                 }
 
                 @screen lg {
-                    grid-template-columns: 48px 112px 100px 112px 96px 196px 72px;
+                    grid-template-columns: 68px 112px 100px 112px 96px 196px 72px;
                 }
             }
         `
