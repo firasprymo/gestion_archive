@@ -56,25 +56,25 @@ public class DocumentServiceImpl implements DocumentService {
 
     public List<Document> getAllDocument() {
         List<Document> documents = documentRepository.findAll();
-        for (Document item :
-                documents) {
-            if (LocalDate.now().isBefore(item.getMaturitePremAge())) {
-                item.setStatus(DocumentStatus.MATURITY_PRIME_AGE);
-                documentRepository.save(item);
-            }
-            if (LocalDate.now().isBefore(item.getMaturiteSecAge())) {
-                item.setStatus(DocumentStatus.MATURITY_SECOND_AGE);
-                documentRepository.save(item);
-            }
-            if (LocalDate.now().isAfter(item.getMaturiteSecAge()) && item.getNomenclature().getValeurHistoriqueTroiAge()) {
-                item.setStatus(DocumentStatus.THIRD_AGE);
-                documentRepository.save(item);
-            }
-            if (LocalDate.now().isAfter(item.getMaturiteSecAge()) && !item.getNomenclature().getValeurHistoriqueTroiAge()) {
-                item.setStatus(DocumentStatus.DESTRUCTED);
-                documentRepository.save(item);
-            }
-        }
+//        for (Document item :
+//                documents) {
+//            if (LocalDate.now().isBefore(item.getMaturitePremAge())) {
+//                item.setStatus(DocumentStatus.MATURITY_PRIME_AGE);
+//                documentRepository.save(item);
+//            }
+//            if (LocalDate.now().isBefore(item.getMaturiteSecAge())) {
+//                item.setStatus(DocumentStatus.MATURITY_SECOND_AGE);
+//                documentRepository.save(item);
+//            }
+//            if (LocalDate.now().isAfter(item.getMaturiteSecAge()) && item.getNomenclature().getValeurHistoriqueTroiAge()) {
+//                item.setStatus(DocumentStatus.THIRD_AGE);
+//                documentRepository.save(item);
+//            }
+//            if (LocalDate.now().isAfter(item.getMaturiteSecAge()) && !item.getNomenclature().getValeurHistoriqueTroiAge()) {
+//                item.setStatus(DocumentStatus.DESTRUCTED);
+//                documentRepository.save(item);
+//            }
+//        }
         return documents;
     }
 
