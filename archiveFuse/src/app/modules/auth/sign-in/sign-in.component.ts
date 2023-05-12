@@ -82,7 +82,8 @@ export class AuthSignInComponent implements OnInit {
                         } else if (user.roles[0].roleName === 'ROLE_AGENT') {
                             this._router.navigateByUrl('pages/show-documents');
 
-                        } else if (user.roles[0].roleName === 'ROLE_RESOPONSABLE' || user.roles[0].roleName === 'ROLE_RESOPONSABLE_CENTRE_ARCHIVE' || user.roles[0].roleName === 'ROLE_RESOPONSABLE_CENTRE_PRE_ARCHIVE') {
+                        } else if (user.roles[0].roleName === 'ROLE_RESOPONSABLE' || user.roles[0].roleName === 'ROLE_RESOPONSABLE_CENTRE_ARCHIVE'
+                            || user.roles[0].roleName === 'ROLE_RESOPONSABLE_CENTRE_PRE_ARCHIVE') {
                             this._router.navigateByUrl('pages/consult-documents');
 
                         }

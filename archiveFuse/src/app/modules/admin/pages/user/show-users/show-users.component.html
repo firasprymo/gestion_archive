@@ -86,7 +86,7 @@ role
                                     <div class=" sm:block">
                                         <ng-container *ngFor="let role of user.roles">
 
-                                            {{role.roleName }}
+                                            {{getRole(role.roleName) }}
                                         </ng-container>
                                     </div>
 

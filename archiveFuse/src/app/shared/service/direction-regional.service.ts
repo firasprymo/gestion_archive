@@ -106,7 +106,6 @@ export class DirectionRegionalService {
             }
         }).pipe(
             tap((response) => {
-                console.log(response);
                 this._pagination.next(response.pageable);
                 this._directionRegionals.next(response.content);
             })

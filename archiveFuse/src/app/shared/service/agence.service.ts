@@ -24,7 +24,6 @@ export class AgenceService {
      * Getter for Agence
      */
     get agences$(): Observable<Agence[]> {
-        console.log(this._agences);
         return this._agences.asObservable();
     }
 
@@ -108,7 +107,6 @@ export class AgenceService {
             }
         }).pipe(
             tap((response) => {
-                console.log(response);
                 this._pagination.next(response.pageable);
                 this._agences.next(response.content);
             })

@@ -24,6 +24,7 @@ import {
     InventoryPagination, InventoryVendor
 } from '../../../apps/ecommerce/inventory/inventory.types';
 import {InventoryService} from '../../../apps/ecommerce/inventory/inventory.service';
+import {RoleName} from "../../../../../shared/model/role-name.enum";
 
 @Component({
     selector: 'app-show-users',
@@ -285,5 +286,7 @@ export class ShowUsersComponent implements OnInit, AfterViewInit, OnDestroy {
         return item.id || index;
     }
 
-
+    getRole(role): RoleName {
+        return RoleName[role];
+    }
 }

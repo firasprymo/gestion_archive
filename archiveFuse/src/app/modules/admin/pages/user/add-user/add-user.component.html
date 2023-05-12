@@ -16,6 +16,9 @@
                                 <mat-error *ngIf="userForm.get('username').hasError('required')">
                                     Username is required
                                 </mat-error>
+                                <mat-error *ngIf="userForm.get('username').hasError('duplicateUsername')">
+                                    Username already exists
+                                </mat-error>
                             </mat-form-field>
                         </div>
                         <div class="flex flex-col gt-xs:flex-row gt-xs:items-baseline">

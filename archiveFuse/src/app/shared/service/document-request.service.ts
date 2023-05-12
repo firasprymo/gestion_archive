@@ -332,17 +332,20 @@ export class DocumentRequestService {
     }
 
     changeStatus(document, statusRequest): any {
-        console.log(document?.document);
         const status = {
             status: statusRequest
         };
-        return this._httpClient.put<DocumentRequest[]>
-        (`${ApiService.apiDocumentRequests}/change-status/${document?.id}`,
-            statusRequest).pipe(
-            tap((response: any) => {
-                this._documentRequests.next(response);
-            })
-        );
+        return this.documentRequests$.pipe(
+            take(1),
+            switchMap(documents =>
+                this._httpClient.put<DocumentRequest[]>
+                (`${ApiService.apiDocumentRequests}/change-status/${document?.id}`,
+                    statusRequest).pipe(map(() => {
+                        const index = documents.findIndex(item => item.id === document.id);
+                        documents.splice(index, 1);
+                        this._documentRequests.next(documents);
+                    })
+                )));
 
     }
 

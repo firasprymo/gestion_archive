@@ -105,7 +105,6 @@ export class StructureCentralService {
           }
       }).pipe(
           tap((response) => {
-              console.log(response);
               this._pagination.next(response.pageable);
               this._structureCentrals.next(response.content);
           })

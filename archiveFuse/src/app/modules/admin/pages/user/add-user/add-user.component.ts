@@ -52,6 +52,7 @@ export class AddUserComponent implements OnInit {
                 value: 'RESOPONSABLE CENTRE PRE ARCHIVE'
             },
         ];
+
     constructor(private _formBuilder: FormBuilder,
                 private _router: Router,
                 private _structureCentralService: StructureCentralService,
@@ -83,7 +84,6 @@ export class AddUserComponent implements OnInit {
         this.centreArchive$ = this._centreArchiveService.centreArchives$;
         this.centrePreArchive$ = this._centrePreArchiveService.centrePreArchives$;
         this._userService.user$.subscribe((res: any) => {
-            console.log(res);
             if (res) {
                 this.user = res.id;
                 this.isUpdate = true;
@@ -123,10 +123,13 @@ export class AddUserComponent implements OnInit {
             .subscribe((res) => {
                 this._router.navigate(['pages/show-users']);
                 return res;
+            }, (err) => {
+                if (err?.error?.message.includes('Username already exists')) {
+                    this.userForm.get('username').setErrors({duplicateUsername: true});
+
+                }
             });
     }
-
-
     cancelUserForm(): void {
         this.userForm.reset();
     }

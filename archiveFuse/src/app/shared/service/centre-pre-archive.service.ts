@@ -24,7 +24,6 @@ export class CentrePreArchiveService {
      * Getter for CentrePreArchive
      */
     get centrePreArchives$(): Observable<CentrePreArchive[]> {
-        console.log(this._centrePreArchives);
         return this._centrePreArchives.asObservable();
     }
 
@@ -108,7 +107,6 @@ export class CentrePreArchiveService {
             }
         }).pipe(
             tap((response) => {
-                console.log(response);
                 this._pagination.next(response.pageable);
                 this._centrePreArchives.next(response.content);
             })

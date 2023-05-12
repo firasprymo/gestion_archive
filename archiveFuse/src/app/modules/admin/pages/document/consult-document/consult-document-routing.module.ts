@@ -9,7 +9,7 @@ const routes: Routes = [{
     path: '',
     component: ConsultDocumentComponent,
     resolve: {
-        documents: DocumentRequestsResolvers,
+        documentRequests: DocumentRequestsResolvers,
         user:ActiveUserResolvers
     }
 }];

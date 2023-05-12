@@ -23,6 +23,7 @@ import java.util.Set;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class User extends AbstractEntity {
+    @Column(unique = true)
     private String username;
     private String password;
     private String email;
