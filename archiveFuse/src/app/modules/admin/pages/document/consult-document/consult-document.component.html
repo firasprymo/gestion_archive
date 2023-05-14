@@ -67,7 +67,7 @@ Nom
                             </div>
 
                             <div class="hidden sm:block">Actions status</div>
-                            <div class="hidden sm:block">Actions</div>
+<!--                           <div class="hidden sm:block">Actions</div>-->
                         </div>
                         <!-- Rows -->
                         <ng-container *ngIf="(documentRequests$ | async) as documentRequests">
@@ -96,19 +96,15 @@ Nom
                                     <!-- Details button -->
                                     <div>
                                         <div [ngSwitch]="document?.document.status">
-                                            <ng-container *ngIf="(user$|async)  as user">
-                                                <ng-container *ngSwitchCase="'PENDING'">
-
-                                                    <button *ngIf="isRoleResponsibleInList('ROLE_RESPONSABLE')"
-                                                            class="ml-4"
-                                                            mat-flat-button
-                                                            [color]="'warn'"
-                                                            (click)="changeStatus(document, 'PRIME_AGE')"
-                                                    >
-                                                        <span
-                                                            class="ml-2 mr-1">Accepter Demande d'ajout de document</span>
-                                                    </button>
-                                                </ng-container>
+                                            <ng-container *ngSwitchCase="'PENDING'">
+                                                <button
+                                                        class="ml-4"
+                                                        mat-flat-button
+                                                        [color]="'warn'"
+                                                >
+                                                    <span
+                                                        class="ml-2 mr-1">{{getEnum(document?.document.status)}}</span>
+                                                </button>
                                             </ng-container>
                                             <ng-container *ngSwitchCase="'PRIME_AGE'">
                                                 <button

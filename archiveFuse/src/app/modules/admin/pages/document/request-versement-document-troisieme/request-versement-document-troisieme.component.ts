@@ -240,11 +240,11 @@ export class RequestVersementDocumentTroisiemeComponent implements OnInit, After
         return DocumentStatus[status];
     }
 
-    changeRequest(document: DocumentRequest, status): any {
+    changeRequest(documents: any, status): any {
         // Open the confirmation dialog
         const confirmation = this._fuseConfirmationService.open({
-            title: 'Accepter Demande',
-            message: 'êtes vous sûr d\'accepter ce versement?',
+            title: 'Demande Versement',
+            message: 'Passer demande de versement de document mature deuxiéme âge',
             actions: {
                 confirm: {
                     label: 'Valider'
@@ -254,20 +254,16 @@ export class RequestVersementDocumentTroisiemeComponent implements OnInit, After
 
         // Subscribe to the confirmation dialog closed action
         confirmation.afterClosed().subscribe((result) => {
-
-            // If the confirm button pressed...
-            if (result === 'confirmed') {
-
-                // Get the product object
-
-                // Delete the product on the server
-                return this._documentReqService.changeStatus(document, status).subscribe((res: any) => {
-                    this.getDocumentRequest();
-                    this.closeDetails();
-
-                    return res;
+            documents.subscribe((res) => {
+                const body = [];
+                for (const item of res) {
+                    body.push(item.document);
+                }
+                this._documentReqService.sendDocumentVersementThird(body).subscribe((re) => {
                 });
-            }
+            });
+            this.closeDetails();
         });
+
     }
 }

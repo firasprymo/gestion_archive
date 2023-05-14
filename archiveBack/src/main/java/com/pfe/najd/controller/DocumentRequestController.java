@@ -135,6 +135,11 @@ public class DocumentRequestController {
         documentService.createDemandeVersement(document.get("document"));
         return new ResponseEntity<>(HttpStatus.OK);
     }
+    @PostMapping("/demande-versement-third")
+    public ResponseEntity<Void> createDemandeVersementThird(@RequestBody Map<String,List<Document>> document) {
+        documentService.createDemandeVersementThird(document.get("document"));
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
     @ExceptionHandler(RuntimeException.class)
     @ResponseStatus(HttpStatus.CONFLICT)

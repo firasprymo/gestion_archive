@@ -48,7 +48,11 @@
                             class="inventory-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5"
                             matSort
                             matSortDisableClear>
-
+                            <div class="hidden sm:block" *ngIf="(user$|async) as user ">
+                                    <p>
+                                        Nomenclature
+                                    </p>
+                            </div>
                             <div [mat-sort-header]="'nomberPage'">
 Nomber Page
                             </div>
@@ -73,13 +77,7 @@ Status
 Demande de consultation de document
                             </div>
 
-                            <div class="hidden sm:block" *ngIf="(user$|async) as user ">
-                                <ng-container *ngIf="user.roles[0].roleName==='ROLE_RESOPONSABLE'">
-                                    <p>
-                                        Actions
-                                    </p>
-                                </ng-container>
-                            </div>
+
                         </div>
                         <!-- Rows -->
                         <ng-container *ngIf="(documents$ | async) as documents">
@@ -87,6 +85,9 @@ Demande de consultation de document
                                 <div class="inventory-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b">
                                     <!-- SKU -->
 
+                                    <div class="hidden md:block truncate">
+                                        {{document.nomenclature?.designationNomenclature}}
+                                    </div>
                                     <div class="hidden md:block truncate">
                                         {{document.nomberPage}}
                                     </div>

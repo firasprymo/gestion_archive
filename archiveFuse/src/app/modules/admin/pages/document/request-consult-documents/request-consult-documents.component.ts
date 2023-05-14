@@ -301,8 +301,26 @@ export class RequestConsultDocumentsComponent implements OnInit, AfterViewInit, 
     }
 
     changeStatus(document: DocumentRequest, status: string): any {
-        this._documentRequestService.changeRequestStatus(document, status).subscribe(() => {
+        const confirmation = this._fuseConfirmationService.open({
+            title: 'Accepter demande de consultation document',
+            message: 'Voulez Vous accepter cette demande de consultation?',
+            actions: {
+                confirm: {
+                    label: 'Valider'
+                }
+            }
         });
 
+        // Subscribe to the confirmation dialog closed action
+        confirmation.afterClosed().subscribe((result) => {
+            // If the confirm button pressed...
+            if (result === 'confirmed') {
+                // Delete the product on the server
+                this._documentRequestService.changeRequestStatus(document, status).subscribe(() => {
+                    // Close the details
+                    this.closeDetails();
+                });
+            }
+        });
     }
 }

@@ -3,11 +3,9 @@ package com.pfe.najd.service.implementation;
 import com.pfe.najd.Enum.DocumentStatus;
 import com.pfe.najd.Enum.RequestStatus;
 import com.pfe.najd.controller.RequestStatusDTO;
+import com.pfe.najd.dao.AgenceDao;
 import com.pfe.najd.dto.DocumentVersementDTO;
-import com.pfe.najd.entities.CentrePreArchive;
-import com.pfe.najd.entities.Document;
-import com.pfe.najd.entities.DocumentRequest;
-import com.pfe.najd.entities.User;
+import com.pfe.najd.entities.*;
 import com.pfe.najd.repository.DocumentRepository;
 import com.pfe.najd.repository.DocumentRequestRepository;
 import com.pfe.najd.repository.UserRepository;
@@ -22,8 +20,8 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -31,6 +29,7 @@ public class DocumentRequestServiceImpl implements DocumentRequestService {
     private final DocumentRequestRepository documentReqRepository;
     private final DocumentRepository documentRepository;
     private final UserRepository userRepository;
+    private final AgenceDao agenceDaoo;
 
     //TODO: change the code of create to verify if the codeStartWith "DR"
     public DocumentRequest createDocumentRequest(DocumentRequest document) {
@@ -114,15 +113,28 @@ public class DocumentRequestServiceImpl implements DocumentRequestService {
 
     @Transactional
     public Page<DocumentRequest> pageDocumentRequests(Pageable pageable) {
-        Page<DocumentRequest> documents = documentReqRepository.findAll(pageable);
-        for (DocumentRequest item :
-                documents) {
-            if (!item.getDocument().getStatus().equals(DocumentStatus.PENDING)) {
+        Set<DocumentRequest> documentRequestSet = documentReqRepository.findAll().stream()
+                .collect(Collectors.groupingBy(DocumentRequest::getDocument))
+                .entrySet().stream()
+                .map(entry -> {
 
-                if (LocalDate.now().isBefore(item.getDocument().getMaturitePremAge())) {
+                            DocumentRequest original = entry.getValue().get(0);
+                            Document distinctDocument = entry.getKey();
+                            return new DocumentRequest(original.getId(), null, distinctDocument, original.getUser());
+                        }
+                )
+                .collect(Collectors.toSet());
+        List<DocumentRequest> documentRequestList1 = new ArrayList<>(documentRequestSet);
+        Page<DocumentRequest> documentRequestPage = new PageImpl<>(documentRequestList1);
+        for (DocumentRequest item :
+                documentRequestPage) {
+            if (!item.getDocument().getStatus().equals(DocumentStatus.PENDING) ||
+                    !item.getDocument().getStatus().equals(DocumentStatus.PENDING_VERSEMENT)) {
+
+                if (LocalDate.now().isAfter(item.getDocument().getMaturitePremAge())) {
                     item.getDocument().setStatus(DocumentStatus.MATURITY_PRIME_AGE);
                     documentReqRepository.save(item);
-                } else if (LocalDate.now().isBefore(item.getDocument().getMaturiteSecAge())) {
+                } else if (LocalDate.now().isAfter(item.getDocument().getMaturiteSecAge())) {
                     item.getDocument().setStatus(DocumentStatus.MATURITY_SECOND_AGE);
                     documentReqRepository.save(item);
                 }
@@ -138,7 +150,7 @@ public class DocumentRequestServiceImpl implements DocumentRequestService {
 //            }
             }
         }
-        return new PageImpl<>(documents.getContent(), documents.getPageable(), documents.getTotalElements());
+        return new PageImpl<>(documentRequestPage.getContent(), documentRequestPage.getPageable(), documentRequestPage.getTotalElements());
 
     }
 
@@ -147,7 +159,8 @@ public class DocumentRequestServiceImpl implements DocumentRequestService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
         User user = userRepository.findByUsername(currentPrincipalName).get();
-        Page<DocumentRequest> documents = documentReqRepository.findAllByDocumentStatusAndLieuAffectation(user.getLieuAffectation(), pageable);
+        Page<DocumentRequest> documents = getDistinct(documentReqRepository.findAllByDocumentStatusAndLieuAffectation(user.getLieuAffectation()));
+
 
         return new PageImpl<>(documents.getContent(), documents.getPageable(), documents.getTotalElements());
 
@@ -158,7 +171,7 @@ public class DocumentRequestServiceImpl implements DocumentRequestService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
         User user = userRepository.findByUsername(currentPrincipalName).get();
-        Page<DocumentRequest> documents = documentReqRepository.findAllByStatusAndLieuAffectation(user.getLieuAffectation(), pageable);
+        Page<DocumentRequest> documents = getDistinct(documentReqRepository.findAllByStatusAndLieuAffectation(user.getLieuAffectation()));
 
         return new PageImpl<>(documents.getContent(), documents.getPageable(), documents.getTotalElements());
 
@@ -169,8 +182,20 @@ public class DocumentRequestServiceImpl implements DocumentRequestService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
         User user = userRepository.findByUsername(currentPrincipalName).get();
-        Page<DocumentRequest> documents = documentReqRepository.findAllByDocumentStatusAndLieuAffectationOrderByDocument(user.getLieuAffectation(), pageable);
-        return new PageImpl<>(documents.getContent(), documents.getPageable(), documents.getTotalElements());
+        Set<DocumentRequest> documents = documentReqRepository.findAllByDocumentStatusAndLieuAffectationOrderByDocument(user.getLieuAffectation());
+        List<DocumentRequest> documentRequestList = documents.stream()
+                .collect(Collectors.groupingBy(DocumentRequest::getDocument))
+                .entrySet().stream()
+                .map(entry -> {
+
+                            DocumentRequest original = entry.getValue().get(0);
+                            Document distinctDocument = entry.getKey();
+                            return new DocumentRequest(original.getId(), null, distinctDocument, original.getUser());
+                        }
+                )
+                .collect(Collectors.toList());
+        Page<DocumentRequest> documentRequestPage = new PageImpl<>(documentRequestList);
+        return new PageImpl<>(documentRequestPage.getContent(), documentRequestPage.getPageable(), documentRequestPage.getTotalElements());
     }
 
     @Transactional
@@ -178,7 +203,7 @@ public class DocumentRequestServiceImpl implements DocumentRequestService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
         User user = userRepository.findByUsername(currentPrincipalName).get();
-        Page<DocumentRequest> documents = documentReqRepository.findAllByDocumentStatusAndLieuAffectationOrderById(user.getLieuAffectation(), pageable);
+        Page<DocumentRequest> documents = getDistinct(documentReqRepository.findAllByDocumentStatusAndLieuAffectationOrderById(user.getLieuAffectation()));
         return new PageImpl<>(documents.getContent(), documents.getPageable(), documents.getTotalElements());
     }
 
@@ -198,27 +223,43 @@ public class DocumentRequestServiceImpl implements DocumentRequestService {
         }
     }
     @Transactional
+    public void createDemandeVersementThird(List<Document> documentList) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+        User user = userRepository.findByUsername(currentPrincipalName).get();
+        for (Document document : documentList) {
+            DocumentRequest documentRequests = new DocumentRequest();
+            Document documentRequested = documentRepository.findById(document.getId()).orElseThrow(RuntimeException::new);
+            documentRequested.setStatus(DocumentStatus.THIRD_AGE);
+            documentRepository.save(documentRequested);
+            documentRequests.setDocument(documentRequested);
+            documentRequests.setUser(user);
+            documentReqRepository.save(documentRequests);
+        }
+    }
+
+    @Transactional
     public Page<DocumentRequest> getAllDocumentsDeuxieme(Pageable pageable) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
         User user = userRepository.findByUsername(currentPrincipalName).get();
-
-        Page<DocumentRequest> documents = documentReqRepository.getAllDeuxiemeAge(user.getLieuAffectation(), pageable);
-
+        Page<DocumentRequest>    documents= getDistinct(documentReqRepository.getAllDeuxiemeAge(user.getLieuAffectation()));
         return new PageImpl<>(documents.getContent(), documents.getPageable(), documents.getTotalElements());
 
     }
+
     @Transactional
     public Page<DocumentRequest> getAllDocumentsTroisieme(Pageable pageable) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
         User user = userRepository.findByUsername(currentPrincipalName).get();
 
-        Page<DocumentRequest> documents = documentReqRepository.getAllTroisiemeAge(user.getLieuAffectation(), pageable);
+        Page<DocumentRequest> documents =getDistinct(documentReqRepository.getAllTroisiemeAge(user.getLieuAffectation()));
 
         return new PageImpl<>(documents.getContent(), documents.getPageable(), documents.getTotalElements());
 
     }
+
     public DocumentRequest requestDocument(Document document) {
         DocumentRequest documentRequest = new DocumentRequest();
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -230,5 +271,22 @@ public class DocumentRequestServiceImpl implements DocumentRequestService {
         documentRequest.setDocument(document1);
         documentRequest.setUser(user);
         return documentReqRepository.save(documentRequest);
+    }
+
+
+    private Page<DocumentRequest> getDistinct(Set<DocumentRequest> documentRequests) {
+        List<DocumentRequest> documentRequestList = documentRequests.stream()
+                .collect(Collectors.groupingBy(DocumentRequest::getDocument))
+                .entrySet().stream()
+                .map(entry -> {
+
+                            DocumentRequest original = entry.getValue().get(0);
+                            Document distinctDocument = entry.getKey();
+                            return new DocumentRequest(original.getId(), null, distinctDocument, original.getUser());
+                        }
+                )
+                .collect(Collectors.toList());
+        Page<DocumentRequest> documents = new PageImpl<>(documentRequestList);
+        return documents;
     }
 }

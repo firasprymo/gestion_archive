@@ -38,13 +38,13 @@ export class AddDocumentComponent implements OnInit, OnDestroy {
         // Horizontal stepper form
         this.documentForm = this._formBuilder.group({
             id: [''],
-            nomberPage: ['', Validators.required],
-            numDocument: ['', Validators.required],
+            nomberPage: ['', [Validators.required]],
+            numDocument: ['', [Validators.required]],
             dateCreation: ['',],
             dateReception: ['',],
-            codeLieuArchive: ['', Validators.required],
-            nomenclature: ['', Validators.required],
-            lieuArchive: ['', Validators.required],
+            codeLieuArchive: ['', [Validators.required]],
+            nomenclature: ['', [Validators.required]],
+            lieuArchive: ['', [Validators.required]],
         });
         this._documentService.document$.subscribe((res) => {
             console.log(res);
@@ -72,7 +72,6 @@ export class AddDocumentComponent implements OnInit, OnDestroy {
                     codeLieuArchive: res?.structureCentral?.codeStructure,
                     lieuArchive: res?.structureCentral?.lieuArchive
                 });
-
             } else if (res.directionRegional) {
                 this.documentForm.patchValue({
                     codeLieuArchive: res?.directionRegional?.codeDirection,
@@ -80,6 +79,7 @@ export class AddDocumentComponent implements OnInit, OnDestroy {
                 });
 
             }
+            console.log(this.documentForm.value);
         });
         this.nomenclatures$ = this._nomenclatureService.nomenclatures$;
     }
@@ -94,6 +94,7 @@ export class AddDocumentComponent implements OnInit, OnDestroy {
      * Create product
      */
     createDocument(): void {
+        console.log(this.documentForm.value);
         // Create the product
         this._documentService.addDocument(this.documentForm.value).subscribe((newDocument) => {
             // Mark for check

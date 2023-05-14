@@ -297,11 +297,7 @@ export class DocumentMaturePremierAgeComponent implements OnInit, AfterViewInit,
 
     isRoleResponsibleInList(value): any {
         this.user$.subscribe(user =>
-            user.roles.filter(obj => {
-                console.log(obj.roleName)
-                console.log(value)
-                return obj.roleName === value
-            })
+            user.roles.filter(obj =>  obj.roleName === value)
         );
     }
 
@@ -315,7 +311,6 @@ export class DocumentMaturePremierAgeComponent implements OnInit, AfterViewInit,
     }
 
     versementDocument(docs: any): any {
-        console.log(docs);
         docs.subscribe((res) => {
             console.log(res);
             const body = [];

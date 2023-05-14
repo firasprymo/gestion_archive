@@ -68,10 +68,6 @@ maturité seconde Age
                                 [mat-sort-header]="'status'">
 Status
                             </div>
-                            <div
-                                [mat-sort-header]="'demande'">
-Demande de consultation de document
-                            </div>
 
                             <div class="hidden sm:block" *ngIf="(user$|async) as user ">
                                 <ng-container *ngIf="user.roles[0].roleName==='ROLE_RESOPONSABLE'">
@@ -106,16 +102,7 @@ Demande de consultation de document
                                     </div>
 
                                     <!-- Price -->
-                                    <div>
-                                        <button
-                                            *ngIf="document?.status==='SECOND_AGE' || document?.status==='THIRD_AGE'"
-                                            class="min-w-10 min-h-7 h-7 px-2 leading-6"
-                                            mat-stroked-button
-                                            (click)="requestConsult(document)">
-                                            Demande de consultation
-                                        </button>
 
-                                    </div>
                                     <ng-template *ngIf="(user$|async) as user ">
 
                                         <!-- Details button -->

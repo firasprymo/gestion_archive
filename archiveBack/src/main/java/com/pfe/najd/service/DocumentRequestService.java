@@ -43,4 +43,5 @@ public interface DocumentRequestService {
     Page<DocumentRequest>getAllDocumentPrimeAge(Pageable pageable);
     void createDemandeVersement(List<Document> documents);
 
+    void createDemandeVersementThird(List<Document> document);
 }

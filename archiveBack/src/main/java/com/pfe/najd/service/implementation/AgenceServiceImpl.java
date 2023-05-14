@@ -53,6 +53,9 @@ public class AgenceServiceImpl implements AgenceService {
             if (updatedAgence.getLieuArchive() != null) {
                 existingAgence.setLieuArchive(updatedAgence.getLieuArchive());
             }
+            if (updatedAgence.getLieuArchiveSecAge() != null) {
+                existingAgence.setLieuArchiveSecAge(updatedAgence.getLieuArchiveSecAge());
+            }
             return agenceDao.save(existingAgence);
         } else {
             throw new RuntimeException("Agence avec code " + id + "n'existe pas");

@@ -47,7 +47,7 @@ import {Users} from '../../../../../shared/model/users.types';
                 }
 
                 @screen lg {
-                    grid-template-columns: 68px 112px 100px 112px 96px 196px 72px;
+                    grid-template-columns: 120px 112px 100px 150px 112px 196px auto;
                 }
             }
         `

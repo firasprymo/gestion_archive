@@ -34,7 +34,7 @@
                             <span class="font-semibold mb-1 gt-xs:text-right gt-xs:min-w-32 gt-xs:mr-4
                             gt-xs:mb-0">Code lieu archive</span>
                             <mat-form-field class="fuse-mat-dense flex-auto">
-                                <input matInput [formControlName]="'codeLieuArchive'" rows="2"
+                                <input matInput [formControlName]="'codeLieuArchive'" readonly
                                        placeholder="Ajouter le Code lieu archive">
                                 <mat-error *ngIf="documentForm.controls.codeLieuArchive.hasError('required')">
                                     Code lieu archive est obligatoire
@@ -46,7 +46,7 @@
                             <span class="font-semibold mb-1 gt-xs:text-right gt-xs:min-w-32 gt-xs:mr-4
                             gt-xs:mb-0">Lieu archive</span>
                             <mat-form-field class="fuse-mat-dense flex-auto">
-                                <input matInput [formControlName]="'lieuArchive'" rows="2"
+                                <input matInput [formControlName]="'lieuArchive'" readonly
                                        placeholder="Ajouter le Lieu archive">
                                 <mat-error *ngIf="documentForm.controls.lieuArchive.hasError('required')">
                                     Lieu archive est obligatoire

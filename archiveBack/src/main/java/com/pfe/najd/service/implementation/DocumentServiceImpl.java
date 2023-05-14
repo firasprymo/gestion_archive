@@ -24,6 +24,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -56,25 +58,25 @@ public class DocumentServiceImpl implements DocumentService {
 
     public List<Document> getAllDocument() {
         List<Document> documents = documentRepository.findAll();
-//        for (Document item :
-//                documents) {
-//            if (LocalDate.now().isBefore(item.getMaturitePremAge())) {
-//                item.setStatus(DocumentStatus.MATURITY_PRIME_AGE);
-//                documentRepository.save(item);
-//            }
-//            if (LocalDate.now().isBefore(item.getMaturiteSecAge())) {
-//                item.setStatus(DocumentStatus.MATURITY_SECOND_AGE);
-//                documentRepository.save(item);
-//            }
-//            if (LocalDate.now().isAfter(item.getMaturiteSecAge()) && item.getNomenclature().getValeurHistoriqueTroiAge()) {
-//                item.setStatus(DocumentStatus.THIRD_AGE);
-//                documentRepository.save(item);
-//            }
-//            if (LocalDate.now().isAfter(item.getMaturiteSecAge()) && !item.getNomenclature().getValeurHistoriqueTroiAge()) {
-//                item.setStatus(DocumentStatus.DESTRUCTED);
-//                documentRepository.save(item);
-//            }
-//        }
+        for (Document item :
+                documents) {
+            if (LocalDate.now().isBefore(item.getMaturitePremAge())) {
+                item.setStatus(DocumentStatus.MATURITY_PRIME_AGE);
+                documentRepository.save(item);
+            }
+            if (LocalDate.now().isBefore(item.getMaturiteSecAge())) {
+                item.setStatus(DocumentStatus.MATURITY_SECOND_AGE);
+                documentRepository.save(item);
+            }
+            if (LocalDate.now().isAfter(item.getMaturiteSecAge()) && item.getNomenclature().getValeurHistoriqueTroiAge()) {
+                item.setStatus(DocumentStatus.THIRD_AGE);
+                documentRepository.save(item);
+            }
+            if (LocalDate.now().isAfter(item.getMaturiteSecAge()) && !item.getNomenclature().getValeurHistoriqueTroiAge()) {
+                item.setStatus(DocumentStatus.DESTRUCTED);
+                documentRepository.save(item);
+            }
+        }
         return documents;
     }
 
@@ -129,6 +131,25 @@ public class DocumentServiceImpl implements DocumentService {
     public Page<Document> pageDocuments(Pageable pageable) {
         Page<Document> documents = documentRepository.getAllByDocumentLieuAffectationAndStatus(pageable);
 
+
+        for (Document item :
+                documents) {
+            if (!item.getStatus().equals(DocumentStatus.PENDING) || item.getStatus().equals(DocumentStatus.PENDING_VERSEMENT)) {
+                if (LocalDate.now().isAfter(item.getMaturitePremAge())) {
+                    item.setStatus(DocumentStatus.MATURITY_PRIME_AGE);
+                    documentRepository.save(item);
+                } else if (LocalDate.now().isAfter(item.getMaturiteSecAge())) {
+                    item.setStatus(DocumentStatus.MATURITY_SECOND_AGE);
+                    documentRepository.save(item);
+                } else if (LocalDate.now().isAfter(item.getMaturiteSecAge()) && item.getNomenclature().getValeurHistoriqueTroiAge()) {
+                    item.setStatus(DocumentStatus.THIRD_AGE);
+                    documentRepository.save(item);
+                } else if (LocalDate.now().isAfter(item.getMaturiteSecAge()) && !item.getNomenclature().getValeurHistoriqueTroiAge()) {
+                    item.setStatus(DocumentStatus.DESTRUCTED);
+                    documentRepository.save(item);
+                }
+            }
+        }
         return new PageImpl<>(documents.getContent(), documents.getPageable(), documents.getTotalElements());
 
     }

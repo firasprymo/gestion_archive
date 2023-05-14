@@ -45,7 +45,7 @@ import {DocumentStatus} from '../../../../../shared/model/document-status.enum';
                 }
 
                 @screen lg {
-                    grid-template-columns: auto 120px 120px 80px 350px 130px 80px ;
+                    grid-template-columns: 80px 120px 120px 80px 350px 130px 80px ;
                 }
             }
         `

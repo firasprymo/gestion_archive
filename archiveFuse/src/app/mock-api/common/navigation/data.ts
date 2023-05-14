@@ -3,22 +3,22 @@ import {FuseNavigationItem} from '@fuse/components/navigation';
 
 export const defaultNavigation: FuseNavigationItem[] = [
 
-    {
-        id: 'home',
-        title: 'Home',
-        type: 'basic',
-        icon: 'heroicons_outline:home',
-        link: '/dashboards/project',
-        meta: ['ROLE_ADMIN', 'ROLE_RESOPONSABLE', 'ROLE_RESOPONSABLE_CENTRE_PRE_ARCHIVE'],
-
-    },
+    // {
+    //     id: 'home',
+    //     title: 'Home',
+    //     type: 'basic',
+    //     icon: 'heroicons_outline:home',
+    //     link: '/dashboards/project',
+    //     meta: ['ROLE_ADMIN', 'ROLE_RESOPONSABLE', 'ROLE_RESOPONSABLE_CENTRE_PRE_ARCHIVE'],
+    //
+    // },
     {
         id: 'documents',
         title: 'Documents',
         subtitle: '',
         type: 'group',
         icon: 'heroicons_outline:home',
-        meta: ['ROLE_ADMIN', 'ROLE_RESOPONSABLE', 'ROLE_RESOPONSABLE_CENTRE_ARCHIVE', 'ROLE_RESOPONSABLE_CENTRE_PRE_ARCHIVE'],
+        meta: ['ROLE_RESOPONSABLE', 'ROLE_RESOPONSABLE_CENTRE_ARCHIVE', 'ROLE_RESOPONSABLE_CENTRE_PRE_ARCHIVE'],
         children: [
             {
                 id: 'documents.add',
@@ -35,7 +35,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 type: 'basic',
                 icon: 'heroicons_outline:chart-pie',
                 link: '/pages/show-documents',
-                meta: ['ROLE_AGENT',],
+                meta: ['ROLE_AGENT','ROLE_RESOPONSABLE'],
             },
             {
                 id: 'documents.showlieu',
@@ -51,7 +51,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 type: 'basic',
                 icon: 'heroicons_outline:chart-pie',
                 link: '/pages/consult-documents',
-                meta: ['ROLE_RESOPONSABLE'],
+                meta: [],
             },
             {
                 id: 'documents.request',

@@ -11,6 +11,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public interface DocumentRequestRepository extends JpaRepository<DocumentRequest, Long>,
@@ -19,19 +20,19 @@ public interface DocumentRequestRepository extends JpaRepository<DocumentRequest
     boolean existsById(Long id);
 
     @Query("select distinct dr  from DocumentRequest dr where dr.document.Status='PENDING_VERSEMENT' and dr.document.codeLieuArchive=?1 ")
-    Page<DocumentRequest> findAllByDocumentStatusAndLieuAffectationOrderById(String lieuAffectation, Pageable pageable);
+    Set<DocumentRequest>  findAllByDocumentStatusAndLieuAffectationOrderById(String lieuAffectation);
 
-    @Query("select distinct dr  from DocumentRequest dr where dr.document.Status NOT IN ('SECOND_AGE','PRIME_AGE','DESTRUCTED','THIRD_AGE') and" +
+    @Query("select  dr from DocumentRequest dr where dr.document.Status NOT IN ('PENDING', 'SECOND_AGE','PRIME_AGE','DESTRUCTED','THIRD_AGE') and" +
             " dr.document.codeLieuArchive=?1 ")
-    Page<DocumentRequest> findAllByDocumentStatusAndLieuAffectationOrderByDocument(String lieuAffectation, Pageable pageable);
+    Set<DocumentRequest> findAllByDocumentStatusAndLieuAffectationOrderByDocument(String lieuAffectation);
 
     @Query("select distinct dr  from DocumentRequest dr where dr.document.Status='PENDING' and dr.document.codeLieuArchive=?1 ")
-    Page<DocumentRequest> findAllByDocumentStatusAndLieuAffectation(String lieuAffectation, Pageable pageable);
+    Set<DocumentRequest> findAllByDocumentStatusAndLieuAffectation(String lieuAffectation);
 
     @Query("select distinct dr  from DocumentRequest dr where dr.status='PENDING' and dr.document.codeLieuArchive=?1 ")
-    Page<DocumentRequest> findAllByStatusAndLieuAffectation(String lieuAffectation, Pageable pageable);
-    @Query("select distinct dr  from DocumentRequest dr where dr.document.Status='SECOND_AGE' and dr.document.codeLieuArchive=?1 ")
-    Page<DocumentRequest> getAllDeuxiemeAge(String lieuAffectation, Pageable pageable);
+    Set<DocumentRequest> findAllByStatusAndLieuAffectation(String lieuAffectation);
+    @Query("select distinct dr  from DocumentRequest dr where dr.document.Status='PENDING_VERSEMENT' and dr.document.codeLieuArchive=?1 ")
+    Set<DocumentRequest> getAllDeuxiemeAge(String lieuAffectation);
     @Query("select distinct dr  from DocumentRequest dr where dr.document.Status='MATURITY_SECOND_AGE' and dr.document.codeLieuArchive=?1 ")
-    Page<DocumentRequest> getAllTroisiemeAge(String lieuAffectation, Pageable pageable);
+    Set<DocumentRequest> getAllTroisiemeAge(String lieuAffectation);
 }

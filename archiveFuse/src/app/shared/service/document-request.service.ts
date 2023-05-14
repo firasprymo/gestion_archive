@@ -122,6 +122,7 @@ export class DocumentRequestService {
             })
         );
     }
+
     /**
      * Get documents
      *
@@ -150,6 +151,7 @@ export class DocumentRequestService {
             })
         );
     }
+
     /**
      * Get documents
      *
@@ -179,6 +181,7 @@ export class DocumentRequestService {
             })
         );
     }
+
     /**
      * Get documents
      *
@@ -335,15 +338,19 @@ export class DocumentRequestService {
         const status = {
             status: statusRequest
         };
-        return this.documentRequests$.pipe(
+        this.documentRequests$.pipe(
             take(1),
             switchMap(documents =>
                 this._httpClient.put<DocumentRequest[]>
                 (`${ApiService.apiDocumentRequests}/change-status/${document?.id}`,
                     statusRequest).pipe(map(() => {
-                        const index = documents.findIndex(item => item.id === document.id);
-                        documents.splice(index, 1);
-                        this._documentRequests.next(documents);
+                    const index = documents.findIndex(item => item.id === document.id);
+                    // Delete the product
+                    documents.splice(index, 1);
+                    // Update the documents
+                    this._documentRequests.next(documents);
+                    // Return the deleted status
+                    return true;
                     })
                 )));
 
@@ -354,12 +361,23 @@ export class DocumentRequestService {
         const body = {
             document
         };
-        return this._httpClient.post<DocumentRequest[]>
-        (`${ApiService.apiDocumentRequests}/demande-versement`,
-            body).pipe(
-            tap((response: any) => {
-                this._documentRequests.next(response);
-            })
+        return this.documentRequests$.pipe(
+            take(1),
+            switchMap(documents =>
+                this._httpClient.post<DocumentRequest[]>
+                (`${ApiService.apiDocumentRequests}/demande-versement`,
+                    body).pipe(
+                    map(() => {
+                        // Find the index of the deleted product
+                        const index = documents.findIndex(item => item.id === document.id);
+                        // Delete the product
+                        documents.splice(index, 1);
+                        // Update the documents
+                        this._documentRequests.next(documents);
+                        // Return the deleted status
+                        return true;
+                    })
+                ))
         );
 
     }
@@ -385,5 +403,29 @@ export class DocumentRequestService {
             tap((response: any) => response)
         );
 
+    }
+
+    sendDocumentVersementThird(document):any {
+        const body = {
+            document
+        };
+        return this.documentRequests$.pipe(
+            take(1),
+            switchMap(documents =>
+                this._httpClient.post<DocumentRequest[]>
+                (`${ApiService.apiDocumentRequests}/demande-versement-third`,
+                    body).pipe(
+                    map(() => {
+                        // Find the index of the deleted product
+                        const index = documents.findIndex(item => item.id === document.id);
+                        // Delete the product
+                        documents.splice(index, 1);
+                        // Update the documents
+                        this._documentRequests.next(documents);
+                        // Return the deleted status
+                        return true;
+                    })
+                ))
+        );
     }
 }

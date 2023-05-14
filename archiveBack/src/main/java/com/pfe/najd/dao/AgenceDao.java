@@ -10,6 +10,7 @@ import java.util.List;
 @Repository
 public interface AgenceDao extends JpaRepository<Agence, Long> {
     boolean existsByCodeAgence(String codeAgence);
+    Agence findByCodeAgence(String codeAgence);
 
     List<Agence> findAll();
 
